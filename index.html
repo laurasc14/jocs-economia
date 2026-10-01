@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jocs d'Economia 4t ESO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#F2F4F1;--card:#fff;--ink:#1B2A24;--muted:#56685F;--line:#D3DCD7}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#101814;--card:#18241F;--ink:#E6EFEA;--muted:#9FB5AA;--line:#2A3A33}}
+:root[data-theme="dark"]{--bg:#101814;--card:#18241F;--ink:#E6EFEA;--muted:#9FB5AA;--line:#2A3A33}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.1rem/1.5 "Atkinson Hyperlegible",system-ui,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:2rem 1rem 3rem}
+h1{font:700 clamp(2rem,5vw,3rem)/1.1 "Fredoka",system-ui,sans-serif;margin:0}
+p.sub{color:var(--muted);margin:.4rem 0 1.6rem}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+a.game{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:20px;padding:1.2rem;border-top:10px solid var(--c)}
+a.game:hover,a.game:focus-visible{border-color:var(--c);outline:none}
+a.game .e{font-size:2rem}
+a.game h2{font:700 1.4rem "Fredoka",sans-serif;margin:.3rem 0}
+a.game p{margin:0;color:var(--muted);font-size:1rem}
+h2.sec{font:700 1.5rem "Fredoka",sans-serif;margin:2rem 0 .8rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Jocs d'Economia</h1>
+  <p class="sub">4t ESO · Corbatera Institut Escola</p>
+  <div class="games">
+    <a class="game" style="--c:#2F4A3C" href="escape-room-cooperativa.html"><span class="e">🔐</span><h2>La caixa de la cooperativa</h2><p>Escape room de costos, punt mort i IVA.</p></a>
+    <a class="game" style="--c:#2E2974" href="qui-vol-ser-ric-economia.html"><span class="e">💰</span><h2>Qui vol ser ric?</h2><p>Repàs abans de l'examen.</p></a>
+    <a class="game" style="--c:#C8782F" href="mercat-del-pa.html"><span class="e">🥖</span><h2>El mercat del pa</h2><p>Oferta, demanda i preu d'equilibri.</p></a>
+    <a class="game" style="--c:#1D2B53" href="vida-en-daus.html"><span class="e">🎲</span><h2>La vida en daus</h2><p>Nòmina, pressupost i imprevistos.</p></a>
+  </div>
+  <h2 class="sec">Per a la professora</h2>
+  <div class="games">
+    <a class="game" style="--c:#0F4C5C" href="lliga-cooperativa.html"><span class="e">🐝</span><h2>Lliga de la cooperativa</h2><p>Monedes, caixa comuna i botiga.</p></a>
+    <a class="game" style="--c:#0E2A23" href="borsa-classe.html"><span class="e">📈</span><h2>Borsa de la classe</h2><p>Notícies, cotitzacions i carteres.</p></a>
+  </div>
+</div>
+</body>
+</html>

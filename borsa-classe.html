@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Borsa de la classe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style id="css">
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#F1F4F2; --card:#FFFFFF; --ink:#13241F; --muted:#526A62; --line:#CFDAD5;
+  --board:#0E2A23; --amber:#FFB547; --up:#1F9D5C; --down:#D8452F; --upb:#4CD38A; --downb:#FF7A68;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#0B1714; --card:#13231F; --ink:#E5F0EC; --muted:#9DB6AE; --line:#24403A; --board:#06130F; --up:#4CD38A; --down:#FF7A68; }
+}
+:root[data-theme="dark"]{ --bg:#0B1714; --card:#13231F; --ink:#E5F0EC; --muted:#9DB6AE; --line:#24403A; --board:#06130F; --up:#4CD38A; --down:#FF7A68; }
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.5 "Atkinson Hyperlegible",system-ui,sans-serif}
+h1,h2,h3{font-family:"Barlow Condensed",system-ui,sans-serif;font-weight:700;margin:0;line-height:1.1}
+.wrap{max-width:1120px;margin:0 auto;padding:1.2rem 1rem 4rem}
+button,select,input{font:inherit;color:inherit}
+button{font-weight:700;border:0;border-radius:10px;padding:.55rem .95rem;cursor:pointer;background:var(--board);color:#fff}
+button.amber{background:var(--amber);color:#2A1A00}
+button.soft{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+button.buy{background:var(--up);color:#fff} button.sell{background:var(--down);color:#fff}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem}
+.top h1{font-size:clamp(2rem,5vw,3rem)}
+.tools{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.savebar{font-size:.95rem;color:var(--muted)} .savebar.dirty{color:var(--down);font-weight:700}
+
+/* The quote board: the memorable element */
+.board{background:var(--board);border-radius:22px;padding:1rem;margin-top:1rem;color:#fff}
+.board .head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;color:#9FC2B6;font-size:.95rem;padding:0 .3rem .6rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.6rem}
+.tile{background:rgba(255,255,255,.05);border-radius:14px;padding:.7rem .8rem}
+.tile .nm{color:#CFE3DB;font-weight:700;font-size:.95rem}
+.tile .sec{color:#86A89C;font-size:.82rem}
+.tile .px{font:700 2.3rem/1 "Barlow Condensed",sans-serif;color:var(--amber);margin-top:.35rem;font-variant-numeric:tabular-nums}
+.tile .ch{font:700 1.15rem "Barlow Condensed",sans-serif}
+.tile .ch.u{color:var(--upb)} .tile .ch.d{color:var(--downb)} .tile .ch.z{color:#86A89C}
+.risk{display:inline-flex;gap:3px;margin-top:.35rem}
+.risk i{width:9px;height:9px;border-radius:2px;background:rgba(255,255,255,.18)}
+.risk i.on{background:var(--amber)}
+
+.news{margin-top:1rem;background:var(--card);border:3px solid var(--amber);border-radius:20px;padding:1.2rem 1.3rem}
+.news .when{color:var(--muted);font-size:.95rem}
+.news h2{font-size:clamp(1.6rem,3.6vw,2.3rem);margin:.2rem 0 .3rem}
+.news p{margin:0;max-width:70ch}
+.news .q{margin-top:.7rem;font-weight:700}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-top:1.1rem}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:1.1rem 1.2rem}
+.card h2{font-size:1.6rem;margin-bottom:.3rem}
+.note{color:var(--muted);margin:.2rem 0 .8rem;max-width:70ch}
+.form{display:flex;flex-wrap:wrap;gap:.6rem;align-items:end}
+.form label{display:flex;flex-direction:column;font-size:.9rem;color:var(--muted);gap:.2rem}
+.form select,.form input{border:2px solid var(--line);border-radius:10px;padding:.5rem .6rem;background:var(--bg)}
+.form input{width:7ch}
+.preview{margin-top:.6rem;min-height:1.5em;font-weight:700}
+.preview.bad{color:var(--down)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:420px}
+th,td{padding:.45rem .5rem;border-bottom:1px solid var(--line);text-align:left}
+th{font-size:.88rem;color:var(--muted)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.pos{font:700 1.3rem "Barlow Condensed",sans-serif;color:var(--muted);width:2rem}
+.u{color:var(--up)} .d{color:var(--down)}
+.mini{font-size:.88rem;color:var(--muted)}
+.log{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto}
+.log li{display:flex;justify-content:space-between;gap:.6rem;align-items:center;padding:.35rem 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.log button{padding:.2rem .5rem;font-size:.85rem}
+.names{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.5rem}
+.names input{border:2px solid var(--line);border-radius:10px;padding:.5rem .6rem;background:var(--bg);width:100%;min-width:0}
+.nrow{display:flex;gap:.3rem}
+.nrow button{padding:.4rem .6rem;font-size:.9rem}
+svg{display:block;width:100%;height:auto}
+svg text{fill:var(--muted);font:12px "Atkinson Hyperlegible",sans-serif}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-size:.9rem;color:var(--muted)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:.3rem;vertical-align:-1px}
+.toast{position:fixed;left:50%;bottom:calc(1rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.6rem 1rem;border-radius:12px;font-weight:700;display:none;z-index:9}
+.toast.show{display:block}
+.projector .edit{display:none}
+.projector .tile .px{font-size:2.8rem}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="application/json" id="state">{"rev":0,"nextId":1,"session":0,"deck":0,"pending":null,"students":[{"id":1,"name":"Alumne 1","cash":1000,"h":{}},{"id":2,"name":"Alumne 2","cash":1000,"h":{}},{"id":3,"name":"Alumne 3","cash":1000,"h":{}},{"id":4,"name":"Alumne 4","cash":1000,"h":{}},{"id":5,"name":"Alumne 5","cash":1000,"h":{}},{"id":6,"name":"Alumne 6","cash":1000,"h":{}},{"id":7,"name":"Alumne 7","cash":1000,"h":{}}],"prices":{"forn":[20],"oli":[15],"volta":[30],"sol":[25],"pixel":[40],"dip":[10]},"news":[],"orders":[]}</script>
+<script id="app">
+const HEAD = '<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<title>Borsa de la classe</title>\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">';
+const CO = [
+  {id:"forn", n:"Forn Daurat", sec:"Fleques", vol:0.01, r:1, c:"#C8782F"},
+  {id:"oli", n:"Oli del Camp", sec:"Cooperativa agrícola", vol:0.02, r:2, c:"#7A8B2E"},
+  {id:"volta", n:"VoltaBike", sec:"Bicis elèctriques", vol:0.04, r:3, c:"#2F6F8F"},
+  {id:"sol", n:"SolMed Energia", sec:"Plaques solars", vol:0.05, r:4, c:"#D9A21B"},
+  {id:"pixel", n:"PixelPlay", sec:"Videojocs", vol:0.08, r:5, c:"#8E3B6E"},
+  {id:"dip", n:"Dipòsit bancari", sec:"Sense risc: +0,2 % per sessió", vol:0, r:0, c:"#6B7C77", fixed:0.002}
+];
+const DECK = [
+  {t:"La Generalitat amplia les ajudes per instal·lar plaques solars", d:"Les famílies podran recuperar fins a un 40 % del cost de la instal·lació.", e:{sol:10}},
+  {t:"PixelPlay retarda el seu gran joc fins a l'any que ve", d:"L'empresa diu que necessita més temps per arreglar errors.", e:{pixel:-15}},
+  {t:"Puja el preu de la farina pel mal temps a Europa", d:"Les pluges han fet malbé part de la collita de blat.", e:{forn:-5}},
+  {t:"Els ajuntaments del Camp de Tarragona creen nous carrils bici", d:"Es preveuen 40 km nous abans de l'estiu.", e:{volta:8}},
+  {t:"Bona collita d'olives al Camp", d:"Els pagesos esperen una de les millors campanyes dels últims anys.", e:{oli:7}},
+  {t:"El Banc Central Europeu apuja els tipus d'interès", d:"Demanar préstecs serà més car per a empreses i famílies.", e:{forn:-2, oli:-2, volta:-4, sol:-5, pixel:-6}},
+  {t:"PixelPlay arrasa amb un joc nou per a mòbils", d:"Ha estat el més descarregat de la setmana a tot Europa.", e:{pixel:20}},
+  {t:"Una avaria deixa sense servei les bicis de lloguer de VoltaBike", d:"Centenars d'usuaris es queixen a les xarxes.", e:{volta:-10}},
+  {t:"Onada de calor i sequera a la tardor", d:"Les oliveres pateixen i el sol no para de brillar.", e:{oli:-8, sol:4}},
+  {t:"Forn Daurat obre deu botigues noves", d:"L'empresa contractarà 60 persones.", e:{forn:6}},
+  {t:"Rumors: una gran elèctrica vol comprar SolMed", d:"Ningú ho ha confirmat, però tothom en parla.", e:{sol:12}},
+  {t:"Desmentit: no hi haurà compra de SolMed", d:"L'elèctrica nega cap interès en l'empresa.", e:{sol:-14}},
+  {t:"Black Friday: rècord de vendes de bicis i videojocs", d:"Les botigues en línia diuen que no havien venut mai tant.", e:{pixel:6, volta:5}},
+  {t:"La inflació fa retallar les despeses de les famílies", d:"Les famílies redueixen l'oci i les compres grans.", e:{pixel:-6, volta:-4, forn:1, oli:-1}},
+  {t:"VoltaBike guanya un contracte amb l'Ajuntament de Barcelona", d:"Subministrarà 2.000 bicis per al servei públic.", e:{volta:12}},
+  {t:"S'acosta Nadal: torrons i coques disparen les vendes", d:"Les fleques i les cooperatives fan l'agost al desembre.", e:{forn:5, oli:3}},
+  {t:"Un atac informàtic tomba els servidors de PixelPlay", d:"Els jugadors no poden connectar-se durant tres dies.", e:{pixel:-12}},
+  {t:"Setmana tranquil·la als mercats", d:"No hi ha grans notícies. Els preus es mouen poc.", e:{}}
+];
+const FEE = 1, START_CASH = 1000;
+const STASH = "borsa-classe-pending";
+
+let state = JSON.parse(document.getElementById("state").textContent);
+let dirty=false, art=null, mode="loading", readOnly=false, projector=false;
+let form={s:null, c:"forn", q:1};
+try{
+  const s=JSON.parse(sessionStorage.getItem(STASH)||localStorage.getItem(STASH)||"null");
+  if(s && s.rev>state.rev){ state=s; dirty=true; } else sessionStorage.removeItem(STASH);
+}catch(e){}
+
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const eur=x=>x.toLocaleString("ca-ES",{minimumFractionDigits:2,maximumFractionDigits:2})+" €";
+const price=id=>{ const a=state.prices[id]; return a[a.length-1]; };
+const prev=id=>{ const a=state.prices[id]; return a.length>1?a[a.length-2]:a[0]; };
+const co=id=>CO.find(c=>c.id===id);
+const stu=id=>state.students.find(s=>s.id===id);
+function worth(s){ return s.cash+CO.reduce((a,c)=>a+(s.h[c.id]||0)*price(c.id),0); }
+function nCos(s){ return CO.filter(c=>c.id!=="dip" && (s.h[c.id]||0)>0).length; }
+
+function change(fn){
+  fn(); state.rev++; dirty=true;
+  try{ sessionStorage.setItem(STASH, JSON.stringify(state)); }catch(e){}
+  if(mode==="local"){ try{ localStorage.setItem(STASH, JSON.stringify(state)); }catch(e){} dirty=false; }
+  render();
+}
+function toast(t){ const el=document.getElementById("toast"); if(!el) return; el.textContent=t; el.classList.add("show"); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove("show"),2400); }
+function buildPage(){
+  const json=JSON.stringify(state).replace(/</g,"\\u003c");
+  const css=document.getElementById("css").textContent, app=document.getElementById("app").textContent;
+  const S="<"+"script", E="<"+"/script>";
+  return "<!doctype html>\n<html lang=\"ca\">\n<head>\n"+HEAD+"\n<style id=\"css\">"+css+"</style>\n</head>\n<body>\n<div id=\"root\"></div>\n"+S+" type=\"application/json\" id=\"state\">"+json+E+"\n"+S+" id=\"app\">"+app+E+"\n</body>\n</html>\n";
+}
+async function save(){
+  if(!art) return;
+  try{ sessionStorage.setItem(STASH, JSON.stringify(state)); await art.publish(buildPage()); }
+  catch(e){
+    const c=e&&e.code;
+    if(c==="conflict") toast("Hi ha una versió més nova; es torna a carregar.");
+    else if(["not_writer","not_granted","consent_required","not_declared","capability_disabled"].includes(c)){ readOnly=true; render(); toast("Aquesta vista és només de lectura."); }
+    else if(c==="rate_limited") toast("Massa desades seguides. Torna-ho a provar d'aquí a una estona.");
+    else toast("No s'ha pogut desar. Els canvis es mantenen en aquesta pestanya.");
+  }
+}
+
+// Market actions
+function revealNews(){
+  if(state.pending!==null) return;
+  change(()=>{ state.pending = state.deck % DECK.length; state.deck++; });
+}
+function moveMarket(){
+  if(state.pending===null){ toast("Primer llegeix la notícia de la sessió."); return; }
+  if(!confirm("Es mouran els preus segons la notícia. Ja s'han fet totes les operacions?")) return;
+  change(()=>{
+    const nw=DECK[state.pending];
+    CO.forEach(c=>{
+      const p=price(c.id);
+      let np;
+      if(c.fixed) np=p*(1+c.fixed);
+      else { const noise=(Math.random()*2-1)*c.vol*1.7; np=p*(1+(nw.e[c.id]||0)/100+noise); }
+      state.prices[c.id].push(Math.max(1, Math.round(np*100)/100));
+    });
+    state.news.push({i:state.pending, s:state.session+1});
+    state.session++; state.pending=null;
+  });
+  toast("Preus actualitzats");
+}
+function order(side){
+  const s=stu(form.s), c=form.c, q=Math.floor(+form.q);
+  if(!s||!q||q<1) return;
+  const p=price(c), tot=p*q;
+  if(side==="buy" && s.cash < tot+FEE){ toast(s.name+" no té prou diners."); return; }
+  if(side==="sell" && (s.h[c]||0) < q){ toast(s.name+" no té tantes accions."); return; }
+  change(()=>{
+    const st=stu(form.s);
+    if(side==="buy"){ st.cash=+(st.cash-tot-FEE).toFixed(2); st.h[c]=(st.h[c]||0)+q; }
+    else { st.cash=+(st.cash+tot-FEE).toFixed(2); st.h[c]-=q; }
+    state.orders.push({id:state.nextId++, ses:state.session, st:st.id, c, q, side, p});
+  });
+  toast((side==="buy"?"Compra":"Venda")+" apuntada");
+}
+function undo(id){
+  const o=state.orders.find(x=>x.id===id); if(!o) return;
+  if(o.ses!==state.session){ toast("Només es poden desfer operacions de la sessió actual."); return; }
+  const s=stu(o.st);
+  if(o.side==="buy" && (s.h[o.c]||0)<o.q){ toast("No es pot desfer: ja ha venut aquestes accions."); return; }
+  change(()=>{
+    const st=stu(o.st), tot=o.p*o.q;
+    if(o.side==="buy"){ st.cash=+(st.cash+tot+FEE).toFixed(2); st.h[o.c]-=o.q; }
+    else { st.cash=+(st.cash-tot+FEE).toFixed(2); st.h[o.c]=(st.h[o.c]||0)+o.q; }
+    state.orders=state.orders.filter(x=>x.id!==id);
+  });
+}
+
+function chart(){
+  const W=560,H=250,L=40,R=12,T=12,B=26, n=state.session;
+  const series=CO.map(c=>state.prices[c.id].map(v=>v/state.prices[c.id][0]*100));
+  const all=series.flat(); const mn=Math.min(80,...all), mx=Math.max(120,...all);
+  const x=i=>L+i*(W-L-R)/Math.max(n,6), y=v=>T+(mx-v)*(H-T-B)/(mx-mn);
+  let g=`<line x1="${L}" x2="${W-R}" y1="${y(100)}" y2="${y(100)}" stroke="var(--line)" stroke-width="2"/><text x="${L-6}" y="${y(100)+4}" text-anchor="end">100</text><text x="${L-6}" y="${y(mx)+4}" text-anchor="end">${Math.round(mx)}</text><text x="${L-6}" y="${y(mn)+4}" text-anchor="end">${Math.round(mn)}</text>`;
+  series.forEach((s,k)=>{ g+=`<polyline fill="none" stroke="${CO[k].c}" stroke-width="3" points="${s.map((v,i)=>x(i)+","+y(v)).join(" ")}"/>`; });
+  g+=`<text x="${L}" y="${H-6}">Sessions</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolució dels preus">${g}</svg><div class="legend">${CO.map(c=>`<span><i class="sw" style="background:${c.c}"></i>${c.n}</span>`).join("")}</div>`;
+}
+
+function render(){
+  document.body.classList.toggle("projector", projector||readOnly);
+  const ranking=[...state.students].sort((a,b)=>worth(b)-worth(a));
+  const last=state.news.length?DECK[state.news[state.news.length-1].i]:null;
+  const pend=state.pending!==null?DECK[state.pending]:null;
+  if(form.s===null) form.s=state.students[0].id;
+  const fs=stu(form.s), fp=price(form.c), fq=Math.max(1,Math.floor(+form.q)||1);
+  const saveTxt = mode==="local"?"Es desa en aquest navegador":mode==="loading"?"Connectant…":dirty?"Hi ha canvis sense desar":"Tot desat";
+
+  document.getElementById("root").innerHTML=`
+  <div class="wrap">
+    <header class="top">
+      <h1>Borsa de la classe</h1>
+      <div class="tools">
+        <span class="savebar edit${dirty&&mode==="artifact"?" dirty":""}">${saveTxt}</span>
+        ${mode==="artifact"&&!readOnly?`<button class="amber edit" data-a="save" ${dirty?"":"disabled"}>Desa els canvis</button>`:""}
+        ${readOnly?"":`<button class="soft" data-a="proj">${projector?"Surt del mode projecció":"Mode projecció"}</button>`}
+      </div>
+    </header>
+
+    <section class="board" aria-label="Cotitzacions">
+      <div class="head"><span>Sessió ${state.session}</span><span>Canvi respecte de la sessió anterior</span></div>
+      <div class="tiles">${CO.map(c=>{ const p=price(c.id), d=(p/prev(c.id)-1)*100;
+        return `<div class="tile"><div class="nm">${c.n}</div><div class="sec">${c.sec}</div><div class="px">${eur(p)}</div>
+          <div class="ch ${state.session===0||Math.abs(d)<0.05?"z":d>0?"u":"d"}">${state.session===0?"Preu inicial":(d>0?"▲ +":"▼ ")+d.toFixed(1).replace(".",",")+" %"}</div>
+          <div class="risk" aria-label="Risc ${c.r} de 5">${[1,2,3,4,5].map(k=>`<i class="${k<=c.r?"on":""}"></i>`).join("")}</div></div>`; }).join("")}</div>
+    </section>
+
+    ${pend?`<section class="news" aria-live="polite"><div class="when">Notícia de la sessió ${state.session+1}</div><h2>${esc(pend.t)}</h2><p>${esc(pend.d)}</p>
+      <p class="q">Quines empreses creieu que pujaran i quines baixaran? Feu les vostres operacions abans que es mogui el mercat.</p></section>`
+     : last?`<section class="news" style="border-color:var(--line)"><div class="when">Última notícia (sessió ${state.session})</div><h2>${esc(last.t)}</h2><p>${esc(last.d)}</p></section>`:""}
+
+    <div class="tools edit" style="margin-top:1rem">
+      <button class="amber" data-a="news" ${pend?"disabled":""}>Llegeix la notícia de la sessió</button>
+      <button data-a="move" ${pend?"":"disabled"}>Mou el mercat</button>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Classificació</h2>
+        <p class="note">Valor total = diners + accions al preu d'avui. Tothom va començar amb ${eur(START_CASH)}.</p>
+        <div class="scroll"><table>
+          <thead><tr><th></th><th>Inversor/a</th><th class="num">Valor</th><th class="num">Rendibilitat</th><th class="num">Empreses</th></tr></thead>
+          <tbody>${ranking.map((s,i)=>{ const w=worth(s), r=(w/START_CASH-1)*100;
+            return `<tr><td class="pos">${i+1}</td><td>${esc(s.name)}</td><td class="num">${eur(w)}</td><td class="num ${r>0.004?"u":r<-0.004?"d":""}">${r>=0?"+":""}${r.toFixed(1).replace(".",",")} %</td><td class="num">${nCos(s)}</td></tr>`; }).join("")}</tbody>
+        </table></div>
+      </section>
+      <section class="card">
+        <h2>Evolució dels preus</h2>
+        <p class="note">Totes les empreses comencen a 100 perquè es puguin comparar. Com més fa ziga-zaga una línia, més risc té.</p>
+        ${chart()}
+      </section>
+    </div>
+
+    <div class="grid edit">
+      <section class="card">
+        <h2>Apunta una operació</h2>
+        <p class="note">Cada compra o venda costa ${eur(FEE)} de comissió.</p>
+        <div class="form">
+          <label>Inversor/a<select id="fS">${state.students.map(s=>`<option value="${s.id}" ${s.id===form.s?"selected":""}>${esc(s.name)}</option>`).join("")}</select></label>
+          <label>Empresa<select id="fC">${CO.map(c=>`<option value="${c.id}" ${c.id===form.c?"selected":""}>${c.n}</option>`).join("")}</select></label>
+          <label>Accions<input id="fQ" type="number" min="1" value="${fq}"></label>
+          <button class="buy" data-a="buy">Compra</button>
+          <button class="sell" data-a="sell">Ven</button>
+        </div>
+        <div class="preview">${fq} × ${eur(fp)} = ${eur(fq*fp)} · ${esc(fs.name)} té ${eur(fs.cash)} i ${fs.h[form.c]||0} accions de ${co(form.c).n}</div>
+        <h3 style="font-size:1.25rem;margin-top:1rem">Cartera de ${esc(fs.name)}</h3>
+        <div class="scroll"><table><thead><tr><th>Empresa</th><th class="num">Accions</th><th class="num">Valor</th></tr></thead><tbody>
+          ${CO.filter(c=>(fs.h[c.id]||0)>0).map(c=>`<tr><td>${c.n}</td><td class="num">${fs.h[c.id]}</td><td class="num">${eur(fs.h[c.id]*price(c.id))}</td></tr>`).join("")||`<tr><td colspan="3" class="mini">Encara no té accions.</td></tr>`}
+          <tr><td>Diners</td><td></td><td class="num">${eur(fs.cash)}</td></tr></tbody></table></div>
+      </section>
+      <section class="card">
+        <h2>Operacions</h2>
+        ${state.orders.length?`<ul class="log">${[...state.orders].reverse().map(o=>`<li><span><span class="mini">S${o.ses+1}</span> ${esc(stu(o.st).name)} ${o.side==="buy"?"compra":"ven"} ${o.q} de ${co(o.c).n} a ${eur(o.p)}</span>${o.ses===state.session?`<button class="soft" data-a="undo" data-id="${o.id}">Desfés</button>`:""}</li>`).join("")}</ul>`
+          :`<p class="note">Encara no hi ha operacions. Llegeix la primera notícia i apunta les compres.</p>`}
+        <h2 style="margin-top:1.2rem">Noms</h2>
+        <p class="note">Escriu el nom i surt de la casella per desar-lo.</p>
+        <div class="names">${state.students.map(s=>`<div class="nrow"><input data-a="name" data-id="${s.id}" value="${esc(s.name)}" aria-label="Nom"><button class="soft" data-a="delst" data-id="${s.id}" aria-label="Treu ${esc(s.name)}">Treu</button></div>`).join("")}</div>
+        <button class="soft" data-a="addst" style="margin-top:.7rem">Afegeix un inversor/a</button>
+      </section>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>`;
+}
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-a]"); if(!b||b.tagName==="INPUT") return;
+  const a=b.dataset.a;
+  if(a==="news") revealNews();
+  if(a==="move") moveMarket();
+  if(a==="buy"||a==="sell") order(a);
+  if(a==="undo") undo(+b.dataset.id);
+  if(a==="save") save();
+  if(a==="proj"){ projector=!projector; render(); }
+  if(a==="addst"){
+    change(()=>{ const id=Math.max(0,...state.students.map(s=>s.id))+1; state.students.push({id, name:"Alumne "+id, cash:START_CASH, h:{}}); });
+    toast("Inversor/a afegit amb "+eur(START_CASH));
+  }
+  if(a==="delst"){
+    const id=+b.dataset.id, s=stu(id); if(!s) return;
+    if(state.students.length<=1){ toast("Hi ha d'haver almenys un inversor/a."); return; }
+    if(!confirm("Vols treure "+s.name+"? També s'esborraran la seva cartera i les seves operacions.")) return;
+    if(form.s===id) form.s=null;
+    change(()=>{ state.students=state.students.filter(x=>x.id!==id); state.orders=state.orders.filter(o=>o.st!==id); });
+    toast(s.name+" s'ha tret de la borsa");
+  }
+});
+document.addEventListener("change",e=>{
+  const t=e.target;
+  if(t.id==="fS"){ form.s=+t.value; render(); }
+  if(t.id==="fC"){ form.c=t.value; render(); }
+  if(t.id==="fQ"){ form.q=t.value; render(); }
+  if(t.dataset&&t.dataset.a==="name"){ const v=t.value.trim(); if(v) change(()=>{ stu(+t.dataset.id).name=v; }); }
+});
+render();
+(async()=>{
+  try{ art = window.claude && window.claude.use ? await window.claude.use("artifact") : null; }catch(e){ art=null; }
+  if(art) mode="artifact";
+  else { mode="local"; try{ const s=JSON.parse(localStorage.getItem(STASH)||"null"); if(s&&s.rev>state.rev) state=s; }catch(e){} }
+  render();
+})();
+</script>
+</body>
+</html>

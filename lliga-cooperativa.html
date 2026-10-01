@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lliga de la cooperativa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style id="css">
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#EAF4F1; --card:#FFFFFF; --ink:#0C2A31; --muted:#4F6F74; --line:#C9DEDA;
+  --teal:#0F4C5C; --honey:#F2A541; --honey-soft:#FBE3B8; --coral:#D9512C; --ok:#2E8B57;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#0A1E23; --card:#12303A; --ink:#E6F2EF; --muted:#9BB9BC; --line:#23474F; --teal:#1B6B7E; --honey-soft:#4A3A1C; }
+}
+:root[data-theme="dark"]{ --bg:#0A1E23; --card:#12303A; --ink:#E6F2EF; --muted:#9BB9BC; --line:#23474F; --teal:#1B6B7E; --honey-soft:#4A3A1C; }
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.5 "Atkinson Hyperlegible",system-ui,sans-serif}
+h1,h2{font-family:"Sora",system-ui,sans-serif;margin:0;line-height:1.15}
+.wrap{max-width:1100px;margin:0 auto;padding:1.2rem 1rem 4rem}
+header.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.8rem}
+header.top h1{font-size:clamp(1.6rem,3.6vw,2.3rem);font-weight:800}
+.tools{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+button,select,input{font:inherit;color:inherit}
+button{font-weight:700;border:0;border-radius:10px;padding:.55rem .9rem;cursor:pointer;background:var(--teal);color:#fff}
+button.soft{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+button.honey{background:var(--honey);color:#2b1a00}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--honey);outline-offset:2px}
+.savebar{font-size:.95rem;color:var(--muted)}
+.savebar.dirty{color:var(--coral);font-weight:700}
+
+/* The common pot: the one bold element */
+.pot{margin-top:1.2rem;background:var(--teal);color:#fff;border-radius:24px;padding:1.4rem 1.4rem 1.2rem}
+.pot h2{font-size:1.25rem;font-weight:700}
+.pot .big{font:800 clamp(2.4rem,7vw,3.6rem)/1 "Sora",sans-serif;margin:.4rem 0 .2rem}
+.pot p{margin:0;color:#CFE6E6}
+.hive{display:flex;flex-wrap:wrap;gap:6px 4px;margin:1rem 0 .4rem}
+.hex{width:34px;height:38px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:rgba(255,255,255,.14);position:relative}
+.hex.full{background:var(--honey)}
+.hex.goal::after{content:"";position:absolute;inset:9px 8px;clip-path:inherit;background:#fff}
+.hex.goal.full::after{background:var(--teal)}
+.goals{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;margin-top:.6rem;font-size:.97rem}
+.goals span{color:#CFE6E6}
+.goals span.won{color:var(--honey);font-weight:700}
+
+.grid{display:grid;grid-template-columns:1.1fr 1fr;gap:1.2rem;margin-top:1.2rem}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:1.1rem 1.2rem}
+.card h2{font-size:1.2rem;font-weight:700;margin-bottom:.7rem}
+.note{color:var(--muted);font-size:.95rem;margin:.2rem 0 .8rem}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:360px}
+th,td{padding:.5rem .5rem;border-bottom:1px solid var(--line);text-align:left}
+th{font-size:.9rem;color:var(--muted);font-weight:700}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.pos{font:800 1.1rem "Sora",sans-serif;color:var(--muted);width:2.2rem}
+tr.first td.pos{color:var(--honey)}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:.8rem}
+.chip{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line);border-radius:999px;padding:.4rem .8rem;font-weight:700}
+.chip[aria-pressed="true"]{background:var(--honey);color:#2b1a00;box-shadow:none}
+.presets{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.5rem}
+.preset{background:var(--honey-soft);color:var(--ink);text-align:left;display:flex;justify-content:space-between;gap:.6rem;align-items:center}
+.preset b{font-family:"Sora",sans-serif;white-space:nowrap}
+.custom{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}
+.custom input{border:2px solid var(--line);border-radius:10px;padding:.5rem .6rem;background:var(--bg)}
+.custom input[type=number]{width:6ch}
+.custom input[type=text]{flex:1;min-width:12ch}
+.shop li{display:flex;justify-content:space-between;align-items:center;gap:.8rem;padding:.5rem 0;border-bottom:1px solid var(--line)}
+.shop{list-style:none;margin:0;padding:0}
+.shop .cost{font:700 1rem "Sora",sans-serif;white-space:nowrap}
+.shop select{border:2px solid var(--line);border-radius:10px;padding:.4rem;background:var(--bg);max-width:12ch}
+.log{list-style:none;margin:0;padding:0;max-height:340px;overflow:auto}
+.log li{display:grid;grid-template-columns:3.2rem 1fr auto auto;gap:.6rem;align-items:center;padding:.4rem 0;border-bottom:1px solid var(--line);font-size:.97rem}
+.log .d{color:var(--muted);font-size:.88rem}
+.log .p{font:700 1rem "Sora",sans-serif;text-align:right}
+.log .p.plus{color:var(--ok)} .log .p.minus{color:var(--coral)}
+.log button{padding:.2rem .5rem;font-size:.85rem}
+.names{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.5rem}
+.names input{border:2px solid var(--line);border-radius:10px;padding:.5rem .6rem;background:var(--bg);width:100%;min-width:0}
+.nrow{display:flex;gap:.3rem}
+.nrow button{padding:.4rem .6rem;font-size:.9rem}
+.dates{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-size:.95rem;color:var(--muted)}
+.dates b{color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(1rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.6rem 1rem;border-radius:12px;font-weight:700;display:none;z-index:9}
+.toast.show{display:block}
+.projector .edit{display:none}
+.projector .grid{grid-template-columns:1fr}
+.projector table{font-size:1.25rem}
+@media (max-width:820px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="application/json" id="state">{"rev":0,"nextId":8,"students":[{"id":1,"name":"Alumne 1"},{"id":2,"name":"Alumne 2"},{"id":3,"name":"Alumne 3"},{"id":4,"name":"Alumne 4"},{"id":5,"name":"Alumne 5"},{"id":6,"name":"Alumne 6"},{"id":7,"name":"Alumne 7"}],"log":[]}</script>
+<script id="app">
+const HEAD = '<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<title>Lliga de la cooperativa</title>\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">';
+const PRESETS = [
+  {m:"Fitxa entregada", p:1},
+  {m:"Fitxa excel·lent", p:2},
+  {m:"Fita de fase a temps", p:3},
+  {m:"Rol de la cooperativa complert", p:2},
+  {m:"Ajuda a un company", p:1},
+  {m:"Guanya un joc de classe", p:2}
+];
+const SHOP = [
+  {m:"Seure on vulguis una sessió", c:4},
+  {m:"Triar l'ordre de sortida al pitch", c:6},
+  {m:"24 h més per entregar una fitxa", c:8},
+  {m:"Triar el teu rol en una fase", c:10},
+  {m:"Una pista durant l'examen", c:15}
+];
+const GOALS = [
+  {at:50, m:"Sessió de Qui vol ser ric?"},
+  {at:100, m:"Esmorzar cooperatiu a l'aula"},
+  {at:150, m:"El grup tria l'activitat de l'última sessió del trimestre"}
+];
+const MAXPOT = 150, PER_HEX = 5;
+const FITES = [["Fase 1","13/10"],["Fase 2","10/11"],["Dossier","27/11"],["Pitch","01/12"],["Examen","04/12"]];
+const STASH = "lliga-coop-pending";
+
+let state = JSON.parse(document.getElementById("state").textContent);
+let dirty = false, art = null, mode = "loading", readOnly = false, projector = false;
+let selected = new Set();
+
+// Recover unsaved changes kept before a publish or a reload
+try{
+  const s = JSON.parse(sessionStorage.getItem(STASH) || localStorage.getItem(STASH) || "null");
+  if(s && s.rev > state.rev){ state = s; dirty = true; }
+  else { sessionStorage.removeItem(STASH); }
+}catch(e){}
+
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const name = id => (state.students.find(s=>s.id===id)||{name:"?"}).name;
+function earned(id){ return state.log.filter(l=>l.s===id && l.p>0).reduce((a,l)=>a+l.p,0); }
+function balance(id){ return state.log.filter(l=>l.s===id).reduce((a,l)=>a+l.p,0); }
+function pot(){ return state.log.filter(l=>l.p>0).reduce((a,l)=>a+l.p,0); }
+function today(){ const d=new Date(); return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0"); }
+
+function change(fn){
+  fn(); state.rev++; dirty = true;
+  try{ sessionStorage.setItem(STASH, JSON.stringify(state)); }catch(e){}
+  if(mode==="local"){ try{ localStorage.setItem(STASH, JSON.stringify(state)); }catch(e){} dirty=false; }
+  render();
+}
+function toast(t){ const el=document.getElementById("toast"); if(!el) return; el.textContent=t; el.classList.add("show"); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove("show"),2200); }
+
+function buildPage(){
+  const json = JSON.stringify(state).replace(/</g,"\\u003c");
+  const css = document.getElementById("css").textContent;
+  const app = document.getElementById("app").textContent;
+  const S = "<"+"script", E = "<"+"/script>";
+  return "<!doctype html>\n<html lang=\"ca\">\n<head>\n"+HEAD+"\n<style id=\"css\">"+css+"</style>\n</head>\n<body>\n<div id=\"root\"></div>\n"
+    + S+" type=\"application/json\" id=\"state\">"+json+E+"\n"+S+" id=\"app\">"+app+E+"\n</body>\n</html>\n";
+}
+async function save(){
+  if(!art) return;
+  try{
+    sessionStorage.setItem(STASH, JSON.stringify(state));
+    await art.publish(buildPage());
+  }catch(e){
+    const c = e && e.code;
+    if(c==="conflict") toast("Algú ha desat una altra versió; es torna a carregar.");
+    else if(c==="not_writer"||c==="not_granted"||c==="consent_required"||c==="not_declared"||c==="capability_disabled"){ readOnly=true; render(); toast("Aquesta vista és només de lectura."); }
+    else if(c==="rate_limited") toast("Massa desades seguides. Torna-ho a provar d'aquí a una estona.");
+    else toast("No s'ha pogut desar. Els canvis es mantenen en aquesta pestanya.");
+  }
+}
+
+function render(){
+  document.body.classList.toggle("projector", projector || readOnly);
+  const P = pot(), filled = Math.min(MAXPOT, P);
+  const ranking = [...state.students].sort((a,b)=>earned(b.id)-earned(a.id));
+  const hexes = Array.from({length:MAXPOT/PER_HEX},(_,i)=>{
+    const v=(i+1)*PER_HEX; return `<span class="hex${v<=filled?" full":""}${GOALS.some(g=>g.at===v)?" goal":""}" aria-hidden="true"></span>`;
+  }).join("");
+  const next = GOALS.find(g=>g.at>P);
+  const saveTxt = mode==="local" ? "Es desa en aquest navegador" : mode==="loading" ? "Connectant…" : dirty ? "Hi ha canvis sense desar" : "Tot desat";
+
+  document.getElementById("root").innerHTML = `
+  <div class="wrap">
+    <header class="top">
+      <h1>Lliga de la cooperativa</h1>
+      <div class="tools">
+        <span class="savebar edit${dirty&&mode==="artifact"?" dirty":""}">${saveTxt}</span>
+        ${mode==="artifact" && !readOnly ? `<button class="honey edit" data-a="save" ${dirty?"":"disabled"}>Desa els canvis</button>`:""}
+        ${readOnly?"":`<button class="soft" data-a="proj">${projector?"Surt del mode projecció":"Mode projecció"}</button>`}
+      </div>
+    </header>
+
+    <section class="pot" aria-label="Caixa comuna">
+      <h2>Caixa comuna de la cooperativa</h2>
+      <div class="big">${P} monedes</div>
+      <p>${next ? `Falten ${next.at-P} monedes per a: ${esc(next.m)}` : "Heu desbloquejat totes les recompenses del grup!"}</p>
+      <div class="hive">${hexes}</div>
+      <div class="goals">${GOALS.map(g=>`<span class="${P>=g.at?"won":""}">${g.at}: ${esc(g.m)}</span>`).join("")}</div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Classificació</h2>
+        <p class="note">Monedes guanyades durant el trimestre. El saldo és el que queda per gastar a la botiga.</p>
+        <div class="scroll"><table>
+          <thead><tr><th></th><th>Nom</th><th class="num">Guanyades</th><th class="num">Saldo</th></tr></thead>
+          <tbody>${ranking.map((s,i)=>`<tr class="${i===0&&earned(s.id)>0?"first":""}"><td class="pos">${i+1}</td><td>${esc(s.name)}</td><td class="num">${earned(s.id)}</td><td class="num">${balance(s.id)}</td></tr>`).join("")}</tbody>
+        </table></div>
+        <div class="dates" style="margin-top:1rem">${FITES.map(f=>`<span>${f[0]}: <b>${f[1]}</b></span>`).join("")}</div>
+      </section>
+
+      <section class="card edit">
+        <h2>Dona monedes</h2>
+        <p class="note">Tria un o més alumnes i després el motiu.</p>
+        <div class="chips">
+          ${state.students.map(s=>`<button class="chip" data-a="sel" data-id="${s.id}" aria-pressed="${selected.has(s.id)}">${esc(s.name)}</button>`).join("")}
+          <button class="chip" data-a="all" aria-pressed="false">${selected.size===state.students.length?"Cap":"Tots"}</button>
+        </div>
+        <div class="presets">${PRESETS.map((p,i)=>`<button class="preset" data-a="give" data-i="${i}" ${selected.size?"":"disabled"}><span>${esc(p.m)}</span><b>+${p.p}</b></button>`).join("")}</div>
+        <div class="custom">
+          <input type="number" id="cp" min="1" max="20" value="1" aria-label="Monedes">
+          <input type="text" id="cm" placeholder="Un altre motiu" aria-label="Motiu">
+          <button data-a="custom" ${selected.size?"":"disabled"}>Afegeix</button>
+        </div>
+      </section>
+
+      <section class="card edit">
+        <h2>Botiga</h2>
+        <p class="note">Gastar monedes no resta res a la caixa comuna.</p>
+        <ul class="shop">${SHOP.map((it,i)=>`<li><span>${esc(it.m)}</span><span class="tools"><span class="cost">${it.c}</span>
+          <select id="sh${i}" aria-label="Qui compra">${state.students.map(s=>`<option value="${s.id}" ${balance(s.id)<it.c?"disabled":""}>${esc(s.name)} (${balance(s.id)})</option>`).join("")}</select>
+          <button class="soft" data-a="buy" data-i="${i}">Compra</button></span></li>`).join("")}</ul>
+      </section>
+
+      <section class="card edit">
+        <h2>Historial</h2>
+        ${state.log.length ? `<ul class="log">${[...state.log].reverse().map(l=>`<li><span class="d">${l.d}</span><span>${esc(name(l.s))}: ${esc(l.m)}</span><span class="p ${l.p>0?"plus":"minus"}">${l.p>0?"+":""}${l.p}</span><button class="soft" data-a="undo" data-id="${l.id}" aria-label="Esborra aquest moviment">Esborra</button></li>`).join("")}</ul>`
+          : `<p class="note">Encara no hi ha cap moviment. Tria alumnes a «Dona monedes» per començar.</p>`}
+      </section>
+
+      <section class="card edit">
+        <h2>Noms de l'alumnat</h2>
+        <p class="note">Escriu el nom i surt de la casella per desar-lo.</p>
+        <div class="names">${state.students.map(s=>`<div class="nrow"><input data-a="name" data-id="${s.id}" value="${esc(s.name)}" aria-label="Nom"><button class="soft" data-a="delst" data-id="${s.id}" aria-label="Treu ${esc(s.name)}">Treu</button></div>`).join("")}</div>
+        <button class="soft" data-a="addst" style="margin-top:.7rem">Afegeix un alumne</button>
+      </section>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>`;
+}
+
+document.addEventListener("click", e=>{
+  const b = e.target.closest("[data-a]"); if(!b || b.tagName==="INPUT") return;
+  const a = b.dataset.a;
+  if(a==="sel"){ const id=+b.dataset.id; selected.has(id)?selected.delete(id):selected.add(id); render(); }
+  if(a==="all"){ selected = selected.size===state.students.length ? new Set() : new Set(state.students.map(s=>s.id)); render(); }
+  if(a==="give"){ const p=PRESETS[+b.dataset.i]; add(p.p,p.m); }
+  if(a==="custom"){
+    const p=parseInt(document.getElementById("cp").value,10), m=document.getElementById("cm").value.trim();
+    if(!p||p<1){ toast("Escriu un nombre de monedes més gran que 0."); return; }
+    if(!m){ toast("Escriu el motiu."); return; }
+    add(p,m);
+  }
+  if(a==="buy"){
+    const it=SHOP[+b.dataset.i], sid=+document.getElementById("sh"+b.dataset.i).value;
+    if(balance(sid)<it.c){ toast(name(sid)+" no té prou monedes."); return; }
+    change(()=>state.log.push({id:state.nextId++, s:sid, p:-it.c, m:it.m, d:today()}));
+    toast(name(sid)+" ha comprat: "+it.m);
+  }
+  if(a==="undo"){ const id=+b.dataset.id; change(()=>{ state.log = state.log.filter(l=>l.id!==id); }); }
+  if(a==="save"){ save(); }
+  if(a==="proj"){ projector=!projector; render(); }
+  if(a==="addst"){
+    change(()=>{ const id=Math.max(0,...state.students.map(s=>s.id))+1; state.students.push({id, name:"Alumne "+id}); });
+    toast("Alumne afegit");
+  }
+  if(a==="delst"){
+    const id=+b.dataset.id, s=state.students.find(x=>x.id===id); if(!s) return;
+    if(state.students.length<=1){ toast("Hi ha d'haver almenys un alumne."); return; }
+    if(!confirm("Vols treure "+s.name+"? També s'esborraran totes les seves monedes i moviments.")) return;
+    selected.delete(id);
+    change(()=>{ state.students=state.students.filter(x=>x.id!==id); state.log=state.log.filter(l=>l.s!==id); });
+    toast(s.name+" s'ha tret de la lliga");
+  }
+});
+document.addEventListener("change", e=>{
+  if(e.target.dataset && e.target.dataset.a==="name"){
+    const id=+e.target.dataset.id, v=e.target.value.trim(); if(!v) return;
+    change(()=>{ state.students.find(s=>s.id===id).name=v; });
+  }
+});
+function add(p,m){
+  const n=selected.size;
+  change(()=>{ selected.forEach(sid=>state.log.push({id:state.nextId++, s:sid, p, m, d:today()})); });
+  toast(`+${p} per a ${n} ${n===1?"alumne":"alumnes"}`);
+  selected=new Set(); render();
+}
+
+render();
+(async()=>{
+  try{ art = window.claude && window.claude.use ? await window.claude.use("artifact") : null; }catch(e){ art=null; }
+  if(art){ mode="artifact"; }
+  else {
+    mode="local";
+    try{ const s=JSON.parse(localStorage.getItem(STASH)||"null"); if(s && s.rev>state.rev){ state=s; } }catch(e){}
+  }
+  render();
+})();
+</script>
+</body>
+</html>

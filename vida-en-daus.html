@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La vida en daus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#DCE8F7; --card:#FFFFFF; --ink:#1D2B53; --muted:#4F5F86; --line:#BCCDE6;
+  --navy:#1D2B53; --sun:#F4C430; --neg:#D9482B; --pos:#22895A; --soft:#EEF4FC;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#0F1730; --card:#18234A; --ink:#E7EDFA; --muted:#A6B4D8; --line:#2B3A6A; --navy:#0A1128; --soft:#1F2C58; --neg:#F06A4D; --pos:#46C08A; }
+}
+:root[data-theme="dark"]{ --bg:#0F1730; --card:#18234A; --ink:#E7EDFA; --muted:#A6B4D8; --line:#2B3A6A; --navy:#0A1128; --soft:#1F2C58; --neg:#F06A4D; --pos:#46C08A; }
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.5 "Atkinson Hyperlegible",system-ui,sans-serif}
+h1,h2,h3{font-family:"Fredoka",system-ui,sans-serif;font-weight:700;margin:0;line-height:1.15}
+.wrap{max-width:980px;margin:0 auto;padding:1.2rem 1rem 4rem}
+button{font:700 1rem "Atkinson Hyperlegible",sans-serif;border:0;border-radius:12px;padding:.65rem 1.1rem;cursor:pointer;background:var(--navy);color:#fff}
+button.sun{background:var(--sun);color:#2A2100}
+button.soft{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem}
+.top h1{font-size:clamp(1.8rem,4.4vw,2.6rem)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:1.2rem 1.3rem;margin-top:1.1rem}
+.card h2{font-size:1.4rem;margin-bottom:.3rem}
+.note{color:var(--muted);margin:.2rem 0 .9rem;max-width:68ch}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.6rem}
+.opt{text-align:left;background:var(--soft);color:var(--ink);box-shadow:inset 0 0 0 2px transparent;display:flex;flex-direction:column;gap:.15rem;font-weight:400}
+.opt b{font-weight:700}
+.opt .price{font:600 1.05rem "Fredoka",sans-serif}
+.opt[aria-pressed="true"]{box-shadow:inset 0 0 0 3px var(--navy);background:var(--card)}
+.opt .eff{font-size:.88rem;color:var(--muted)}
+
+/* The die: the memorable element */
+.dierow{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.die{width:96px;height:96px;border-radius:20px;background:var(--sun);display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:14px;box-shadow:0 6px 0 #C99B12;flex:none}
+.die i{width:16px;height:16px;border-radius:50%;background:#2A2100;place-self:center;visibility:hidden}
+.die.rolling{animation:wob .12s linear infinite}
+@keyframes wob{0%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}100%{transform:rotate(-8deg)}}
+@media (prefers-reduced-motion:reduce){.die.rolling{animation:none}}
+
+.payslip{border:2px dashed var(--line);border-radius:14px;padding:1rem;max-width:420px}
+.payslip div{display:flex;justify-content:space-between;padding:.2rem 0}
+.payslip .tot{border-top:2px solid var(--ink);margin-top:.4rem;padding-top:.5rem;font:700 1.15rem "Fredoka",sans-serif}
+.neg{color:var(--neg)} .pos{color:var(--pos)}
+
+.status{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.8rem;margin-top:1rem}
+.stat{background:var(--navy);color:#fff;border-radius:16px;padding:.8rem 1rem}
+.stat span{display:block;color:#B9C6EA;font-size:.92rem}
+.stat b{font:700 1.7rem "Fredoka",sans-serif}
+.meter{height:10px;border-radius:5px;background:rgba(255,255,255,.2);margin-top:.4rem;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--sun)}
+.months{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:1rem}
+.mo{height:30px;border-radius:6px;background:var(--soft);font-size:.72rem;display:grid;place-items:center;color:var(--muted);font-weight:700}
+.mo.now{box-shadow:inset 0 0 0 2px var(--navy);color:var(--ink)}
+.mo.up{background:var(--pos);color:#fff}.mo.down{background:var(--neg);color:#fff}
+.event{margin-top:1rem;background:var(--soft);border-radius:16px;padding:1rem 1.1rem;max-width:60ch}
+.event h3{font-size:1.2rem}
+.event .amt{font:700 1.3rem "Fredoka",sans-serif;margin-top:.3rem}
+.choices{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.7rem}
+.sum{max-width:460px}
+.sum div{display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--line)}
+.sum .tot{font:700 1.15rem "Fredoka",sans-serif;border-bottom:0}
+.actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{padding:.4rem .5rem;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+th{font-size:.88rem;color:var(--muted)}
+svg{display:block;width:100%;height:auto}
+svg text{fill:var(--muted);font:12px "Atkinson Hyperlegible",sans-serif}
+.code{font:700 1.05rem "Atkinson Hyperlegible",sans-serif;background:var(--soft);border-radius:12px;padding:.8rem 1rem;user-select:all}
+ol li{margin-bottom:.45rem}
+@media (max-width:600px){.months{grid-template-columns:repeat(6,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>La vida en daus</h1>
+    <button class="soft" id="restart">Comença de nou</button>
+  </header>
+  <div id="app"></div>
+</div>
+
+<script>
+const JOBS=[
+  {n:"Dependent/a de botiga", b:1380},
+  {n:"Cambrer/a", b:1450},
+  {n:"Auxiliar administratiu/va", b:1550},
+  {n:"Electricista", b:1750},
+  {n:"Tècnic/a informàtic/a", b:1950},
+  {n:"Infermer/a", b:2250}
+];
+const HOUSE=[
+  {id:"hab", n:"Habitació en un pis compartit", p:400, s:40, e:"Barat, però comparteixes cuina i bany"},
+  {id:"est", n:"Estudi petit", p:650, s:80, e:"Tot per a tu, en poc espai"},
+  {id:"pis", n:"Pis d'una habitació", p:800, s:100, e:"Còmode, però car"}
+];
+const TRANS=[
+  {id:"bici", n:"A peu o en bici", p:10, e:"Gairebé gratis"},
+  {id:"bus", n:"Transport públic", p:25, e:"Abonament mensual"},
+  {id:"cotxe", n:"Cotxe de segona mà", p:230, e:"Quota, assegurança i gasolina"}
+];
+const PHONE=[
+  {id:"b", n:"Tarifa bàsica", p:12, e:"Pocs gigues"},
+  {id:"g", n:"Tarifa amb molts gigues", p:30, e:"Sense límits"}
+];
+const FOOD=[
+  {n:"Cuino a casa", p:220, ben:-1, e:"−1 benestar"},
+  {n:"Normal", p:300, ben:0, e:"Benestar igual"},
+  {n:"Menjo molt fora", p:450, ben:1, e:"+1 benestar"}
+];
+const FUN=[
+  {n:"Gens d'oci", p:0, ben:-1, e:"−1 benestar"},
+  {n:"Poc", p:60, ben:0, e:"Benestar igual"},
+  {n:"Força", p:150, ben:1, e:"+1 benestar"},
+  {n:"Molt", p:250, ben:2, e:"+2 benestar"}
+];
+const VARIS=50, START=300, MONTHS=["Gen","Feb","Mar","Abr","Mai","Jun","Jul","Ago","Set","Oct","Nov","Des"];
+// Imprevistos per cara del dau
+const EVENTS={
+  1:[ s=>s.trans==="cotxe"?{t:"Avaria del cotxe",d:"El taller diu que és l'embragatge.",a:-450}:{t:"Se t'espatlla la bici",d:"Roda i frens nous.",a:-60},
+      ()=>({t:"Se t'espatlla el portàtil",d:"Te'n cal un per treballar i estudiar.",a:-350}),
+      ()=>({t:"Visita al dentista",d:"Un empast que no cobreix la sanitat pública.",a:-180}),
+      s=>s.trans==="cotxe"?{t:"Multa d'aparcament",d:"Zona blava caducada.",a:-200}:{t:"Multa al bus",d:"Havies oblidat validar el bitllet.",a:-100} ],
+  2:[ ()=>({t:"Aniversari d'un amic",d:"Fem un regal entre tots.",a:-40}),
+      ()=>({t:"Pantalla del mòbil trencada",d:"Et cau a terra a la parada.",a:-120}),
+      ()=>({t:"Factura de la llum més alta",d:"Ha fet molt fred aquest mes.",a:-35}),
+      ()=>({t:"Casament d'un cosí",d:"Roba i regal.",a:-150}) ],
+  3:[ ()=>({t:"Mes tranquil",d:"No passa res d'especial.",a:0}) ],
+  4:[ ()=>({t:"Rebaixes!",d:"Unes bambes que t'encanten.",choice:true,a:-90,ben:1}),
+      ()=>({t:"Escapada amb els amics",d:"Un cap de setmana a la Vall d'Aran.",choice:true,a:-200,ben:2}),
+      ()=>({t:"Concert del teu grup preferit",d:"Les entrades s'esgoten avui.",choice:true,a:-70,ben:1}) ],
+  5:[ ()=>({t:"Hores extres",d:"T'han pagat unes hores de més.",a:110}),
+      ()=>({t:"Vens roba de segona mà",d:"Roba que ja no et posaves.",a:45}),
+      ()=>({t:"Hisenda et torna diners",d:"La declaració de la renda surt a retornar.",a:150}) ],
+  6:[ ()=>({t:"Bonificació a la feina",d:"Has fet una molt bona feina aquest trimestre.",a:300}),
+      ()=>({t:"Guanyes un concurs",d:"Un sorteig de la botiga del barri.",a:200}) ]
+};
+const KEY="vida-daus-v1";
+const fresh=()=>({phase:"setup", job:null, house:null, trans:null, phone:null, len:12, m:0, saldo:START, ben:6, hist:[], cur:{food:1, fun:1, roll:null, ev:null, take:null}});
+let S=fresh();
+try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.phase) S=s; }catch(e){}
+const save=()=>{ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} };
+const $=id=>document.getElementById(id);
+const eur=x=>(x<0?"−":"")+Math.abs(Math.round(x)).toLocaleString("ca-ES")+" €";
+const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+const dieHTML=(v,id)=>`<div class="die" id="${id}" role="img" aria-label="Dau: ${v||"sense tirar"}">${Array.from({length:9},(_,i)=>`<i style="visibility:${v&&PIPS[v].includes(i)?"visible":"hidden"}"></i>`).join("")}</div>`;
+function setDie(el,v){ [...el.children].forEach((p,i)=>p.style.visibility=PIPS[v].includes(i)?"visible":"hidden"); el.setAttribute("aria-label","Dau: "+v); }
+function roll(el,done){
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const v=1+Math.floor(Math.random()*6);
+  if(reduce){ setDie(el,v); done(v); return; }
+  el.classList.add("rolling"); let k=0;
+  const t=setInterval(()=>{ setDie(el,1+Math.floor(Math.random()*6)); if(++k>9){ clearInterval(t); el.classList.remove("rolling"); setDie(el,v); setTimeout(()=>done(v),250);} },70);
+}
+
+function payslip(b){
+  const ss=b*0.065, rate=b<1500?0.06:b<1800?0.10:b<2100?0.13:0.15, irpf=b*rate;
+  return {b, ss, irpf, rate, net:b-ss-irpf};
+}
+const job=()=>JOBS[S.job];
+const fixed=()=>{ const h=HOUSE.find(x=>x.id===S.house), t=TRANS.find(x=>x.id===S.trans), p=PHONE.find(x=>x.id===S.phone);
+  return {h, t, p, total:h.p+h.s+t.p+p.p+VARIS}; };
+
+function render(){ save(); ({setup:renderSetup, play:renderPlay, end:renderEnd})[S.phase](); }
+
+function optList(arr,key,cur){ return arr.map(o=>`<button class="opt" data-k="${key}" data-v="${o.id}" aria-pressed="${cur===o.id}"><b>${o.n}</b><span class="price">${eur(o.p+(o.s||0))} al mes</span><span class="eff">${o.e}${o.s?` (inclou ${o.s} € de llum, aigua i internet)`:""}</span></button>`).join(""); }
+
+function renderSetup(){
+  const ps=S.job!==null?payslip(job().b):null;
+  const ready=S.job!==null&&S.house&&S.trans&&S.phone;
+  $("app").innerHTML=`
+  <section class="card">
+    <h2>1. La teva feina</h2>
+    <p class="note">Tira el dau per saber de què treballes. Els sous són bruts mensuals aproximats, en 12 pagues.</p>
+    <div class="dierow">
+      ${dieHTML(S.job!==null?S.job+1:null,"jobDie")}
+      <div>${S.job===null?`<button class="sun" id="jobRoll">Tira el dau</button>`:`
+        <div class="payslip">
+          <div><b>${job().n}</b></div>
+          <div><span>Salari brut</span><span>${eur(ps.b)}</span></div>
+          <div class="neg"><span>Seguretat Social (6,5 %)</span><span>${eur(-ps.ss)}</span></div>
+          <div class="neg"><span>Retenció d'IRPF (${Math.round(ps.rate*100)} %)</span><span>${eur(-ps.irpf)}</span></div>
+          <div class="tot"><span>Salari net</span><span>${eur(ps.net)}</span></div>
+        </div>`}</div>
+    </div>
+  </section>
+  <section class="card"><h2>2. On vius?</h2><div class="opts">${optList(HOUSE,"house",S.house)}</div></section>
+  <section class="card"><h2>3. Com et mous?</h2><div class="opts">${optList(TRANS,"trans",S.trans)}</div></section>
+  <section class="card"><h2>4. Mòbil</h2><div class="opts">${optList(PHONE,"phone",S.phone)}</div></section>
+  <section class="card">
+    <h2>5. Quant temps?</h2>
+    <div class="opts">
+      <button class="opt" data-k="len" data-v="6" aria-pressed="${S.len===6}"><b>6 mesos</b><span class="eff">Partida curta, uns 25 minuts</span></button>
+      <button class="opt" data-k="len" data-v="12" aria-pressed="${S.len===12}"><b>Un any sencer</b><span class="eff">Uns 45 minuts</span></button>
+    </div>
+    ${ready?`<p class="note" style="margin-top:1rem">Despeses fixes cada mes: <b>${eur(fixed().total)}</b> (inclou ${VARIS} € de roba, higiene i altres). Et queden ${eur(payslip(job().b).net-fixed().total)} per al menjar, l'oci i l'estalvi. Comences amb ${eur(START)} al compte.</p>`:""}
+    <div class="actions"><button class="sun" id="go" ${ready?"":"disabled"}>Comença a viure</button></div>
+    <p class="note">Guanya qui acaba amb més diners estalviats sense que el benestar baixi de 5.</p>
+  </section>`;
+  if($("jobRoll")) $("jobRoll").onclick=()=>{ $("jobRoll").disabled=true; roll($("jobDie"),v=>{ S.job=v-1; render(); }); };
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ S[b.dataset.k]=b.dataset.k==="len"?+b.dataset.v:b.dataset.v; render(); });
+  if($("go")) $("go").onclick=()=>{ S.phase="play"; render(); };
+}
+
+function renderPlay(){
+  const c=S.cur, ps=payslip(job().b), f=fixed();
+  const food=FOOD[c.food], fun=FUN[c.fun];
+  const ev=c.ev, evA=ev?(ev.choice?(c.take?ev.a:0):ev.a):0;
+  const left=ps.net-f.total-food.p-fun.p+evA;
+  $("app").innerHTML=`
+  <div class="status">
+    <div class="stat"><span>Compte bancari</span><b class="${S.saldo<0?"neg":""}" style="color:${S.saldo<0?"#FF9B85":"#fff"}">${eur(S.saldo)}</b></div>
+    <div class="stat"><span>Benestar</span><b>${S.ben} / 10</b><div class="meter"><i style="width:${S.ben*10}%"></i></div></div>
+    <div class="stat"><span>${job().n}</span><b>${eur(ps.net)}</b></div>
+  </div>
+  <div class="months">${Array.from({length:S.len},(_,i)=>{ const h=S.hist[i]; return `<div class="mo ${i===S.m?"now":""} ${h?(h.res>=0?"up":"down"):""}">${MONTHS[i]}</div>`; }).join("")}</div>
+
+  <section class="card">
+    <h2>${MONTHS[S.m]}: com gastes aquest mes?</h2>
+    <p class="note">Les despeses fixes (${eur(f.total)}) ja estan comptades.</p>
+    <h3 style="font-size:1.05rem;margin:.4rem 0">Menjar</h3>
+    <div class="opts">${FOOD.map((o,i)=>`<button class="opt" data-food="${i}" aria-pressed="${c.food===i}" ${c.roll?"disabled":""}><b>${o.n}</b><span class="price">${eur(o.p)}</span><span class="eff">${o.e}</span></button>`).join("")}</div>
+    <h3 style="font-size:1.05rem;margin:1rem 0 .4rem">Oci</h3>
+    <div class="opts">${FUN.map((o,i)=>`<button class="opt" data-fun="${i}" aria-pressed="${c.fun===i}" ${c.roll?"disabled":""}><b>${o.n}</b><span class="price">${eur(o.p)}</span><span class="eff">${o.e}</span></button>`).join("")}</div>
+  </section>
+
+  <section class="card">
+    <h2>L'imprevist del mes</h2>
+    <div class="dierow">
+      ${dieHTML(c.roll,"evDie")}
+      ${c.roll?"":`<button class="sun" id="evRoll">Tira el dau</button>`}
+    </div>
+    ${ev?`<div class="event">
+      <h3>${ev.t}</h3><div>${ev.d}</div>
+      ${ev.choice?`<div class="choices">
+        <button class="${c.take===true?"":"soft"}" data-take="1">Sí: ${eur(ev.a)}, +${ev.ben} benestar</button>
+        <button class="${c.take===false?"":"soft"}" data-take="0">No, m'ho estalvio</button></div>`
+        :`<div class="amt ${ev.a<0?"neg":ev.a>0?"pos":""}">${ev.a?(ev.a>0?"+":"")+eur(ev.a):"0 €"}</div>`}
+    </div>`:""}
+  </section>
+
+  ${ev && (!ev.choice || c.take!==null)?`<section class="card">
+    <h2>Tancament de ${MONTHS[S.m]}</h2>
+    <div class="sum">
+      <div><span>Salari net</span><span class="pos">${eur(ps.net)}</span></div>
+      <div><span>Despeses fixes</span><span class="neg">${eur(-f.total)}</span></div>
+      <div><span>Menjar</span><span class="neg">${eur(-food.p)}</span></div>
+      <div><span>Oci</span><span class="neg">${eur(-fun.p)}</span></div>
+      <div><span>Imprevist</span><span class="${evA<0?"neg":"pos"}">${evA?eur(evA):"0 €"}</span></div>
+      ${S.saldo<0?`<div><span>Interessos del deute de la targeta (2 %)</span><span class="neg">${eur(S.saldo*0.02)}</span></div>`:""}
+      <div class="tot"><span>${left>=0?"Estalvies aquest mes":"Aquest mes perds"}</span><span class="${left>=0?"pos":"neg"}">${eur(left+(S.saldo<0?S.saldo*0.02:0))}</span></div>
+    </div>
+    <div class="actions"><button class="sun" id="close">${S.m+1<S.len?"Passa al mes següent":"Acaba la partida"}</button></div>
+  </section>`:""}`;
+
+  document.querySelectorAll("[data-food]").forEach(b=>b.onclick=()=>{ c.food=+b.dataset.food; render(); });
+  document.querySelectorAll("[data-fun]").forEach(b=>b.onclick=()=>{ c.fun=+b.dataset.fun; render(); });
+  document.querySelectorAll("[data-take]").forEach(b=>b.onclick=()=>{ c.take=b.dataset.take==="1"; render(); });
+  if($("evRoll")) $("evRoll").onclick=()=>{ $("evRoll").disabled=true; document.querySelectorAll("[data-food],[data-fun]").forEach(b=>b.disabled=true);
+    roll($("evDie"),v=>{ const pool=EVENTS[v]; c.roll=v; c.ev=pool[Math.floor(Math.random()*pool.length)](S); c.take=c.ev.choice?null:undefined; render(); }); };
+  if($("close")) $("close").onclick=()=>{
+    const interest=S.saldo<0?S.saldo*0.02:0;
+    const benD=food.ben+fun.ben+(ev.choice&&c.take?ev.ben:0);
+    const res=left+interest;
+    S.saldo=Math.round(S.saldo+res);
+    S.ben=Math.max(0,Math.min(10,S.ben+benD));
+    S.hist.push({food:food.p, fun:fun.p, ev:evA, interest, res:Math.round(res), saldo:S.saldo, ben:S.ben, evt:ev.t});
+    S.m++;
+    S.cur={food:c.food, fun:c.fun, roll:null, ev:null, take:null};
+    if(S.m>=S.len) S.phase="end";
+    render(); scrollTo({top:0, behavior:"smooth"});
+  };
+}
+
+function renderEnd(){
+  const ps=payslip(job().b), f=fixed(), n=S.len, H=S.hist;
+  const tot=k=>H.reduce((a,h)=>a+h[k],0);
+  const income=ps.net*n, housing=(f.h.p+f.h.s)*n;
+  const pct=Math.round(housing/income*100);
+  const win=S.ben>=5;
+  // saldo line chart
+  const W=560,Hh=220,L=56,R=12,T=12,B=28, vals=[START,...H.map(h=>h.saldo)];
+  const mn=Math.min(0,...vals), mx=Math.max(...vals,100);
+  const x=i=>L+i*(W-L-R)/n, y=v=>T+(mx-v)*(Hh-T-B)/(mx-mn||1);
+  let g=`<line x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--line)" stroke-width="2"/><text x="${L-6}" y="${y(0)+4}" text-anchor="end">0 €</text><text x="${L-6}" y="${y(mx)+4}" text-anchor="end">${eur(mx)}</text>`;
+  g+=`<polyline fill="none" stroke="var(--navy)" stroke-width="3" points="${vals.map((v,i)=>x(i)+","+y(v)).join(" ")}"/>`;
+  vals.forEach((v,i)=>{ g+=`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="${v<0?"var(--neg)":"var(--navy)"}"/>`; if(i) g+=`<text x="${x(i)}" y="${Hh-8}" text-anchor="middle">${MONTHS[i-1]}</text>`; });
+  const code=`${job().n} · ${f.h.n} · ${f.t.n} · ${n} mesos · Estalvi ${eur(S.saldo)} · Benestar ${S.ben}/10`;
+  $("app").innerHTML=`
+  <section class="card" style="background:var(--navy);color:#fff;border-color:var(--navy)">
+    <h2 style="font-size:2rem">${win?"Has sobreviscut pel teu compte!":"Has arribat al final, però molt cansat/da"}</h2>
+    <p style="color:#B9C6EA;margin:.4rem 0 0">${win?`Acabes amb ${eur(S.saldo)} al compte i el benestar a ${S.ben}.`:`Tens ${eur(S.saldo)} al compte, però el benestar és ${S.ben}: estalviar a costa de no viure no compta per guanyar.`}</p>
+  </section>
+  <section class="card">
+    <h2>El teu compte, mes a mes</h2>
+    <svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Evolució del compte">${g}</svg>
+  </section>
+  <section class="card">
+    <h2>On han anat els diners</h2>
+    <div class="sum">
+      <div><span>Sou net cobrat</span><span class="pos">${eur(income)}</span></div>
+      <div><span>Habitatge (${pct} % del sou)</span><span class="neg">${eur(-housing)}</span></div>
+      <div><span>Transport i mòbil</span><span class="neg">${eur(-(f.t.p+f.p.p)*n)}</span></div>
+      <div><span>Roba i altres</span><span class="neg">${eur(-VARIS*n)}</span></div>
+      <div><span>Menjar</span><span class="neg">${eur(-tot("food"))}</span></div>
+      <div><span>Oci</span><span class="neg">${eur(-tot("fun"))}</span></div>
+      <div><span>Imprevistos</span><span class="${tot("ev")<0?"neg":"pos"}">${eur(tot("ev"))}</span></div>
+      ${tot("interest")?`<div><span>Interessos de deute</span><span class="neg">${eur(tot("interest"))}</span></div>`:""}
+      <div class="tot"><span>Estalvi final</span><span>${eur(S.saldo)}</span></div>
+    </div>
+    <div class="scroll" style="margin-top:1rem"><table>
+      <thead><tr><th>Mes</th><th>Imprevist</th><th>Resultat</th><th>Compte</th><th>Benestar</th></tr></thead>
+      <tbody>${H.map((h,i)=>`<tr><td>${MONTHS[i]}</td><td>${h.evt}</td><td class="${h.res<0?"neg":"pos"}">${eur(h.res)}</td><td>${eur(h.saldo)}</td><td>${h.ben}</td></tr>`).join("")}</tbody>
+    </table></div>
+  </section>
+  <section class="card">
+    <h2>Copia el teu resultat a Classroom</h2>
+    <div class="code">${code}</div>
+    <h2 style="margin-top:1.2rem">Pensa-hi</h2>
+    <ol>
+      <li>L'habitatge t'ha costat el ${pct} % del sou. Es recomana que no passi del 30–35 %. Has complert la recomanació?</li>
+      <li>Quin imprevist t'ha fet més mal? Tenies prou estalvi per pagar-lo sense endeutar-te?</li>
+      <li>Quina diferència hi ha entre el teu salari brut (${eur(ps.b)}) i el net (${eur(ps.net)})? On van aquests diners?</li>
+      <li>Si tornessis a jugar, què canviaries: l'habitatge, el transport o la manera de gastar cada mes?</li>
+    </ol>
+  </section>`;
+}
+$("restart").onclick=()=>{ if(confirm("Vols començar una vida nova? Es perdrà la partida actual.")){ S=fresh(); render(); scrollTo({top:0}); } };
+render();
+</script>
+</body>
+</html>

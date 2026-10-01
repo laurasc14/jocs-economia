@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Escape room: la caixa de la cooperativa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#E6ECE7; --paper:#F7F9F6; --ink:#17231C; --muted:#4E6157;
+  --steel:#2F4A3C; --steel-2:#3F6150; --amber:#E0A526; --ok:#2E9E5B; --stamp:#B43A2E;
+  --line:#C3CFC7;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101813; --paper:#18231D; --ink:#E7EFE9; --muted:#9FB3A7;
+    --steel:#253B30; --steel-2:#34523F; --line:#2C3D33;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101813; --paper:#18231D; --ink:#E7EFE9; --muted:#9FB3A7;
+  --steel:#253B30; --steel-2:#34523F; --line:#2C3D33;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.08rem/1.55 "Atkinson Hyperlegible",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1;margin:0}
+.wrap{max-width:980px;margin:0 auto;padding:1.5rem 1rem 4rem}
+
+/* The vault door: the one bold element */
+.vault{background:var(--steel);color:#EEF3EF;border-radius:28px;padding:1.6rem;display:grid;grid-template-columns:auto 1fr;gap:1.6rem;align-items:center;box-shadow:inset 0 0 0 6px var(--steel-2)}
+.dial{width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#1b2d23 0 22%,#5d7f6c 23% 26%,#294236 27% 60%,#5d7f6c 61% 63%,#203529 64%);position:relative;transition:transform 1.2s cubic-bezier(.3,1.4,.5,1)}
+.dial::after{content:"";position:absolute;left:50%;top:8px;width:6px;height:22px;margin-left:-3px;background:var(--amber);border-radius:3px}
+.vault h1{font-size:clamp(1.8rem,4.6vw,3rem);font-weight:800}
+.vault p{margin:.5rem 0 0;color:#C9D8CE;max-width:52ch}
+.lamps{display:flex;gap:.6rem;margin-top:1rem}
+.lamp{width:26px;height:26px;border-radius:50%;background:#1a2a21;box-shadow:inset 0 0 0 3px #5d7f6c}
+.lamp.on{background:var(--ok);box-shadow:0 0 14px var(--ok),inset 0 0 0 3px #bfe8cf}
+.bar{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-top:1.2rem}
+.clock{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:2.2rem;font-variant-numeric:tabular-nums;color:var(--amber);min-width:5ch}
+button{font:700 1rem "Atkinson Hyperlegible",sans-serif;border:0;border-radius:12px;padding:.7rem 1.1rem;cursor:pointer;background:var(--amber);color:#231a05}
+button.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
+button:focus-visible,input:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+button:disabled{opacity:.45;cursor:not-allowed}
+
+.intro{margin:1.6rem 0 0;color:var(--muted);max-width:70ch}
+.puzzle{background:var(--paper);border:2px solid var(--line);border-radius:18px;padding:1.3rem 1.3rem 1.4rem;margin-top:1.2rem;position:relative}
+.puzzle.locked{opacity:.5}
+.puzzle.locked .body{display:none}
+.puzzle h2{font-size:1.45rem;font-weight:800;display:flex;gap:.7rem;align-items:baseline}
+.puzzle h2 .n{color:var(--muted);font-weight:500}
+.status{font-size:.95rem;color:var(--muted);margin-top:.2rem}
+.solved .status{color:var(--ok);font-weight:700}
+.body{margin-top:.8rem}
+.body p{max-width:68ch}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;min-width:420px;margin:.6rem 0}
+td,th{border-bottom:1px solid var(--line);padding:.45rem .7rem;text-align:left}
+th{font-weight:700}
+ol.q{padding-left:1.2rem}
+ol.q li{margin-bottom:.8rem}
+.opts{display:block;color:var(--muted)}
+.lock{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:1rem}
+.lock input{font:700 1.3rem "Bricolage Grotesque",sans-serif;letter-spacing:.12em;width:9ch;padding:.5rem .7rem;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink);text-transform:uppercase}
+.msg{font-weight:700;min-height:1.4em}
+.msg.bad{color:var(--stamp)}
+.msg.good{color:var(--ok)}
+.hint{margin-top:.8rem;padding:.8rem 1rem;border-left:4px solid var(--amber);background:var(--bg);border-radius:0 10px 10px 0;display:none}
+.hint.show{display:block}
+.stamp{position:absolute;right:1rem;top:1rem;border:3px solid var(--ok);color:var(--ok);font:800 1rem "Bricolage Grotesque",sans-serif;padding:.2rem .6rem;border-radius:8px;transform:rotate(-8deg);display:none}
+.solved .stamp{display:block}
+
+.win{display:none;margin-top:1.6rem;background:var(--ok);color:#fff;border-radius:22px;padding:1.6rem}
+.win.show{display:block}
+.win h2{font-size:2rem}
+.foot{margin-top:2rem;color:var(--muted);font-size:.92rem}
+@media (max-width:640px){.vault{grid-template-columns:1fr}.dial{width:110px;height:110px}}
+@media (prefers-reduced-motion:reduce){.dial{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="vault" aria-label="Caixa forta">
+    <div class="dial" id="dial" aria-hidden="true"></div>
+    <div>
+      <h1>La caixa de la cooperativa</h1>
+      <p>Els diners de la primera venda són dins la caixa forta i ningú recorda la combinació. Resoleu els cinc candaus abans que s'acabi el temps.</p>
+      <div class="lamps" id="lamps" aria-label="Candaus oberts"></div>
+      <div class="bar">
+        <span class="clock" id="clock" aria-live="off">45:00</span>
+        <button id="startBtn">Comença el compte enrere</button>
+        <button class="ghost" id="resetBtn">Reinicia</button>
+      </div>
+    </div>
+  </section>
+
+  <p class="intro">Cada candau s'obre amb un codi numèric (o de lletres). Escriviu només xifres, sense euros ni comes: 12,50 € s'escriu 1250. Demanar una pista resta 2 minuts al rellotge. Les xifres són d'exemple: una cooperativa que fa bosses de roba pintades.</p>
+
+  <div id="puzzles"></div>
+
+  <section class="win" id="win" aria-live="polite">
+    <h2>Caixa oberta!</h2>
+    <p id="winText"></p>
+  </section>
+
+  <p class="foot">Economia 4t ESO · Corbatera Institut Escola</p>
+</div>
+
+<script>
+const P = [
+ {t:"Fixos o variables?", key:"MTAw",
+  html:`<p>Aquests són els costos d'un mes de la cooperativa:</p>
+  <div class="scroll"><table>
+   <tr><th>Cost</th><th>Import</th></tr>
+   <tr><td>Lloguer de la parada al mercat</td><td>60 € al mes</td></tr>
+   <tr><td>Tela per fer cada bossa</td><td>2 € per bossa</td></tr>
+   <tr><td>Assegurança de la parada</td><td>25 € al mes</td></tr>
+   <tr><td>Pintura tèxtil</td><td>0,50 € per bossa</td></tr>
+   <tr><td>Quota de la botiga web</td><td>15 € al mes</td></tr>
+   <tr><td>Etiqueta amb el logotip</td><td>0,50 € per bossa</td></tr>
+  </table></div>
+  <p>Separeu els costos fixos dels variables. <strong>Codi: el total de costos fixos del mes.</strong></p>`,
+  hint:"Un cost fix no canvia encara que feu més bosses o menys. Pregunteu-vos: si aquest mes no fem cap bossa, l'hem de pagar igualment?"},
+ {t:"Quant costa fabricar?", key:"MjIw",
+  html:`<p>Amb les dades del candau anterior, calculeu el cost variable de <em>una</em> bossa. Aquest mes la cooperativa fa 40 bosses.</p>
+  <p><strong>Codi: el cost total del mes</strong> (costos fixos + costos variables de les 40 bosses).</p>`,
+  hint:"Cost variable unitari = tela + pintura + etiqueta. Cost total = CF + (CVu × quantitat)."},
+ {t:"El punt mort", key:"MjA=",
+  html:`<p>Cada bossa es ven a 8 €. La cooperativa vol saber quantes bosses ha de vendre per no perdre diners, és a dir, quan els ingressos igualen els costos totals.</p>
+  <p><strong>Codi: el nombre de bosses del punt mort.</strong></p>`,
+  hint:"Punt mort = costos fixos ÷ (preu − cost variable unitari). Primer calculeu quant guanyeu amb cada bossa."},
+ {t:"No oblideu l'IVA", key:"OTY4",
+  html:`<p>El preu de 8 € és <em>sense</em> IVA. Una botiga del barri us demana el preu final amb l'IVA general del 21 %.</p>
+  <p><strong>Codi: el preu final d'una bossa amb IVA</strong>, escrit sense coma (per exemple, 3,25 € seria 325).</p>`,
+  hint:"Preu amb IVA = preu × 1,21. Arrodoniu a cèntims."},
+ {t:"Paraules de cooperativa", key:"QkRBQw==",
+  html:`<p>Trieu la resposta correcta de cada pregunta. <strong>Codi: les quatre lletres en ordre</strong> (per exemple, ABCD).</p>
+  <ol class="q">
+   <li>Qui pren les decisions importants en una cooperativa?
+     <span class="opts">A) El soci que ha posat més diners · B) Tots els socis, un soci un vot · C) El director · D) El banc</span></li>
+   <li>Dediqueu el dissabte a vendre al mercat en lloc d'anar a un partit. Quin és el cost d'oportunitat?
+     <span class="opts">A) Els diners de la tela · B) El preu de la bossa · C) L'IVA · D) El partit al qual renuncieu</span></li>
+   <li>Què vol dir estar al punt mort?
+     <span class="opts">A) Ingressos iguals als costos totals · B) No vendre res · C) Tenir el màxim benefici · D) Haver de tancar</span></li>
+   <li>Qui paga finalment l'IVA d'una bossa?
+     <span class="opts">A) La cooperativa · B) L'Ajuntament · C) El consumidor final · D) El proveïdor de tela</span></li>
+  </ol>`,
+  hint:"Una pregunta regalada: la resposta de la número 3 és la A."}
+];
+
+const TOTAL = 45*60, PEN = 120, SK = "escape-coop-v1";
+let st = {solved:[], hints:[], left:TOTAL, running:false, end:null};
+try{ const s = JSON.parse(localStorage.getItem(SK)); if(s && Array.isArray(s.solved)) st = s; }catch(e){}
+function save(){ try{ localStorage.setItem(SK, JSON.stringify(st)); }catch(e){} }
+
+const box = document.getElementById("puzzles");
+const lamps = document.getElementById("lamps");
+P.forEach((p,i)=>{
+  const l = document.createElement("span"); l.className="lamp"; lamps.appendChild(l);
+  const s = document.createElement("section");
+  s.className="puzzle"; s.id="p"+i;
+  s.innerHTML = `<span class="stamp">Obert</span>
+   <h2><span class="n">Candau ${i+1}</span> ${p.t}</h2>
+   <div class="status"></div>
+   <div class="body">${p.html}
+     <div class="lock">
+       <label class="sr" for="in${i}" style="position:absolute;left:-9999px">Codi del candau ${i+1}</label>
+       <input id="in${i}" autocomplete="off" inputmode="${i===4?'text':'numeric'}" placeholder="codi">
+       <button data-i="${i}" class="try">Prova el codi</button>
+       <button data-i="${i}" class="ghost hintb">Pista (−2 min)</button>
+       <span class="msg" id="m${i}" aria-live="polite"></span>
+     </div>
+     <div class="hint" id="h${i}">${p.hint}</div>
+   </div>`;
+  box.appendChild(s);
+});
+
+function norm(v){ return v.toUpperCase().replace(/[^0-9A-Z]/g,""); }
+function fmt(s){ s=Math.max(0,s); return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0"); }
+
+function render(){
+  const next = st.solved.length;
+  P.forEach((p,i)=>{
+    const s = document.getElementById("p"+i), done = st.solved.includes(i);
+    s.classList.toggle("solved", done);
+    s.classList.toggle("locked", !done && i>next);
+    s.querySelector(".status").textContent = done ? "Candau obert" : (i>next ? "Obriu primer el candau anterior" : "Tancat");
+    s.querySelectorAll("input,button").forEach(el=>el.disabled = done || i>next);
+    document.getElementById("h"+i).classList.toggle("show", st.hints.includes(i));
+    lamps.children[i].classList.toggle("on", done);
+  });
+  document.getElementById("dial").style.transform = `rotate(${next*72}deg)`;
+  document.getElementById("clock").textContent = fmt(st.left);
+  const btn = document.getElementById("startBtn");
+  btn.textContent = st.running ? "Pausa" : (st.left<TOTAL ? "Continua" : "Comença el compte enrere");
+  const won = next===P.length;
+  document.getElementById("win").classList.toggle("show", won);
+  if(won){
+    const used = TOTAL - st.left;
+    document.getElementById("winText").textContent =
+      `Heu obert la caixa amb ${fmt(st.left)} de marge (temps utilitzat: ${fmt(used)}, pistes demanades: ${st.hints.length}).`;
+  }
+}
+
+let tick=null;
+function run(){
+  clearInterval(tick);
+  if(!st.running) return;
+  tick = setInterval(()=>{
+    st.left = Math.round((st.end - Date.now())/1000);
+    if(st.left<=0){ st.left=0; st.running=false; clearInterval(tick);
+      document.getElementById("clock").textContent="00:00"; alert("S'ha acabat el temps! Podeu continuar per acabar els càlculs."); }
+    save(); document.getElementById("clock").textContent = fmt(st.left);
+  },500);
+}
+document.getElementById("startBtn").onclick=()=>{
+  st.running = !st.running;
+  if(st.running) st.end = Date.now()+st.left*1000;
+  save(); render(); run();
+};
+document.getElementById("resetBtn").onclick=()=>{
+  if(!confirm("Segur que voleu reiniciar la partida?")) return;
+  st={solved:[],hints:[],left:TOTAL,running:false,end:null}; save(); clearInterval(tick);
+  P.forEach((_,i)=>{document.getElementById("in"+i).value="";document.getElementById("m"+i).textContent="";});
+  render();
+};
+box.addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  const i=+b.dataset.i;
+  if(b.classList.contains("try")) check(i);
+  if(b.classList.contains("hintb") && !st.hints.includes(i)){
+    st.hints.push(i); st.left=Math.max(0,st.left-PEN); if(st.running) st.end-=PEN*1000;
+    save(); render();
+  }
+});
+box.addEventListener("keydown",e=>{ if(e.key==="Enter" && e.target.tagName==="INPUT") check(+e.target.id.slice(2)); });
+function check(i){
+  const v = norm(document.getElementById("in"+i).value), m=document.getElementById("m"+i);
+  if(!v){ m.className="msg bad"; m.textContent="Escriviu un codi."; return; }
+  if(btoa(v)===P[i].key){
+    st.solved.push(i); m.className="msg good"; m.textContent="Correcte!";
+    if(st.solved.length===P.length){ st.running=false; clearInterval(tick); }
+    save(); render();
+    const n=document.getElementById("p"+(i+1)); if(n) n.scrollIntoView({behavior:"smooth",block:"start"});
+  } else { m.className="msg bad"; m.textContent="El candau no s'obre. Reviseu el càlcul."; }
+}
+render(); run();
+</script>
+</body>
+</html>
