@@ -20,7 +20,8 @@
     ['N1', 'M3'],     // 6 Què, com i per a qui
     ['N1', 'M4'],     // 7 Factors de producció
     ['NOU', 'PLU'],   // 8 Economies plurals, drets i deures
-    ['N1', 'M6']      // 9 Caça l'error
+    ['NOU', 'DAD'],   // 9 Dades amb font (Fita 1, criteri 3.1)
+    ['N1', 'M6']      // 10 Caça l'error
   ]);
 
   nivell('N2', 2, 'El mercat', 'Fase 2 · U2 · Productivitat, preus i mercat', 'Fita 2 · 10/11', 'estudi.html#u2', [

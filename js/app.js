@@ -10,6 +10,9 @@
     { id: 'N3', num: 3, titol: 'El pla', tema: 'Fase 3 · U3', fita: 'Dossier 27/11 · Pitch 01/12', aval: 1 },
     { id: 'N4', num: 4, titol: 'Quant costa viure pel teu compte?', tema: 'Projecte del 2n trimestre', fita: 'A partir del 15/12', aval: 2 }
   ];
+  // 2a avaluació amagada fins que comenci (posa-ho a true el 15/12)
+  var MOSTRA_AVAL2 = false;
+  PLA = PLA.filter(function (p) { return MOSTRA_AVAL2 || p.aval === 1; });
   var AVALS = {
     1: ['1a avaluació', 'SA «Res no es llença. De l\'illa de les flors a la nostra cooperativa» · Prova competencial: 04/12'],
     2: ['2a avaluació', 'Projecte «Quant costa viure pel teu compte?»']
@@ -28,6 +31,7 @@
     ['qui-vol-ser-ric-economia.html', '💰', 'Qui vol ser ric?', 'Repàs de la prova', 1],
     ['vida-en-daus.html', '🎲', 'La vida en daus', 'Nòmina, pressupost i imprevistos', 2]
   ];
+  CLASSE = CLASSE.filter(function (c) { return MOSTRA_AVAL2 || c[4] === 1; });
   var KEY = 'coop-lab-v2';
   var DOCENT = /[?&]docent\b/.test(location.search);
   var app = document.getElementById('app');

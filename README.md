@@ -9,10 +9,10 @@ Cada alumne crea el seu **carnet de soci/a** amb el nom de la seva cooperativa i
 
 | Nivell | Fase i unitat | Fita | Missions |
 | --- | --- | --- | --- |
-| 1 · El problema | Fase 1 · U1 | Fita 1 · 13/10 | Escassetat o repartiment · Cost d'oportunitat · Costos irrecuperables · Pensar al marge i incentius · Positiu/normatiu i micro/macro · Què, com i per a qui · Factors de producció · Economies plurals, drets i deures · Caça l'error · BOSS |
+| 1 · El problema | Fase 1 · U1 | Fita 1 · 13/10 | Escassetat o repartiment · Cost d'oportunitat · Costos irrecuperables · Pensar al marge i incentius · Positiu/normatiu i micro/macro · Què, com i per a qui · Factors de producció · Economies plurals, drets i deures · Dades amb font · Caça l'error · BOSS |
 | 2 · El mercat | Fase 2 · U2 | Fita 2 · 10/11 | Productivitat i divisió del treball · Recursos i sostenibilitat · Lleis del mercat · Llegeix la taula · Troba l'equilibri · Desplaçaments · Flux circular · De l'enquesta a la demanda · Caça l'error · BOSS |
 | 3 · El pla | Fase 3 · U3 | Dossier 27/11 · Pitch 01/12 | Costos fixos i variables · Benefici · Punt mort · Tres escenaris · Formes jurídiques · Un soci, un vot · Principis cooperatius · Elements de l'empresa i organigrama · RSC i rentat verd · Caça l'error · BOSS |
-| 4 · Quant costa viure pel teu compte? | 2n trimestre | A partir del 15/12 | Properament (nòmina i pressupost, ja preparat a `2n-trimestre/`) |
+| 4 · Quant costa viure pel teu compte? | 2a avaluació | A partir del 15/12 | Amagat (`var MOSTRA_AVAL2 = false;` a `js/app.js`); missions a `2n-trimestre/` |
 
 ## Estudi (teoria)
 
@@ -32,7 +32,8 @@ Cada alumne crea el seu **carnet de soci/a** amb el nom de la seva cooperativa i
 
 ## A classe
 
-Posa't a prova (`repas-teoria.html`), Entrenament lliure (`exercicis-calcul.html`), Calculadora de la cooperativa, Kit del pitch, El mercat del pa, La caixa de la cooperativa (escape room), La vida en daus (2n trimestre) i Qui vol ser ric?
+1a avaluació: Posa't a prova (`repas-teoria.html`, per unitats), Entrenament lliure (`exercicis-calcul.html`), Calculadora de la cooperativa (punt mort i tres escenaris), Kit del pitch (5 minuts i consell assessor), El mercat del pa, La caixa de la cooperativa (escape room) i Qui vol ser ric?
+2a avaluació (amagat de moment): La vida en daus.
 Eines de la professora (només amb `?docent`): `lliga-cooperativa.html` i `borsa-classe.html`.
 
 ## Estructura

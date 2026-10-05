@@ -124,6 +124,33 @@
         return { intro: 'La cooperativa <b>' + CE.esc(ctx.coop) + '</b> busca quina mirada econòmica encaixa amb el projecte «Res no es llença».', steps: steps };
       } },
 
+    { id: 'DAD', titol: 'Dades amb font', sabers: 'Cercar, seleccionar i contrastar informació',
+      recorda: "Una dada ben citada diu <b>què</b> (la xifra), <b>qui</b> la publica (l'organisme) i <b>quan</b> (l'any). Les fonts més fiables són organismes oficials i estudis amb metodologia (Idescat, INE, Agència de Residus de Catalunya, Eurostat). Si dues dades no coincideixen, mira si són d'anys, territoris o definicions diferents. <i>Les xifres d'aquests exercicis són d'exemple.</i>",
+      gen: function (r, ctx) {
+        var tema = CE.pick(r, [['menjar que es llença', 'kg', 'Agència de Residus de Catalunya'], ['roba que es llença', 'kg', 'Agència de Residus de Catalunya'], ['aparells electrònics que es llencen', 'kg', 'Eurostat']]);
+        var fonts = CE.shuffle(r, [[tema[2] + ' (informe del 2024)', true], ['Un vídeo viral sense cap font', false], ['Un blog anònim', false], ['Un comentari en un fòrum', false]].slice(0, 3));
+        var falta = CE.pick(r, [
+          ['«Cada persona llença uns 30 kg de ' + tema[0].split(' ')[0] + ' l\'any.» Font: ' + tema[2] + '.', 1, "Falta l'any"],
+          ['«Cada persona llença uns 30 kg de ' + tema[0].split(' ')[0] + ' l\'any.» (2023)', 0, "Falta l'organisme"]
+        ]);
+        var why = CE.pick(r, [
+          ['Font A (2018): 35 kg per persona. Font B (2024): 28 kg per persona.', 0],
+          ['Font A, Catalunya: 30 kg per persona. Font B, tot Europa: 40 kg per persona.', 1],
+          ['Font A, només les llars: 25 kg per persona. Font B, tota la cadena (camp, botigues i llars): 60 kg per persona.', 2]
+        ]);
+        var kg = CE.int(r, 20, 40), mem = CE.int(r, 3, 5);
+        var tot = CE.int(r, 4, 12) * 50, pct = CE.pick(r, [10, 20, 25, 40, 50]), rec = tot * pct / 100;
+        return {
+          intro: 'La persona del rol de Dades de la cooperativa <b>' + CE.esc(ctx.coop) + '</b> busca dues dades sobre <b>' + tema[0] + '</b> per al llenç ① de la Fita 1.',
+          steps: [
+            { q: 'Quina font és més fiable?', type: 'choice', opts: fonts.map(function (x) { return x[0]; }), ans: fonts.findIndex(function (x) { return x[1]; }), hint: 'Busca un organisme oficial que digui l\'any.', line: 'Font fiable: ' + tema[2] },
+            { q: 'Què li falta a aquesta cita? ' + falta[0], type: 'choice', opts: ["L'organisme", "L'any", 'La xifra'], ans: falta[1], hint: 'Una cita completa té xifra, organisme i any.', line: falta[2] },
+            { q: 'Dues fonts no coincideixen. ' + why[0] + ' Quina és la causa més probable?', type: 'choice', opts: ["Són d'anys diferents", 'Són de territoris diferents', 'Mesuren coses diferents'], ans: why[1], hint: 'Fixa\'t en què canvia entre la font A i la B.', line: ['Anys diferents', 'Territoris diferents', 'Definicions diferents'][why[1]] + ': no vol dir que una s\'equivoqui' },
+            { q: 'Una font diu que cada persona llença ' + kg + ' kg l\'any. Quants kg llençaria una llar de <b>' + mem + '</b> persones?', type: 'num', ans: kg * mem, unit: 'kg', hint: 'Multiplica la dada per persona pel nombre de persones.', line: kg + ' × ' + mem + ' = ' + (kg * mem) + ' kg l\'any' },
+            { q: 'Al barri es llencen ' + tot + ' kg al mes i la cooperativa en recupera ' + rec + ' kg. Quin <b>percentatge</b> recupera?', type: 'num', ans: pct, unit: '%', hint: 'Recuperat ÷ total × 100.', line: rec + ' ÷ ' + tot + ' × 100 = ' + pct + ' %' }
+          ] };
+      } },
+
     /* ---------- U2 ---------- */
     { id: 'PRO', titol: 'La fàbrica de la cooperativa', sabers: 'Productivitat i divisió del treball',
       recorda: "<b>Productivitat = producció ÷ factor utilitzat</b> (per exemple, unitats per persona o per hora). La <b>divisió del treball</b>, que cadascú s'especialitzi en una tasca, sol fer augmentar la productivitat.",
