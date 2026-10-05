@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Teoria d'Economia 4t ESO: economia i escassetat, empresa i cooperativa, costos i punt mort, mercat, nòmina i pressupost.">
+<title>Estudi · Corbatera Coop Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estudi.css">
+</head>
+<body>
+<header class="top">
+  <a class="back" href="index.html">← Tornar al mapa</a>
+  <div class="brand">🐝 Corbatera Coop Lab · Estudi</div>
+  <button class="print" id="print">Imprimeix o desa en PDF</button>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="Índex">
+  <label class="search"><span>Cerca</span><input id="q" type="search" placeholder="punt mort, IVA, cooperativa…"></label>
+  <p class="nores" id="nores" hidden>No hi ha cap apartat amb aquesta paraula.</p>
+  <ol id="toc"></ol>
+</nav>
+
+<main id="doc">
+<section class="intro">
+  <h1>La teoria del trimestre</h1>
+  <p>Aquí tens tot el que cal saber per entendre la cooperativa i preparar l'examen. Cada apartat té la idea clau, un exemple resolt i els errors que més es repeteixen. Quan acabis un apartat, prem <b>Practica-ho</b> i et portarà a la missió que hi correspon.</p>
+</section>
+
+<!-- ================= TEMA 1 ================= -->
+<section class="tema" id="t1">
+<h2><span class="tn">Tema 1</span> Economia i escassetat</h2>
+
+<article class="ap" id="t1-1">
+<h3>1.1 Les necessitats</h3>
+<p>Una <b>necessitat</b> és la sensació de manca d'alguna cosa, juntament amb el desig de satisfer-la. Les classifiquem en dos grups:</p>
+<ul>
+  <li><b>Primàries:</b> són imprescindibles per viure. Per exemple, menjar, beure, dormir sota un sostre o la salut.</li>
+  <li><b>Secundàries:</b> milloren la qualitat de vida, però podem viure sense. Per exemple, un mòbil, un viatge o un concert.</li>
+</ul>
+<p>La frontera depèn de la societat i de l'època. Fa cent anys ningú necessitava internet; avui és gairebé imprescindible per estudiar.</p>
+<div class="tip"><b>Truc:</b> pregunta't «podria viure sense això?». Si la resposta és no, és primària.</div>
+<a class="practice" href="index.html#jugar=N1M1">Practica-ho → Nivell 1 · Fase 1</a>
+</article>
+
+<article class="ap" id="t1-2">
+<h3>1.2 Béns i serveis</h3>
+<p>Les necessitats se satisfan amb <b>béns</b>, que són coses materials que es poden tocar i guardar (un entrepà, una bossa), i amb <b>serveis</b>, que són activitats que una persona fa per una altra (un tall de cabells, una classe).</p>
+<table>
+  <tr><th>Tipus</th><th>Què és</th><th>Exemple</th></tr>
+  <tr><td>Bé lliure</td><td>Tan abundant que no té preu ni propietari</td><td>L'aire, la llum del sol</td></tr>
+  <tr><td>Bé econòmic</td><td>Escàs: cal produir-lo i té preu</td><td>L'aigua embotellada, la tela</td></tr>
+</table>
+<div class="err"><b>Compte!</b> L'aigua és un bé natural, però l'aigua embotellada és un bé econòmic: algú l'ha envasada, transportada i té preu.</div>
+<a class="practice" href="index.html#jugar=N1M1">Practica-ho → Nivell 1 · Fase 1</a>
+</article>
+
+<article class="ap" id="t1-3">
+<h3>1.3 L'escassetat i les tres preguntes</h3>
+<p>Les necessitats humanes són <b>il·limitades</b>: quan en satisfem una, n'apareix una altra. En canvi, els recursos per satisfer-les són <b>limitats</b>. Aquesta és l'<b>escassetat</b>, el problema central de l'economia. Com que no podem tenir-ho tot, hem de <b>triar</b>.</p>
+<p>Tota societat, i també tota empresa, ha de respondre tres preguntes:</p>
+<table>
+  <tr><th>Pregunta</th><th>Què decideix</th><th>A la cooperativa</th></tr>
+  <tr><td><b>Què</b> produir?</td><td>Quins béns i quanta quantitat</td><td>Fem bosses o samarretes? Quantes?</td></tr>
+  <tr><td><b>Com</b> produir?</td><td>Amb quins recursos i tècniques</td><td>A mà o amb màquina? Amb torns?</td></tr>
+  <tr><td><b>Per a qui</b> produir?</td><td>Com es reparteix el que es produeix</td><td>A qui venem? Com repartim els diners?</td></tr>
+</table>
+<p>L'<b>economia</b> és la ciència que estudia com les persones i les societats gestionen els recursos escassos per satisfer les seves necessitats.</p>
+<a class="practice" href="index.html#jugar=N1M3">Practica-ho → Nivell 1 · Fase 3</a>
+</article>
+
+<article class="ap" id="t1-4">
+<h3>1.4 El cost d'oportunitat</h3>
+<p>Cada vegada que triem una opció, renunciem a les altres. El <b>cost d'oportunitat</b> és el valor de la <b>millor alternativa</b> a què renunciem.</p>
+<div class="key">Cost d'oportunitat = valor de la millor alternativa a què renuncies</div>
+<div class="ex"><b>Exemple resolt.</b> Dissabte has d'estar a la parada de la cooperativa sense cobrar. Podries fer de cangur (25 €), donar classes de repàs (40 €) o repartir propaganda (15 €).
+<ol><li>La millor alternativa és donar classes: 40 €.</li><li>Cost d'oportunitat d'anar a la parada = <b>40 €</b>.</li><li>Si triessis donar classes, el cost d'oportunitat seria la millor de les que queden: fer de cangur, <b>25 €</b>.</li></ol></div>
+<div class="err"><b>Compte!</b> No se sumen totes les alternatives (40 + 25 + 15), només es compta la millor. I el cost d'oportunitat no sempre són diners: pot ser temps, descans o oci.</div>
+<a class="practice" href="index.html#jugar=N1M2">Practica-ho → Nivell 1 · Fase 2</a>
+</article>
+
+<article class="ap" id="t1-5">
+<h3>1.5 Els factors de producció</h3>
+<p>Els recursos que es fan servir per produir s'anomenen <b>factors de producció</b>. Cada factor rep un pagament a canvi:</p>
+<table>
+  <tr><th>Factor</th><th>Què és</th><th>A la cooperativa</th><th>Remuneració</th></tr>
+  <tr><td>Terra</td><td>Recursos naturals</td><td>Cotó, aigua, energia</td><td>Renda</td></tr>
+  <tr><td>Treball</td><td>Esforç físic i mental de les persones</td><td>Hores de pintar i de vendre</td><td>Salari</td></tr>
+  <tr><td>Capital</td><td>Béns fets per produir altres béns</td><td>Màquina de cosir, pinzells, portàtil</td><td>Interès</td></tr>
+  <tr><td>Iniciativa empresarial</td><td>Organitzar els altres factors i assumir el risc</td><td>Tenir la idea i tirar-la endavant</td><td>Benefici</td></tr>
+</table>
+<div class="err"><b>Compte!</b> En economia, «capital» no vol dir diners, sinó màquines, eines i edificis que serveixen per produir.</div>
+<a class="practice" href="index.html#jugar=N1M4">Practica-ho → Nivell 1 · Fase 4</a>
+</article>
+
+<article class="ap" id="t1-6">
+<h3>1.6 Els agents econòmics i el flux circular</h3>
+<p>Els <b>agents econòmics</b> són els qui prenen decisions econòmiques:</p>
+<ul>
+  <li><b>Famílies:</b> consumeixen béns i serveis i ofereixen factors de producció, sobretot treball.</li>
+  <li><b>Empreses:</b> produeixen béns i serveis i contracten factors de producció.</li>
+  <li><b>Sector públic:</b> cobra impostos i ofereix serveis públics (escoles, hospitals, carreteres).</li>
+</ul>
+<p>Famílies i empreses es troben en dos mercats. Al <b>mercat de béns i serveis</b>, les famílies compren el que fan les empreses. Al <b>mercat de factors</b>, les empreses contracten el treball de les famílies i els paguen un salari. Els diners van en un sentit i els béns i el treball, en l'altre: és el <b>flux circular de la renda</b>.</p>
+<figure class="fig">
+<svg viewBox="0 0 560 250" role="img" aria-label="Esquema del flux circular de la renda">
+  <rect x="20" y="95" width="130" height="60" rx="14" class="b1"/><text x="85" y="130" text-anchor="middle" class="tb">Famílies</text>
+  <rect x="410" y="95" width="130" height="60" rx="14" class="b1"/><text x="475" y="130" text-anchor="middle" class="tb">Empreses</text>
+  <rect x="190" y="10" width="180" height="50" rx="12" class="b2"/><text x="280" y="32" text-anchor="middle" class="ts">Mercat de béns</text><text x="280" y="50" text-anchor="middle" class="ts">i serveis</text>
+  <rect x="190" y="190" width="180" height="50" rx="12" class="b2"/><text x="280" y="220" text-anchor="middle" class="ts">Mercat de factors</text>
+  <path d="M410 110 C 380 70, 380 45, 372 38" class="ar a1"/><path d="M188 38 C 160 45, 140 70, 120 93" class="ar a1"/>
+  <path d="M100 157 C 120 190, 160 210, 188 214" class="ar a2"/><path d="M372 214 C 400 210, 430 190, 455 157" class="ar a2"/>
+  <text x="130" y="72" class="tl">béns</text><text x="400" y="72" class="tl">béns</text>
+  <text x="105" y="200" class="tl">treball</text><text x="420" y="200" class="tl">treball</text>
+</svg>
+<figcaption>Els béns i el treball circulen en un sentit; els diners (pagaments i salaris) circulen en el sentit contrari.</figcaption>
+</figure>
+<a class="practice" href="index.html#jugar=N1M5">Practica-ho → Nivell 1 · Fase 5</a>
+</article>
+</section>
+
+<!-- ================= TEMA 2 ================= -->
+<section class="tema" id="t2">
+<h2><span class="tn">Tema 2</span> L'empresa i la cooperativa</h2>
+
+<article class="ap" id="t2-1">
+<h3>2.1 Què és una empresa i a quin sector pertany</h3>
+<p>Una <b>empresa</b> és una organització que combina factors de producció per produir béns o serveis i vendre'ls. Les empreses <b>creen riquesa</b>, <b>generen ocupació</b> i <b>paguen impostos</b>.</p>
+<table>
+  <tr><th>Sector</th><th>Activitat</th><th>Exemples</th></tr>
+  <tr><td>Primari</td><td>Obtenir recursos de la natura</td><td>Agricultura, ramaderia, pesca</td></tr>
+  <tr><td>Secundari</td><td>Transformar matèries primeres</td><td>Indústria, construcció</td></tr>
+  <tr><td>Terciari</td><td>Oferir serveis</td><td>Comerç, turisme, transport, educació</td></tr>
+</table>
+<div class="err"><b>Compte!</b> Una botiga de roba no fabrica roba, la ven: és del sector terciari. Una mateixa empresa pot fer activitats de sectors diferents: la cooperativa fabrica (secundari) i ven (terciari).</div>
+<a class="practice" href="index.html#jugar=N2M1">Practica-ho → Nivell 2 · Fase 1</a>
+</article>
+
+<article class="ap" id="t2-2">
+<h3>2.2 Les formes jurídiques</h3>
+<p>Quan es crea una empresa, cal triar-ne la <b>forma jurídica</b>. La diferència més important és la <b>responsabilitat</b>: si l'empresa té deutes i no els pot pagar, fins on responen els propietaris?</p>
+<table>
+  <tr><th>Forma</th><th>Qui la forma</th><th>Responsabilitat</th><th>Com es decideix</th></tr>
+  <tr><td>Empresari/ària individual (autònom/a)</td><td>Una persona</td><td><b>Il·limitada</b>: respon amb els seus béns personals</td><td>Ho decideix ell o ella</td></tr>
+  <tr><td>Societat limitada (SL)</td><td>Un o més socis</td><td><b>Limitada</b> al capital aportat</td><td>Segons el capital de cadascú</td></tr>
+  <tr><td>Societat anònima (SA)</td><td>Accionistes; capital dividit en accions</td><td><b>Limitada</b> al capital aportat</td><td>Segons les accions de cadascú</td></tr>
+  <tr><td>Cooperativa</td><td>Socis que s'uneixen voluntàriament</td><td><b>Limitada</b> al capital aportat</td><td><b>Un soci, un vot</b></td></tr>
+</table>
+<div class="ex"><b>Exemple resolt.</b> Una sòcia d'una SL va aportar 2.000 € i l'empresa tanca amb 6.000 € de deutes. Com a màxim perd els <b>2.000 €</b> que va aportar; el seu pis no està en risc. Si fos autònoma, hauria de respondre dels 6.000 € amb els seus béns.</div>
+<a class="practice" href="index.html#jugar=N2M2">Practica-ho → Nivell 2 · Fase 2</a>
+</article>
+
+<article class="ap" id="t2-3">
+<h3>2.3 La cooperativa i els seus principis</h3>
+<p>Una <b>cooperativa</b> és una empresa formada per persones que s'uneixen voluntàriament per satisfer necessitats comunes, i que la gestionen de manera democràtica. Es regeix per uns <b>principis cooperatius</b>:</p>
+<table>
+  <tr><th>Principi</th><th>Què vol dir</th><th>Exemple a la vostra cooperativa</th></tr>
+  <tr><td>Adhesió voluntària i oberta</td><td>Hi entra qui vol i compleix els requisits, i en pot sortir</td><td>Qualsevol alumne de 4t pot entrar-hi</td></tr>
+  <tr><td>Gestió democràtica</td><td>Un soci, un vot</td><td>El preu es vota a l'assemblea</td></tr>
+  <tr><td>Participació econòmica</td><td>Els socis aporten capital; els excedents es reparteixen segons l'activitat</td><td>Qui treballa més hores rep més</td></tr>
+  <tr><td>Educació i formació</td><td>Formar els socis</td><td>Un taller de disseny per a l'equip</td></tr>
+  <tr><td>Compromís amb la comunitat</td><td>Contribuir al territori</td><td>Comprar la tela a una botiga del poble</td></tr>
+</table>
+<div class="ex"><b>Exemple resolt.</b> Una cooperativa té 7 socis. La Iris hi ha posat 95 € i el Jan, 10 €. Tots dos tenen <b>1 vot</b>. Si 4 voten a favor d'una proposta i 3 en contra, s'aprova (4 &gt; 3). En una SA amb un vot per euro, la Iris tindria 95 vots.</div>
+<a class="practice" href="index.html#jugar=N2M3">Practica-ho → Nivell 2 · Fase 3</a>
+<a class="practice" href="index.html#jugar=N2M5">Practica-ho → Nivell 2 · Fase 5</a>
+</article>
+
+<article class="ap" id="t2-4">
+<h3>2.4 Com es reparteixen els excedents</h3>
+<p>Els diners que sobren després de pagar totes les despeses s'anomenen <b>excedents</b> (en altres empreses en diríem beneficis). A la cooperativa, primer una part va als <b>fons</b> de la cooperativa (per exemple, el fons de reserva) i la resta es reparteix entre els socis <b>segons l'activitat</b> de cadascú, no segons el capital.</p>
+<div class="ex"><b>Exemple resolt.</b> Excedent de 300 €. Els estatuts diuen que el 20 % va al fons de reserva. La Laia ha treballat 18 h, l'Unai 12 h i l'Aina 30 h.
+<ol>
+<li>Fons de reserva: 300 × 20 % = <b>60 €</b>.</li>
+<li>A repartir: 300 − 60 = <b>240 €</b>.</li>
+<li>Hores totals: 18 + 12 + 30 = <b>60 h</b>.</li>
+<li>Per hora: 240 ÷ 60 = <b>4 €/h</b>.</li>
+<li>A la Laia li toquen 18 × 4 = <b>72 €</b>; a l'Unai, 48 €; a l'Aina, 120 €. Comprovació: 72 + 48 + 120 = 240 €.</li>
+</ol></div>
+<div class="tip"><b>Truc:</b> fes sempre la comprovació final. La suma del que rep cada soci ha de donar el total a repartir.</div>
+<a class="practice" href="index.html#jugar=N2M4">Practica-ho → Nivell 2 · Fase 4</a>
+</article>
+</section>
+
+<!-- ================= TEMA 3 ================= -->
+<section class="tema" id="t3">
+<h2><span class="tn">Tema 3</span> Costos, benefici i punt mort</h2>
+
+<article class="ap" id="t3-1">
+<h3>3.1 Costos fixos i variables</h3>
+<p>Els <b>costos</b> són el que l'empresa paga per produir.</p>
+<ul>
+  <li><b>Costos fixos (CF):</b> no canvien encara que produeixis més o menys. Es paguen igualment encara que no facis res. Exemples: lloguer, assegurança, quota de la web.</li>
+  <li><b>Costos variables (CV):</b> augmenten com més produeixes. Exemples: material, etiquetes, embalatge.</li>
+</ul>
+<p>El <b>cost variable unitari (CVu)</b> és el que costa fer <b>una sola unitat</b>.</p>
+<div class="tip"><b>Truc:</b> pregunta't «si aquest mes no fem cap unitat, ho hem de pagar igualment?». Si sí, és fix.</div>
+<a class="practice" href="index.html#jugar=N3M1">Practica-ho → Nivell 3 · Fase 1</a>
+</article>
+
+<article class="ap" id="t3-2">
+<h3>3.2 El cost total</h3>
+<div class="key">Cost total = CF + CVu × quantitat</div>
+<div class="ex"><b>Exemple resolt.</b> Costos fixos: 115 €. Cada bossa necessita 2 € de tela, 0,50 € de pintura i 0,30 € d'etiqueta. Se'n fan 60.
+<ol><li>CVu = 2 + 0,50 + 0,30 = <b>2,80 €</b>.</li><li>Costos variables = 2,80 × 60 = <b>168 €</b>.</li><li>Cost total = 115 + 168 = <b>283 €</b>.</li></ol></div>
+<div class="err"><b>Compte!</b> L'error més freqüent és oblidar els costos fixos i calcular només CVu × quantitat.</div>
+<a class="practice" href="index.html#jugar=N3M2">Practica-ho → Nivell 3 · Fase 2</a>
+</article>
+
+<article class="ap" id="t3-3">
+<h3>3.3 Ingressos i benefici</h3>
+<div class="key">Ingressos = preu × quantitat venuda</div>
+<div class="key">Benefici = ingressos − cost total</div>
+<p>Si el resultat és negatiu, l'empresa té <b>pèrdues</b>.</p>
+<div class="ex"><b>Exemple resolt.</b> Amb les dades de l'apartat anterior, es venen les 60 bosses a 8 €.
+<ol><li>Ingressos = 8 × 60 = <b>480 €</b>.</li><li>Benefici = 480 − 283 = <b>197 €</b>.</li></ol></div>
+<a class="practice" href="index.html#jugar=N3M3">Practica-ho → Nivell 3 · Fase 3</a>
+</article>
+
+<article class="ap" id="t3-4">
+<h3>3.4 El punt mort</h3>
+<p>El <b>punt mort</b> (o llindar de rentabilitat) és la quantitat que cal vendre perquè els ingressos siguin <b>iguals</b> als costos totals: ni es guanya ni es perd. Per sota hi ha pèrdues; per sobre, benefici.</p>
+<p>Per calcular-lo, primer necessites el <b>marge unitari</b>: el que et queda de cada unitat venuda per anar pagant els costos fixos.</p>
+<div class="key">Marge unitari = preu − CVu</div>
+<div class="key">Punt mort = CF ÷ marge unitari</div>
+<div class="ex"><b>Exemple resolt.</b> CF = 115 €, preu = 8 €, CVu = 2,80 €.
+<ol><li>Marge unitari = 8 − 2,80 = <b>5,20 €</b>.</li><li>Punt mort = 115 ÷ 5,20 = 22,1 → cal vendre <b>23 bosses</b> (sempre s'arrodoneix cap amunt, perquè amb 22 encara es perd una mica).</li></ol></div>
+<figure class="fig">
+<svg viewBox="0 0 520 250" role="img" aria-label="Gràfic del punt mort: ingressos i cost total es creuen a 23 unitats">
+  <line x1="50" y1="210" x2="500" y2="210" class="ax"/><line x1="50" y1="20" x2="50" y2="210" class="ax"/>
+  <line x1="50" y1="210" x2="490" y2="40" class="rev"/>
+  <line x1="50" y1="165" x2="490" y2="90" class="cost"/>
+  <line x1="50" y1="165" x2="490" y2="165" class="fix"/>
+  <circle cx="258" cy="130" r="7" class="pm"/>
+  <line x1="258" y1="130" x2="258" y2="210" class="dash"/>
+  <text x="250" y="150" text-anchor="end" class="tl">Punt mort</text>
+  <text x="430" y="36" class="tr">Ingressos</text><text x="490" y="114" text-anchor="end" class="tc">Cost total</text><text x="400" y="182" class="tl">Costos fixos</text>
+  <text x="95" y="182" class="tl">pèrdues</text><text x="440" y="88" class="tl">benefici</text>
+  <text x="500" y="230" text-anchor="end" class="tl">unitats</text><text x="58" y="20" class="tl">€</text>
+</svg>
+<figcaption>On les dues rectes es creuen hi ha el punt mort. A l'esquerra hi ha pèrdues i a la dreta, benefici.</figcaption>
+</figure>
+<div class="err"><b>Compte!</b> El punt mort es calcula <b>dividint</b> els costos fixos entre el marge, no restant-los.</div>
+<a class="practice" href="index.html#jugar=N3M4">Practica-ho → Nivell 3 · Fase 4</a>
+</article>
+
+<article class="ap" id="t3-5">
+<h3>3.5 L'IVA</h3>
+<p>L'<b>IVA</b> (impost sobre el valor afegit) és un <b>impost indirecte</b>: grava el consum i va inclòs en el preu del que comprem. Les empreses el cobren i l'ingressen a Hisenda, però qui el paga de veritat és el <b>consumidor final</b>.</p>
+<table>
+  <tr><th>Tipus</th><th>Percentatge</th><th>Per a què</th></tr>
+  <tr><td>General</td><td>21 %</td><td>La majoria de productes i serveis</td></tr>
+  <tr><td>Reduït</td><td>10 %</td><td>Hostaleria, transport de viatgers, alguns aliments</td></tr>
+  <tr><td>Superreduït</td><td>4 %</td><td>Productes bàsics: pa, llet, ous, fruita, llibres</td></tr>
+</table>
+<div class="key">Quota d'IVA = preu sense IVA × tipus ÷ 100</div>
+<div class="key">Preu final = preu sense IVA × (1 + tipus ÷ 100)</div>
+<div class="ex"><b>Exemple resolt.</b> Una samarreta costa 20 € sense IVA (21 %). Quota = 20 × 0,21 = <b>4,20 €</b>. Preu final = 20 × 1,21 = <b>24,20 €</b>.</div>
+<div class="err"><b>Compte!</b> No es pot sumar el percentatge com si fossin euros: 20 + 21 = 41 € és incorrecte.</div>
+<a class="practice" href="index.html#jugar=N3M5">Practica-ho → Nivell 3 · Fase 5</a>
+</article>
+</section>
+
+<!-- ================= TEMA 4 ================= -->
+<section class="tema" id="t4">
+<h2><span class="tn">Tema 4</span> El mercat</h2>
+
+<article class="ap" id="t4-1">
+<h3>4.1 La demanda i l'oferta</h3>
+<p>Un <b>mercat</b> és qualsevol lloc, físic o virtual, on es troben compradors i venedors d'un bé o servei.</p>
+<ul>
+  <li>La <b>demanda</b> és la quantitat que els consumidors volen i poden comprar a cada preu. <b>Llei de la demanda:</b> si el preu puja, la quantitat demandada baixa.</li>
+  <li>L'<b>oferta</b> és la quantitat que els productors volen vendre a cada preu. <b>Llei de l'oferta:</b> si el preu puja, la quantitat oferta augmenta.</li>
+</ul>
+<div class="tip"><b>Per recordar-ho:</b> la demanda baixa cap a la dreta (com més car, menys en vull) i l'oferta puja cap a la dreta (com més car, més en vull vendre).</div>
+<a class="practice" href="mercat-del-pa.html">Practica-ho → El mercat del pa (a classe)</a>
+</article>
+
+<article class="ap" id="t4-2">
+<h3>4.2 L'equilibri del mercat</h3>
+<p>El <b>preu d'equilibri</b> és el preu en què la quantitat demandada és igual a la quantitat oferta. Gràficament, és on es creuen les dues corbes.</p>
+<figure class="fig">
+<svg viewBox="0 0 520 260" role="img" aria-label="Corbes d'oferta i demanda que es creuen al preu d'equilibri">
+  <line x1="60" y1="225" x2="490" y2="225" class="ax"/><line x1="60" y1="20" x2="60" y2="225" class="ax"/>
+  <line x1="90" y1="40" x2="450" y2="210" class="dem"/><line x1="90" y1="210" x2="450" y2="40" class="ofe"/>
+  <circle cx="270" cy="125" r="7" class="pm"/>
+  <line x1="60" y1="125" x2="270" y2="125" class="dash"/><line x1="270" y1="125" x2="270" y2="225" class="dash"/>
+  <text x="455" y="215" class="td">D</text><text x="455" y="45" class="to">O</text>
+  <text x="66" y="118" class="tl">Preu d'equilibri</text><text x="276" y="245" class="tl">Quantitat d'equilibri</text>
+  <text x="160" y="60" class="tl">Preu alt → excés d'oferta</text><text x="160" y="190" class="tl">Preu baix → excés de demanda</text>
+</svg>
+<figcaption>Al punt on es creuen la demanda (D) i l'oferta (O) hi ha el preu i la quantitat d'equilibri.</figcaption>
+</figure>
+<ul>
+  <li>Si el preu està <b>per sobre</b> de l'equilibri, hi ha <b>excés d'oferta</b>: sobra producte i els venedors abaixen el preu.</li>
+  <li>Si el preu està <b>per sota</b>, hi ha <b>excés de demanda</b>: falta producte, hi ha cues i el preu puja.</li>
+</ul>
+<a class="practice" href="mercat-del-pa.html">Practica-ho → El mercat del pa (a classe)</a>
+</article>
+
+<article class="ap" id="t4-3">
+<h3>4.3 Quan es desplacen les corbes</h3>
+<p>Si canvia el <b>preu</b>, ens movem al llarg de la corba. Si canvia <b>qualsevol altra cosa</b>, tota la corba es desplaça i el preu d'equilibri canvia.</p>
+<table>
+  <tr><th>Què passa</th><th>Corba</th><th>Efecte en el preu</th></tr>
+  <tr><td>Festa major: tothom vol més pa</td><td>Demanda augmenta</td><td>Puja</td></tr>
+  <tr><td>Les famílies tenen menys diners</td><td>Demanda baixa</td><td>Baixa</td></tr>
+  <tr><td>Una moda fa que tothom vulgui bosses de roba</td><td>Demanda augmenta</td><td>Puja</td></tr>
+  <tr><td>La farina s'encareix</td><td>Oferta baixa</td><td>Puja (i es ven menys)</td></tr>
+  <tr><td>Una màquina nova permet produir més barat</td><td>Oferta augmenta</td><td>Baixa</td></tr>
+  <tr><td>Una mala collita d'olives</td><td>Oferta baixa</td><td>Puja</td></tr>
+</table>
+<div class="tip"><b>Truc:</b> si el canvi afecta els <b>compradors</b> (renda, gustos, modes), es mou la demanda. Si afecta els <b>productors</b> (costos, tecnologia, clima), es mou l'oferta.</div>
+<a class="practice" href="repas-teoria.html">Practica-ho → Repassa la teoria · Tema 4</a>
+</article>
+</section>
+
+<!-- ================= TEMA 5 ================= -->
+<section class="tema" id="t5">
+<h2><span class="tn">Tema 5</span> Nòmina i pressupost</h2>
+
+<article class="ap" id="t5-1">
+<h3>5.1 La nòmina</h3>
+<p>La <b>nòmina</b> és el document que l'empresa dona al treballador cada mes amb el detall del que cobra.</p>
+<ul>
+  <li><b>Salari brut:</b> tot el que guanyes abans de descomptes.</li>
+  <li><b>Deduccions:</b> les <b>cotitzacions a la Seguretat Social</b> (per a pensions, atur i sanitat; per al treballador són aproximadament un 6,5 %) i la <b>retenció d'IRPF</b> (un avançament de l'impost sobre la renda, que depèn del sou i de la situació personal).</li>
+  <li><b>Salari net:</b> el que arriba de veritat al compte.</li>
+</ul>
+<div class="key">Salari net = salari brut − deduccions</div>
+<div class="ex"><b>Exemple resolt.</b> Salari brut: 1.500 €. Seguretat Social 6,5 % i IRPF 10 %.
+<ol><li>Seguretat Social = 1.500 × 0,065 = <b>97,50 €</b>.</li><li>IRPF = 1.500 × 0,10 = <b>150 €</b>.</li><li>Salari net = 1.500 − 97,50 − 150 = <b>1.252,50 €</b>.</li></ol></div>
+<div class="err"><b>Compte!</b> L'empresa també cotitza a la Seguretat Social per cada treballador, a part del sou. Per això a l'empresa un treballador li costa més que el salari brut.</div>
+<a class="practice" href="exercicis-calcul.html">Practica-ho → Entrenament lliure (tria «Nòmina»)</a>
+</article>
+
+<article class="ap" id="t5-2">
+<h3>5.2 El pressupost personal</h3>
+<p>Un <b>pressupost</b> és un pla que preveu els ingressos i les despeses d'un període, normalment un mes.</p>
+<ul>
+  <li><b>Despeses fixes:</b> són iguals cada mes (lloguer, quota del mòbil, assegurança).</li>
+  <li><b>Despeses variables:</b> canvien segons el que decideixes (oci, roba, menjar fora).</li>
+</ul>
+<div class="key">Saldo = ingressos − despeses</div>
+<p>Si el saldo és positiu hi ha <b>superàvit</b> i pots estalviar. Si és negatiu hi ha <b>dèficit</b>. Dues pautes útils: la regla <b>50/30/20</b> (50 % per a necessitats, 30 % per a desitjos, 20 % per a estalvi) i que l'habitatge no passi del <b>30–35 %</b> del sou.</p>
+<a class="practice" href="vida-en-daus.html">Practica-ho → La vida en daus</a>
+</article>
+
+<article class="ap" id="t5-3">
+<h3>5.3 Estalvi, imprevistos i deute</h3>
+<p>L'<b>estalvi</b> és la part dels ingressos que no gastes. És important tenir un <b>fons d'emergència</b>: diners reservats per als imprevistos (una avaria, el dentista, una multa).</p>
+<p>Si no tens estalvi, un imprevist t'obliga a <b>endeutar-te</b> (targeta de crèdit, préstec ràpid), i el deute s'ha de tornar amb <b>interessos</b>.</p>
+<div class="ex"><b>Exemple resolt.</b> Un deute de 300 € en una targeta que cobra un 2 % d'interès mensual. Si no en tornes res, al cap d'un mes deus 300 × 1,02 = <b>306 €</b>, i al cap de dos mesos, 306 × 1,02 = <b>312,12 €</b>. Els interessos es paguen sobre els interessos anteriors.</div>
+<a class="practice" href="vida-en-daus.html">Practica-ho → La vida en daus</a>
+</article>
+</section>
+
+<p class="foot">Corbatera Coop Lab · Economia 4t ESO · Corbatera Institut Escola · Curs 2026–2027</p>
+</main>
+</div>
+
+<script>
+(function () {
+  var doc = document.getElementById('doc'), toc = document.getElementById('toc');
+  // Índex generat a partir dels títols
+  var temes = doc.querySelectorAll('.tema');
+  toc.innerHTML = Array.prototype.map.call(temes, function (t) {
+    var aps = t.querySelectorAll('.ap');
+    return '<li data-t="' + t.id + '"><a href="#' + t.id + '">' + t.querySelector('h2').textContent.replace(/^Tema \d/, function (m) { return m + ' ·'; }) + '</a><ol>' +
+      Array.prototype.map.call(aps, function (a) { return '<li data-a="' + a.id + '"><a href="#' + a.id + '">' + a.querySelector('h3').textContent + '</a></li>'; }).join('') + '</ol></li>';
+  }).join('');
+  // Cercador
+  var norm = function (s) { return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); };
+  var q = document.getElementById('q');
+  q.addEventListener('input', function () {
+    var v = norm(q.value.trim()), any = false;
+    var re = v ? new RegExp('(^|[^a-z0-9])' + v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) : null;
+    temes.forEach(function (t) {
+      var vis = 0;
+      t.querySelectorAll('.ap').forEach(function (a) {
+        var hit = !re || re.test(norm(a.textContent));
+        a.hidden = !hit; toc.querySelector('[data-a="' + a.id + '"]').hidden = !hit; if (hit) vis++;
+      });
+      t.hidden = !vis; toc.querySelector('[data-t="' + t.id + '"]').hidden = !vis; if (vis) any = true;
+    });
+    document.getElementById('nores').hidden = any;
+  });
+  document.getElementById('print').onclick = function () { q.value = ''; q.dispatchEvent(new Event('input')); window.print(); };
+})();
+</script>
+</body>
+</html>

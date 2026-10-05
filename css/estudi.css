@@ -1,0 +1,91 @@
+/* Corbatera Coop Lab · estil de l'apartat d'estudi */
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#F2F5F3; --card:#FFFFFF; --ink:#16231D; --muted:#56685E; --line:#D3DED7; --soft:#EEF3F0;
+  --head:#123B2E; --accent:#0F766E; --amber:#F2B233; --bad:#C2410C; --blue:#1D4ED8;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#0D1512; --card:#15201B; --ink:#E5EFEA; --muted:#9DB4A8; --line:#263A31; --soft:#1C2A24; --head:#0A2219; --accent:#3FB8A8; --bad:#F07A45; --blue:#7EA6FF; }
+}
+:root[data-theme="dark"]{ --bg:#0D1512; --card:#15201B; --ink:#E5EFEA; --muted:#9DB4A8; --line:#263A31; --soft:#1C2A24; --head:#0A2219; --accent:#3FB8A8; --bad:#F07A45; --blue:#7EA6FF; }
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.04rem/1.65 "Lexend",system-ui,sans-serif}
+h1,h2,h3{line-height:1.2;margin:0}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;background:var(--head);color:#fff;padding:.65rem 1rem}
+.top .brand{font-weight:800}
+.top .back{color:#fff;text-decoration:none;font-weight:600;padding:.35rem .7rem;border-radius:10px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.3)}
+.print{font:inherit;font-weight:600;border:0;border-radius:10px;padding:.45rem .8rem;background:var(--amber);color:#2b1d00;cursor:pointer}
+
+.layout{max-width:1180px;margin:0 auto;padding:1rem;display:grid;grid-template-columns:270px 1fr;gap:1.4rem;align-items:start}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);max-height:calc(100vh - 90px);overflow:auto;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:.9rem}
+.search{display:flex;flex-direction:column;gap:.3rem;font-weight:600;font-size:.92rem}
+.search input{font:inherit;font-weight:400;border:2px solid var(--line);border-radius:10px;padding:.45rem .6rem;background:var(--soft);color:var(--ink)}
+.nores{color:var(--bad);font-size:.9rem}
+.toc ol{list-style:none;margin:.8rem 0 0;padding:0}
+.toc ol ol{margin:.2rem 0 .6rem;padding-left:.7rem;border-left:2px solid var(--line)}
+.toc li > a{display:block;text-decoration:none;color:var(--ink);font-weight:700;font-size:.95rem;padding:.15rem 0}
+.toc ol ol a{font-weight:400;color:var(--muted);font-size:.9rem}
+.toc a:hover{color:var(--accent)}
+
+main{min-width:0}
+.intro{background:var(--head);color:#fff;border-radius:20px;padding:1.3rem 1.4rem}
+.intro h1{font-size:clamp(1.7rem,4vw,2.4rem)}
+.intro p{color:#C9DDD3;margin:.5rem 0 0;max-width:70ch}
+.tema{margin-top:1.6rem}
+.tema > h2{font-size:1.6rem;display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;margin-bottom:.6rem}
+.tn{background:var(--accent);color:#fff;border-radius:999px;padding:.1rem .75rem;font-size:.9rem}
+.ap{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:1.1rem 1.3rem;margin-top:.9rem}
+.ap h3{font-size:1.25rem;color:var(--accent);margin-bottom:.4rem}
+.ap p,.ap li{max-width:72ch}
+.ap ul,.ap ol{padding-left:1.3rem}
+.ap li{margin:.25rem 0}
+table{border-collapse:collapse;width:100%;margin:.8rem 0;font-size:.96rem;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:.45rem .6rem;text-align:left;vertical-align:top}
+th{background:var(--soft)}
+.key{font-weight:800;font-size:1.1rem;background:var(--soft);border-left:5px solid var(--accent);border-radius:0 12px 12px 0;padding:.55rem .9rem;margin:.7rem 0}
+.ex{background:var(--soft);border-radius:14px;padding:.8rem 1rem;margin:.8rem 0}
+.ex b:first-child{color:var(--blue)}
+.ex ol{margin:.4rem 0 0}
+.err{border:2px dashed var(--bad);border-radius:14px;padding:.7rem 1rem;margin:.8rem 0}
+.err b:first-child{color:var(--bad)}
+.tip{border-left:5px solid var(--amber);background:var(--soft);border-radius:0 12px 12px 0;padding:.6rem .9rem;margin:.8rem 0}
+.practice{display:inline-block;margin:.4rem .5rem 0 0;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;border-radius:10px;padding:.45rem .85rem}
+.fig{margin:1rem 0;background:var(--soft);border-radius:14px;padding:.8rem}
+.fig svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+.fig figcaption{color:var(--muted);font-size:.9rem;text-align:center;margin-top:.4rem}
+svg text{font:13px "Lexend",system-ui,sans-serif;fill:var(--ink)}
+svg .tb{font-weight:800;font-size:15px}
+svg .ts,svg .tl{fill:var(--muted)}
+svg .tl,svg .tc,svg .tr{paint-order:stroke;stroke:var(--soft);stroke-width:5px;stroke-linejoin:round}
+svg .b1{fill:var(--card);stroke:var(--accent);stroke-width:3}
+svg .b2{fill:var(--card);stroke:var(--line);stroke-width:2}
+svg .ar{fill:none;stroke-width:3}
+svg .a1{stroke:var(--accent)} svg .a2{stroke:var(--amber)}
+svg .ax{stroke:var(--muted);stroke-width:2}
+svg .rev{stroke:#1E9E62;stroke-width:4} svg .cost{stroke:var(--bad);stroke-width:4} svg .fix{stroke:var(--muted);stroke-width:2;stroke-dasharray:6 5}
+svg .dem{stroke:var(--blue);stroke-width:4} svg .ofe{stroke:var(--bad);stroke-width:4}
+svg .pm{fill:var(--amber)} svg .dash{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 4}
+svg .tr{fill:#1E9E62;font-weight:700} svg .tc{fill:var(--bad);font-weight:700} svg .td{fill:var(--blue);font-weight:800;font-size:16px} svg .to{fill:var(--bad);font-weight:800;font-size:16px}
+.foot{color:var(--muted);text-align:center;font-size:.9rem;margin:2rem 0}
+[hidden]{display:none!important}
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr}
+  .toc{position:static;max-height:none}
+}
+@media print{
+  :root{--bg:#fff;--card:#fff;--ink:#000;--muted:#333;--line:#bbb;--soft:#f3f3f3}
+  body{font-size:11pt;background:#fff}
+  .top,.toc,.practice{display:none!important}
+  .layout{display:block;padding:0}
+  .intro{background:none;color:#000;padding:0}.intro p{color:#333}
+  .ap{break-inside:avoid;border:1px solid #bbb}
+  .tema{break-before:page}
+  .tema:first-of-type{break-before:auto}
+}
