@@ -106,7 +106,7 @@ td.lvl b{display:block;font-size:1rem}
     <div class="stage" id="stage">
       <div class="ringw">
         <svg viewBox="0 0 200 200" aria-hidden="true"><circle class="track" cx="100" cy="100" r="88"/><circle class="arc" id="arc" cx="100" cy="100" r="88"/></svg>
-        <div class="digits"><b id="digits">3:00</b><span id="phase">Preparats?</span></div>
+        <div class="digits"><b id="digits">5:00</b><span id="phase">Preparats?</span></div>
       </div>
       <div class="ctrl">
         <button class="pink" id="startBtn">Comença</button>
@@ -117,10 +117,9 @@ td.lvl b{display:block;font-size:1rem}
     <section class="card">
       <h2>Durada</h2>
       <div class="presets" style="margin-top:.6rem">
-        <button class="soft" data-min="2">2 min</button>
-        <button class="soft" data-min="3">3 min</button>
-        <button class="soft" data-min="5">5 min</button>
-        <button class="soft" data-min="2" data-qa="1">Torn de preguntes (2 min)</button>
+        <button class="soft" data-min="5">Pitch (5 min)</button>
+        <button class="soft" data-min="4" data-qa="1">Consell assessor (4 preguntes, 4 min)</button>
+        <button class="soft" data-min="3">Assaig curt (3 min)</button>
         <label style="display:flex;align-items:center;gap:.4rem">Altres: <input id="custom" inputmode="numeric" placeholder="min"> <button class="soft" id="setCustom">Posa</button></label>
       </div>
       <div class="flags"><span><i style="background:var(--go)"></i>Temps de sobres</span><span><i style="background:var(--warn)"></i>Queda 1 minut</span><span><i style="background:var(--stop)"></i>Queden 30 segons</span><span>Si s'acaba el temps, el rellotge compta el temps de més en vermell.</span></div>
@@ -131,8 +130,8 @@ td.lvl b{display:block;font-size:1rem}
   <!-- GUIÓ -->
   <section id="script" hidden>
     <section class="card">
-      <h2>L'estructura d'un bon pitch (3 minuts)</h2>
-      <p class="note">Feu servir aquest guió per preparar-lo i assajar-lo. Marqueu cada part quan la tingueu preparada.</p>
+      <h2>L'estructura del pitch (5 minuts)</h2>
+      <p class="note">El pitch explica el dossier de la cooperativa. Cada part surt d'un llenç. Després, l'altra cooperativa i la docent fan dues preguntes cadascuna.</p>
       <ol class="script" id="scriptList"></ol>
     </section>
   </section>
@@ -141,7 +140,7 @@ td.lvl b{display:block;font-size:1rem}
   <section id="rubric" hidden>
     <section class="card">
       <h2>Avaluació del pitch</h2>
-      <p class="note">Cada persona que avalua tria un nivell per criteri (de 1 a 4) i desa la seva avaluació. La nota final és la mitjana de totes, sobre 4. Les dades es guarden en aquest ordinador.</p>
+      <p class="note">Criteris de la teva rúbrica (dossier i pitch). Cada persona que avalua tria un nivell per criteri (NA 1 · AS 2 · AN 3 · AE 4) i desa la seva avaluació. La nota és la mitjana, sobre 4, com al quadern d'avaluació. Les dades es guarden en aquest ordinador.</p>
       <div class="evalbar">
         <label>Presentació<select id="presSel"></select></label>
         <button class="soft" id="addPres">+ Presentació</button>
@@ -175,7 +174,7 @@ document.querySelector(".tabs").onclick=e=>{ const b=e.target.closest("[data-tab
 
 /* Timer */
 const C=2*Math.PI*88; $("arc").style.strokeDasharray=C;
-let total=180, left=180, running=false, endAt=0, tick=null, label="Pitch", beeped={};
+let total=300, left=300, running=false, endAt=0, tick=null, label="Pitch", beeped={};
 function fmt(s){ const neg=s<0; s=Math.abs(Math.ceil(s)); return (neg?"+":"")+Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); }
 function beep(freq,dur){ try{ const a=beep.ctx||(beep.ctx=new (window.AudioContext||window.webkitAudioContext)()); const o=a.createOscillator(), g=a.createGain(); o.frequency.value=freq; o.connect(g); g.connect(a.destination); g.gain.setValueAtTime(.2,a.currentTime); g.gain.exponentialRampToValueAtTime(.001,a.currentTime+dur); o.start(); o.stop(a.currentTime+dur); }catch(e){} }
 function draw(){
@@ -202,28 +201,29 @@ draw();
 
 /* Script */
 const SCRIPT=[
- ["El ganxo","Comenceu amb una pregunta, una dada o una situació que enganxi el públic.","15 s"],
- ["El problema o la necessitat","Quina necessitat cobreix el vostre producte? A qui li passa?","20 s"],
- ["El producte","Què és, què el fa diferent i per què val la pena. Si podeu, ensenyeu-lo.","40 s"],
- ["El client","A qui el voleu vendre i on el vendreu.","20 s"],
- ["Els números","Preu de venda, cost per unitat, punt mort i benefici previst. Feu servir la calculadora de la cooperativa.","40 s"],
- ["L'equip i la cooperativa","Com us organitzeu, quins rols teniu i com preneu les decisions.","25 s"],
- ["El tancament","Una frase final que es recordi i una crida a l'acció: compreu, voteu, confieu en nosaltres…","20 s"]
+ ["El ganxo","Una dada, una imatge o una pregunta sobre el que es llença que enganxi el consell assessor.","20 s"],
+ ["El problema (llenç ①)","Quina necessitat hi ha i a qui afecta? Feu servir les dues dades contrastades, amb organisme i any.","40 s"],
+ ["La proposta","Què fa la vostra cooperativa amb el que es llença i per què és diferent. Si podeu, ensenyeu el producte.","40 s"],
+ ["El mercat (Fita 2)","Resultats de l'enquesta, la demanda, la competència i per què heu triat aquest preu.","50 s"],
+ ["La viabilitat (llenç ③)","Costos, punt mort i els tres escenaris. Què fareu si passa el pessimista?","60 s"],
+ ["La cooperativa (llenç ④)","Forma jurídica i per què, els principis que aplicareu i el repartiment de rols.","40 s"],
+ ["Els compromisos (llenç ⑤)","Tres compromisos de RSC mesurables, sense rentat verd.","30 s"],
+ ["El tancament","Una frase final que es recordi i què demaneu al consell assessor.","20 s"]
 ];
-const SK="kit-pitch-script-v1"; let checked={}; try{ checked=JSON.parse(localStorage.getItem(SK))||{}; }catch(e){}
+const SK="kit-pitch-script-v2"; let checked={}; try{ checked=JSON.parse(localStorage.getItem(SK))||{}; }catch(e){}
 $("scriptList").innerHTML=SCRIPT.map((s,i)=>`<li><span class="n">${i+1}</span><div><h3>${s[0]}</h3><p>${s[1]}</p></div><div style="display:grid;justify-items:end;gap:.3rem"><span class="t">${s[2]}</span><input type="checkbox" data-c="${i}" ${checked[i]?"checked":""} aria-label="${s[0]} preparat"></div></li>`).join("");
 $("scriptList").onchange=e=>{ const i=e.target.dataset.c; if(i===undefined) return; checked[i]=e.target.checked; try{ localStorage.setItem(SK,JSON.stringify(checked)); }catch(x){} };
 
 /* Rubric */
 const CRIT=[
- {n:"Estructura i claredat",l:["Desordenat, costa seguir-lo","Té algunes parts, però hi falta ordre","Ordenat, amb gairebé totes les parts","Molt clar, amb totes les parts del guió ben enllaçades"]},
- {n:"Producte i client",l:["No queda clar què venen ni a qui","S'entén el producte, però no el client","Producte i client clars","Proposta de valor clara i convincent"]},
- {n:"Números",l:["No hi ha números o són incorrectes","Alguns números, però incomplets","Preu, costos i punt mort correctes","Números correctes i ben explicats, amb benefici previst"]},
- {n:"Comunicació",l:["Llegeix, no mira el públic","Parla amb dubtes, poc contacte visual","Parla amb seguretat i bon to","Molt segur, convincent i amb bon suport visual"]},
- {n:"Temps i preguntes",l:["Molt fora de temps, no respon","Fora de temps o respostes vagues","Dins del temps i respon bé","Temps exacte i respostes molt sòlides"]}
+ {n:"El problema i la proposta",l:["No queda clar quin problema resolen","S'entén el problema, però sense dades","Problema amb dues dades contrastades i proposta clara","Proposta convincent que no deixa ningú fora"]},
+ {n:"El mercat i el preu",l:["No hi ha enquesta ni preu justificat","Enquesta petita o preu poc justificat","Enquesta tabulada i preu justificat amb la demanda","A més, en reconeixen els límits i comparen amb la competència"]},
+ {n:"La viabilitat",l:["Sense comptes o amb costos inventats","Un escenari calculat i costos incomplets","Tres escenaris coherents i conclusió de viabilitat","A més, punt mort i condicions concretes perquè sigui viable"]},
+ {n:"La cooperativa i la RSC",l:["No identifiquen la forma jurídica","La nomenen sense justificar","Justifiquen la forma jurídica i tenen compromisos mesurables","Comparen formes, connecten la RSC amb els costos i apliquen principis"]},
+ {n:"Comunicació i preguntes",l:["Llegeixen, fora de temps, no responen","Respostes vagues o molt fora de temps","Dins del temps, tothom participa i responen bé","Respostes sòlides a preguntes difícils i reconeixen límits"]}
 ];
-const RK="kit-pitch-rubric-v1";
-let RS={pres:[{id:1,name:"Cooperativa",evals:[]}],cur:1,nextId:2};
+const RK="kit-pitch-rubric-v2";
+let RS={pres:[{id:1,name:"Cooperativa 1",evals:[]},{id:2,name:"Cooperativa 2",evals:[]}],cur:1,nextId:3};
 try{ const s=JSON.parse(localStorage.getItem(RK)); if(s&&Array.isArray(s.pres)) RS=s; }catch(e){}
 const rsave=()=>{ try{ localStorage.setItem(RK,JSON.stringify(RS)); }catch(e){} };
 let pick={};
@@ -231,7 +231,7 @@ const curP=()=>RS.pres.find(p=>p.id===RS.cur)||RS.pres[0];
 function renderRubric(){
   if(!RS.pres.find(p=>p.id===RS.cur)) RS.cur=RS.pres[0].id;
   $("presSel").innerHTML=RS.pres.map(p=>`<option value="${p.id}" ${p.id===RS.cur?"selected":""}>${esc(p.name)}</option>`).join("");
-  $("rubTable").innerHTML=`<thead><tr><th>Criteri</th>${[1,2,3,4].map(n=>`<th>${n}</th>`).join("")}</tr></thead><tbody>${CRIT.map((c,i)=>`<tr><td class="crit">${c.n}</td>${c.l.map((t,k)=>`<td class="lvl ${pick[i]===k+1?"sel":""}" data-i="${i}" data-v="${k+1}" tabindex="0" role="button" aria-pressed="${pick[i]===k+1}"><b>${k+1}</b>${t}</td>`).join("")}</tr>`).join("")}</tbody>`;
+  $("rubTable").innerHTML=`<thead><tr><th>Criteri</th>${[1,2,3,4].map(n=>`<th>${["NA","AS","AN","AE"][n-1]} (${n})</th>`).join("")}</tr></thead><tbody>${CRIT.map((c,i)=>`<tr><td class="crit">${c.n}</td>${c.l.map((t,k)=>`<td class="lvl ${pick[i]===k+1?"sel":""}" data-i="${i}" data-v="${k+1}" tabindex="0" role="button" aria-pressed="${pick[i]===k+1}"><b>${k+1}</b>${t}</td>`).join("")}</tr>`).join("")}</tbody>`;
   const n=Object.keys(pick).length; $("evStatus").textContent=`${n} de ${CRIT.length} criteris triats`;
   $("saveEval").disabled=n<CRIT.length;
   renderResults();

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Repassa la teoria · Economia 4t ESO</title>
+<title>Posa't a prova · Economia Bàsica 4t ESO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
@@ -85,164 +85,86 @@ button:focus-visible{outline:3px solid var(--c,#3B5BDB);outline-offset:2px}
 <div class="wrap" id="app"></div>
 <script>
 const U=[
-{id:"u1",t:"L'economia i l'escassetat",e:"🌍",c:"#3B5BDB",
+{id:"u1",t:"Unitat 1 · El problema",e:"🏝️",c:"#3B5BDB",
  secs:[
-  {t:"Necessitats i béns",h:`<p>Una <b>necessitat</b> és la sensació de manca d'alguna cosa, acompanyada del desig de satisfer-la.</p>
-   <ul><li><b>Necessitats primàries:</b> són imprescindibles per viure, com menjar, beure, l'habitatge o la salut.</li>
-   <li><b>Necessitats secundàries:</b> milloren la qualitat de vida, però podem viure sense, com un mòbil, viatjar o anar al cinema.</li></ul>
-   <p>Les necessitats se satisfan amb <b>béns</b> (coses materials, com un entrepà) i amb <b>serveis</b> (activitats, com un tall de cabells o una classe).</p>
-   <p>Els <b>béns lliures</b> són tan abundants que no tenen preu, com l'aire. Els <b>béns econòmics</b> són escassos i tenen preu, com l'aigua embotellada.</p>`,
-   q:{p:"Una consulta al dentista és…",o:["Un bé lliure","Un servei","Un bé material","Una necessitat secundària"],a:1,x:"És una activitat que fa una persona per a una altra: un servei."}},
-  {t:"L'escassetat i l'elecció",h:`<p>Les necessitats humanes són <b>il·limitades</b>: quan en satisfem una, n'apareix una altra. En canvi, els recursos per satisfer-les són <b>limitats</b>. Aquest és el problema central de l'economia: l'<b>escassetat</b>.</p>
-   <p>Com que no podem tenir-ho tot, hem de <b>triar</b>. Tota societat ha de respondre tres preguntes bàsiques:</p>
-   <ul><li><b>Què</b> produir i en quina quantitat?</li><li><b>Com</b> produir-ho, amb quines tècniques i recursos?</li><li><b>Per a qui</b> produir-ho, és a dir, com es reparteix?</li></ul>
-   <div class="ex"><b>Exemple.</b> Un ajuntament té un pressupost limitat: si fa una piscina nova, potser no podrà arreglar el pavelló.</div>`,
-   q:{p:"Quin és el problema central que estudia l'economia?",o:["Com guanyar més diners","L'escassetat de recursos davant de necessitats il·limitades","El funcionament dels bancs","Com cobrar impostos"],a:1,x:"L'economia estudia com gestionar recursos escassos per satisfer necessitats il·limitades."}},
-  {t:"El cost d'oportunitat",h:`<p>Cada vegada que triem una opció, renunciem a una altra. El <b>cost d'oportunitat</b> és el valor de la <b>millor alternativa a què renunciem</b>.</p>
-   <div class="ex"><b>Exemple.</b> Dissabte pots anar a treballar a la parada de la cooperativa o anar a un concert. Si vas a treballar, el cost d'oportunitat és el concert que et perds.</div>
-   <p>El cost d'oportunitat no sempre són diners: pot ser temps, oci o descans.</p>`,
-   q:{p:"Estudies dues hores en lloc de jugar a futbol amb els amics. Quin és el cost d'oportunitat?",o:["Les dues hores d'estudi","La nota de l'examen","El partit de futbol que no jugues","Res, perquè estudiar és gratis"],a:2,x:"És la millor alternativa a què renuncies: el partit."}},
-  {t:"Els factors de producció",h:`<p>Per produir béns i serveis fan falta recursos, que s'anomenen <b>factors de producció</b>:</p>
-   <ul><li><b>Terra o recursos naturals:</b> sòl, aigua, minerals, energia.</li>
-   <li><b>Treball:</b> l'esforç físic i mental de les persones.</li>
-   <li><b>Capital:</b> màquines, eines, edificis i tecnologia que s'usen per produir.</li>
-   <li><b>Iniciativa empresarial:</b> la capacitat d'organitzar els altres factors i assumir riscos.</li></ul>
-   <p>Cada factor rep una remuneració: la terra rep una <b>renda</b>, el treball un <b>salari</b>, el capital un <b>interès</b> i l'empresari un <b>benefici</b>.</p>`,
-   q:{p:"La màquina de cosir que fa servir la cooperativa per fer bosses és…",o:["Terra","Treball","Capital","Iniciativa empresarial"],a:2,x:"Les màquines i les eines que serveixen per produir són capital."}},
-  {t:"Els agents econòmics",h:`<p>Els <b>agents econòmics</b> són els qui prenen decisions econòmiques:</p>
-   <ul><li><b>Famílies:</b> consumeixen béns i serveis i ofereixen factors de producció, sobretot treball.</li>
-   <li><b>Empreses:</b> produeixen béns i serveis i contracten factors de producció.</li>
-   <li><b>Sector públic:</b> recapta impostos i ofereix serveis públics, com escoles, hospitals o carreteres.</li></ul>
-   <p>Es relacionen en dos mercats: al <b>mercat de béns i serveis</b> les famílies compren el que fan les empreses; al <b>mercat de factors</b> les empreses contracten el treball de les famílies a canvi d'un salari. Aquest circuit s'anomena <b>flux circular de la renda</b>.</p>`,
-   q:{p:"Quan treballes en una empresa a canvi d'un sou, actues com a família en…",o:["El mercat de béns i serveis","El mercat de factors","El sector públic","La borsa"],a:1,x:"Ofereixes el teu treball, que és un factor de producció."}}
+  {t:"Escassetat o repartiment?",h:`<p>Les necessitats són <b>il·limitades</b> i els recursos, <b>limitats</b>: això és l'<b>escassetat</b>. Però a <i>L'illa de les flors</i> sobren tomàquets i hi ha persones que no en mengen: això és un <b>problema de repartiment</b>. Hi ha prou recursos, però no arriben a tothom perquè no tenen diners, propietat o accés.</p>
+   <div class="ex"><b>Exemple.</b> La cooperativa ven melmelada a 5 €. Els veïns que només pagarien 4 € o menys <b>queden fora del mercat</b>, encara que hi hagi melmelada per a tothom.</div>`,
+   q:{p:"Els supermercats llencen fruita bona mentre hi ha famílies que no en poden comprar. És un problema de…",o:["Escassetat","Repartiment","Productivitat"],a:1,x:"Hi ha prou fruita; el problema és que no arriba a tothom."}},
+  {t:"Cost d'oportunitat i costos irrecuperables",h:`<p>El <b>cost d'oportunitat</b> és el valor de la <b>millor alternativa</b> a què renuncies quan tries.</p>
+   <p>Un <b>cost irrecuperable</b> és un diner o temps que ja has gastat i que no tornarà, decideixis el que decideixis. Per això <b>no s'ha de tenir en compte</b> per decidir.</p>
+   <div class="ex"><b>Exemple.</b> Vau pagar 50 € per una parada a la fira i no els tornen. Per decidir si hi aneu, només compten el que vendreu i el que gastareu a partir d'ara.</div>`,
+   q:{p:"Vas pagar 30 € per una entrada que no et tornen i el mateix dia et conviden a un pla que t'agrada més. Els 30 €…",o:["T'obliguen a anar al concert per no perdre'ls","No han de comptar: ja estan gastats igualment","Són el teu cost d'oportunitat"],a:1,x:"És un cost irrecuperable: no tornarà facis el que facis."}},
+  {t:"Pensar al marge i els incentius",h:`<p>L'<b>anàlisi marginal</b> és decidir pensant en <b>una unitat més</b>: una hora més, un producte més. Val la pena continuar mentre el que guanyes de més sigui igual o més gran que el que et costa de més.</p>
+   <p>Un <b>incentiu</b> és una recompensa o un càstig que fa canviar el comportament. L'<b>equitat</b> també importa: al joc de l'ultimàtum, molta gent rebutja repartiments injustos.</p>`,
+   q:{p:"Obrir la parada una hora més fa vendre 15 € més i costa 18 €. Val la pena?",o:["Sí","No","Només si plou"],a:1,x:"El benefici marginal (15 €) és més petit que el cost marginal (18 €)."}},
+  {t:"Positiu o normatiu? Micro o macro?",h:`<ul><li><b>Positiu:</b> fets que es poden comprovar amb dades. <b>Normatiu:</b> opinions sobre el que hauria de ser.</li>
+   <li><b>Micro:</b> decisions de famílies, empreses o mercats concrets. <b>Macro:</b> l'economia d'un país (atur, inflació, PIB).</li></ul>`,
+   q:{p:"«Les botigues haurien de donar el menjar que sobra» és una afirmació…",o:["Positiva","Normativa","Macroeconòmica"],a:1,x:"Expressa una opinió sobre el que hauria de ser."}},
+  {t:"Què, com i per a qui · factors de producció",h:`<p>Tota economia decideix <b>què</b> produir, <b>com</b> produir-ho i <b>per a qui</b>, buscant <b>eficiència</b> (no malbaratar) i <b>equitat</b> (repartiment just).</p>
+   <p>Els <b>factors de producció</b> són la <b>terra</b> (recursos naturals), el <b>treball</b>, el <b>capital</b> (màquines, eines, edificis) i la <b>iniciativa empresarial</b>.</p>`,
+   q:{p:"La màquina de cosir de la cooperativa és…",o:["Terra","Treball","Capital","Iniciativa empresarial"],a:2,x:"Les eines i màquines que serveixen per produir són capital."}},
+  {t:"Economies plurals, drets i deures",h:`<ul><li><b>Circular:</b> reutilitzar, reparar i reciclar.</li><li><b>Ecològica:</b> respectar els límits del planeta.</li><li><b>Feminista i de les cures:</b> comptar el treball de cures, encara que no surti al PIB.</li><li><b>Social i solidària:</b> les persones per davant del benefici, com les cooperatives.</li></ul>
+   <p>Les persones consumidores tenim <b>drets</b> (informació, reclamar) i <b>deures</b> (pagar impostos, consumir de manera responsable).</p>`,
+   q:{p:"Una botiga que repara mòbils perquè no es llencin és un exemple d'economia…",o:["Circular","Feminista i de les cures","Macroeconòmica"],a:0,x:"Allargar la vida dels productes és economia circular."}}
  ],
- cards:[["Escassetat","Recursos limitats davant de necessitats il·limitades."],["Bé lliure","Bé abundant que no té preu, com l'aire."],["Bé econòmic","Bé escàs que té preu."],["Cost d'oportunitat","Valor de la millor alternativa a què renuncies quan tries."],["Factors de producció","Terra, treball, capital i iniciativa empresarial."],["Capital","Màquines, eines, edificis i tecnologia per produir."],["Agents econòmics","Famílies, empreses i sector públic."],["Flux circular de la renda","Circuit de béns, factors i diners entre famílies i empreses."]],
+ cards:[["Escassetat","Recursos limitats davant de necessitats il·limitades."],["Problema de repartiment","Hi ha prou recursos, però no arriben a tothom."],["Cost d'oportunitat","Valor de la millor alternativa a què renuncies."],["Cost irrecuperable","Diner o temps ja gastat que no tornarà: no ha de comptar per decidir."],["Anàlisi marginal","Decidir pensant en una unitat més."],["Incentiu","Recompensa o càstig que fa canviar el comportament."],["Normatiu","Afirmació que expressa el que hauria de ser."],["Macroeconomia","Estudi de l'economia d'un país en conjunt."],["Capital","Màquines, eines i edificis per produir."],["Economia circular","Reutilitzar, reparar i reciclar perquè res no es llenci."]],
  extra:[
-  {p:"Quina d'aquestes és una necessitat primària?",o:["Tenir una consola","Alimentar-se","Anar de viatge","Comprar roba de marca"],a:1,x:"És imprescindible per viure."},
-  {p:"Quina remuneració rep el factor treball?",o:["Renda","Interès","Salari","Benefici"],a:2,x:"El treball es remunera amb un salari."},
-  {p:"La pregunta «com produir?» fa referència a…",o:["Quins béns es fabriquen","Amb quines tècniques i recursos es produeix","Qui rebrà els béns","El preu dels béns"],a:1,x:"Tracta de les tècniques i els recursos que s'utilitzen."}
+  {p:"«L'atur juvenil ha baixat aquest any» és…",o:["Micro i normatiu","Macro i positiu","Micro i positiu"],a:1,x:"Parla de tot el país (macro) i es pot comprovar amb dades (positiu)."},
+  {p:"Cuinar el sopar a casa compta al PIB?",o:["Sí","No"],a:1,x:"El PIB només compta el que es compra i es ven, però cuinar és treball de cures."},
+  {p:"Quina remuneració rep el treball?",o:["Renda","Salari","Interès","Benefici"],a:1,x:"El treball es remunera amb un salari."}
  ]},
-{id:"u2",t:"L'empresa i la cooperativa",e:"🏭",c:"#0F8B8D",
+{id:"u2",t:"Unitat 2 · El mercat",e:"📊",c:"#0F8B8D",
  secs:[
-  {t:"Què és una empresa",h:`<p>Una <b>empresa</b> és una organització que combina factors de producció per produir béns o serveis i vendre'ls, normalment per obtenir un benefici.</p>
-   <p>Les empreses <b>creen riquesa</b>, <b>generen ocupació</b> i <b>paguen impostos</b>, que financen els serveis públics.</p>
-   <p>Segons la seva activitat, es classifiquen en tres sectors:</p>
-   <ul><li><b>Primari:</b> obtenen recursos de la natura, com l'agricultura, la ramaderia o la pesca.</li>
-   <li><b>Secundari:</b> transformen matèries primeres, com la indústria o la construcció.</li>
-   <li><b>Terciari:</b> ofereixen serveis, com el comerç, el turisme o l'educació.</li></ul>`,
-   q:{p:"Una fàbrica de galetes pertany al sector…",o:["Primari","Secundari","Terciari","Públic"],a:1,x:"Transforma matèries primeres (farina, sucre) en un producte nou."}},
-  {t:"Les formes jurídiques",h:`<p>Qui crea una empresa ha de triar una <b>forma jurídica</b>. Una diferència clau és la <b>responsabilitat</b>: si l'empresa té deutes, qui els paga?</p>
-   <ul><li><b>Empresari/ària individual (autònom/a):</b> una sola persona. La responsabilitat és <b>il·limitada</b>: respon dels deutes amb els seus béns personals, com el pis o el cotxe.</li>
-   <li><b>Societat limitada (SL):</b> els socis responen només amb el capital que han aportat. Habitual en empreses petites i mitjanes.</li>
-   <li><b>Societat anònima (SA):</b> el capital es divideix en accions. També té responsabilitat limitada. Habitual en grans empreses.</li>
-   <li><b>Cooperativa:</b> empresa de propietat conjunta dels socis, que la gestionen de manera democràtica.</li></ul>`,
-   q:{p:"Una autònoma té deutes que l'empresa no pot pagar. Què pot passar?",o:["Res, els deutes desapareixen","Ha de respondre amb els seus béns personals","Els paga l'Estat","Els paguen els clients"],a:1,x:"L'empresari individual té responsabilitat il·limitada."}},
-  {t:"La cooperativa",h:`<p>Una <b>cooperativa</b> és una empresa formada per persones que s'uneixen voluntàriament per satisfer necessitats comunes. Es basa en uns <b>principis cooperatius</b>:</p>
-   <ul><li><b>Adhesió voluntària i oberta:</b> hi pot entrar qui vulgui i compleixi els requisits.</li>
-   <li><b>Gestió democràtica:</b> <b>un soci, un vot</b>, independentment del capital aportat.</li>
-   <li><b>Participació econòmica:</b> els socis aporten capital i els excedents es reparteixen segons l'activitat de cadascú, no segons els diners posats.</li>
-   <li><b>Educació i formació</b> dels socis.</li>
-   <li><b>Compromís amb la comunitat</b> i cooperació amb altres cooperatives.</li></ul>
-   <div class="ex"><b>A la vostra cooperativa:</b> totes les decisions importants es voten i cada persona té un vot.</div>`,
-   q:{p:"En una cooperativa, la sòcia que ha aportat més diners…",o:["Té més vots","Té un vot, com tothom","Decideix sola","No pot votar"],a:1,x:"Gestió democràtica: un soci, un vot."}}
+  {t:"Productivitat i divisió del treball",h:`<div class="formula">Productivitat = producció ÷ factor utilitzat</div>
+   <p>Quan cada persona s'especialitza en una tasca (<b>divisió del treball</b>), la productivitat sol augmentar.</p>
+   <div class="ex"><b>Exemple.</b> 3 persones fan 24 sobres: 8 per persona. Repartint tasques en fan 48: 16 per persona, un 100 % més.</div>`,
+   q:{p:"4 persones fan 32 bosses en una hora. Quina és la productivitat per persona?",o:["4 bosses","8 bosses","128 bosses"],a:1,x:"32 ÷ 4 = 8 bosses per persona."}},
+  {t:"Recursos i desenvolupament sostenible",h:`<p>Els recursos <b>renovables</b> es regeneren (sol, vent, cotó) i els <b>no renovables</b> s'esgoten (petroli, gas, minerals). El <b>desenvolupament sostenible</b> satisfà les necessitats d'avui sense posar en perill les de demà.</p>`,
+   q:{p:"El liti de les bateries és un recurs…",o:["Renovable","No renovable"],a:1,x:"És un mineral: s'esgota."}},
+  {t:"Demanda i oferta",h:`<p><b>Llei de la demanda:</b> si el preu puja, la quantitat demandada baixa. <b>Llei de l'oferta:</b> si el preu puja, la quantitat oferta augmenta.</p>`,
+   q:{p:"Si el preu de les bosses puja, la quantitat que volen comprar els clients…",o:["Augmenta","Baixa","No canvia"],a:1,x:"Llei de la demanda."}},
+  {t:"L'equilibri del mercat",h:`<p>El <b>preu d'equilibri</b> és on la quantitat demandada és igual a l'oferta. Per sobre hi ha <b>excés d'oferta</b> (sobra producte i el preu baixa); per sota, <b>excés de demanda</b> (falta producte i el preu puja).</p>`,
+   q:{p:"A 3 € es volen comprar 50 unitats i només se n'ofereixen 30. Què hi ha?",o:["Excés d'oferta","Excés de demanda","Equilibri"],a:1,x:"Es demana més del que s'ofereix: el preu tendirà a pujar."}},
+  {t:"Desplaçaments de les corbes",h:`<p>Si canvia un factor dels <b>compradors</b> (renda, gustos, modes, festes), es desplaça la <b>demanda</b>. Si canvia un factor dels <b>productors</b> (costos, tecnologia, clima), es desplaça l'<b>oferta</b>.</p>`,
+   q:{p:"La tela s'encareix molt. Què passa?",o:["Augmenta la demanda","Baixa l'oferta i el preu puja","Baixa la demanda"],a:1,x:"Un cost de producció més alt redueix l'oferta."}},
+  {t:"Flux circular i enquesta",h:`<p>Al <b>flux circular</b>, les famílies compren béns a les empreses i els ofereixen treball a canvi de salaris; el sector públic cobra impostos i ofereix serveis.</p>
+   <p>Amb l'<b>enquesta</b> («Quant pagaries com a màxim?»), a cada preu compren tots els que pagarien aquest preu <b>o més</b>. Ingressos previstos = preu × quantitat.</p>`,
+   q:{p:"Enquesta: 3 persones pagarien com a màxim 2 €, 5 persones 3 € i 4 persones 4 €. Quantes comprarien a 3 €?",o:["5","9","12"],a:1,x:"Els de 3 € i els de 4 €: 5 + 4 = 9."}}
  ],
- cards:[["Empresa","Organització que combina factors per produir béns o serveis."],["Sector primari","Obté recursos de la natura."],["Sector secundari","Transforma matèries primeres: indústria i construcció."],["Sector terciari","Ofereix serveis."],["Responsabilitat il·limitada","Respondre dels deutes de l'empresa amb els béns personals."],["Societat limitada","Els socis responen només amb el capital aportat."],["Cooperativa","Empresa de propietat conjunta gestionada democràticament."],["Un soci, un vot","Principi de gestió democràtica de les cooperatives."]],
+ cards:[["Productivitat","Producció ÷ factor utilitzat."],["Divisió del treball","Cada persona s'especialitza en una tasca."],["Recurs no renovable","Recurs que s'esgota: petroli, gas, minerals."],["Desenvolupament sostenible","Satisfer les necessitats d'avui sense comprometre les de demà."],["Preu d'equilibri","Preu on quantitat demandada = quantitat oferta."],["Excés d'oferta","Sobra producte: el preu tendeix a baixar."],["Excés de demanda","Falta producte: el preu tendeix a pujar."],["Flux circular de la renda","Circuit de béns, treball i diners entre famílies i empreses."]],
  extra:[
-  {p:"Una botiga de roba pertany al sector…",o:["Primari","Secundari","Terciari","Quaternari"],a:2,x:"El comerç és un servei."},
-  {p:"Com es reparteixen els excedents en una cooperativa?",o:["Segons el capital aportat","A parts iguals sempre","Segons l'activitat de cada soci","Se'ls queda el president"],a:2,x:"Es reparteixen segons la participació en l'activitat."},
-  {p:"Quina forma jurídica divideix el capital en accions?",o:["Autònom","Societat anònima","Cooperativa","Societat limitada"],a:1,x:"La societat anònima divideix el capital en accions."}
+  {p:"Una influencer posa de moda les bosses reciclades. Quina corba es desplaça?",o:["L'oferta","La demanda","Cap"],a:1,x:"Una moda afecta els compradors."},
+  {p:"Quan treballes en una empresa a canvi d'un sou, actues en…",o:["El mercat de béns","El mercat de factors"],a:1,x:"Ofereixes treball, un factor de producció."},
+  {p:"Amb el preu de 4 € compren 13 persones. Quins són els ingressos previstos?",o:["17 €","52 €","9 €"],a:1,x:"4 × 13 = 52 €."}
  ]},
-{id:"u3",t:"Costos, ingressos i benefici",e:"🧮",c:"#C2410C",
+{id:"u3",t:"Unitat 3 · El pla",e:"📈",c:"#C2410C",
  secs:[
-  {t:"Costos fixos i variables",h:`<p>Els <b>costos</b> són el que paga l'empresa per produir.</p>
-   <ul><li><b>Costos fixos (CF):</b> no canvien encara que produeixis més o menys, com el lloguer o l'assegurança.</li>
-   <li><b>Costos variables (CV):</b> augmenten com més produeixes, com la matèria primera.</li></ul>
-   <p>El <b>cost variable unitari (CVu)</b> és el que costa fer <b>una</b> unitat.</p>
-   <div class="formula">Cost total = CF + CVu × quantitat</div>
-   <div class="ex"><b>Exemple.</b> El lloguer de la parada és de 60 €/mes (fix) i cada bossa necessita 3 € de material (variable). Si en feu 40: 60 + 3 × 40 = 180 €.</div>`,
-   q:{p:"CF = 100 €, CVu = 2 €. Quin és el cost total de fer 50 unitats?",o:["150 €","200 €","102 €","5.000 €"],a:1,x:"100 + 2 × 50 = 200 €."}},
-  {t:"Ingressos i benefici",h:`<p>Els <b>ingressos</b> són els diners que entren per les vendes:</p>
-   <div class="formula">Ingressos = preu × quantitat venuda</div>
-   <p>El <b>benefici</b> és el que queda després de pagar tots els costos:</p>
-   <div class="formula">Benefici = ingressos − cost total</div>
-   <p>Si el resultat és negatiu, l'empresa té <b>pèrdues</b>.</p>
-   <div class="ex"><b>Exemple.</b> Veneu 40 bosses a 8 €: ingressos de 320 €. Amb un cost total de 180 €, el benefici és de 140 €.</div>`,
-   q:{p:"Venem 30 unitats a 5 € i el cost total és de 170 €. Quin és el resultat?",o:["Benefici de 20 €","Pèrdues de 20 €","Benefici de 150 €","Pèrdues de 170 €"],a:1,x:"Ingressos: 30 × 5 = 150 €. 150 − 170 = −20 €: pèrdues."}},
-  {t:"El punt mort",h:`<p>El <b>punt mort</b> (o llindar de rendibilitat) és la quantitat que cal vendre perquè els ingressos siguin <b>iguals</b> als costos totals: ni es guanya ni es perd.</p>
-   <p>Primer calcula el <b>marge unitari</b>: el que guanyes amb cada unitat per pagar els costos fixos (preu − CVu).</p>
+  {t:"Costos i cost total",h:`<p><b>Costos fixos</b>: es paguen igual encara que no produeixis (lloguer, assegurança). <b>Costos variables</b>: augmenten amb la producció (material).</p>
+   <div class="formula">Cost total = CF + CVu × quantitat</div>`,
+   q:{p:"CF = 100 €, CVu = 2 €. Cost total de fer 50 unitats?",o:["150 €","200 €","102 €"],a:1,x:"100 + 2 × 50 = 200 €."}},
+  {t:"Benefici i punt mort",h:`<div class="formula">Benefici = preu × quantitat − cost total</div>
    <div class="formula">Punt mort = CF ÷ (preu − CVu)</div>
-   <div class="ex"><b>Exemple.</b> CF = 100 €, preu = 8 €, CVu = 3 €. Marge: 5 €. Punt mort: 100 ÷ 5 = <b>20 bosses</b>. A partir de la bossa 21 hi ha benefici.</div>`,
-   q:{p:"CF = 300 €, preu = 10 €, CVu = 4 €. Quin és el punt mort?",o:["30 unitats","50 unitats","75 unitats","21 unitats"],a:1,x:"300 ÷ (10 − 4) = 300 ÷ 6 = 50 unitats."}},
-  {t:"L'IVA",h:`<p>L'<b>IVA</b> (impost sobre el valor afegit) és un <b>impost indirecte</b>: grava el consum i està inclòs en el preu del que comprem.</p>
-   <p>A Espanya hi ha tres tipus principals: el <b>general (21 %)</b>, el <b>reduït (10 %)</b>, per exemple per a l'hostaleria o el transport, i el <b>superreduït (4 %)</b>, per a productes bàsics com el pa, la llet o els llibres.</p>
-   <p>Les empreses el cobren als clients i l'ingressen a Hisenda, però qui el paga de veritat és el <b>consumidor final</b>.</p>
-   <div class="formula">Preu amb IVA = preu sense IVA × (1 + tipus)</div>
-   <div class="ex"><b>Exemple.</b> 8 € amb un IVA del 21 %: 8 × 1,21 = 9,68 €.</div>`,
-   q:{p:"Un producte costa 20 € sense IVA. Quin és el preu amb un IVA del 21 %?",o:["21 €","24,20 €","41 €","20,21 €"],a:1,x:"20 × 1,21 = 24,20 €."}}
+   <div class="ex"><b>Espelmes Corbatera.</b> CF 115 €, preu 8 €, CVu 2,80 €. Marge 5,20 €; punt mort 115 ÷ 5,20 = 22,1 → <b>23 espelmes</b>.</div>`,
+   q:{p:"CF = 300 €, preu = 10 €, CVu = 4 €. Punt mort?",o:["30 unitats","50 unitats","75 unitats"],a:1,x:"300 ÷ 6 = 50 unitats."}},
+  {t:"Tres escenaris",h:`<p>El <b>pla de viabilitat</b> calcula el resultat en tres escenaris: <b>pessimista</b>, <b>realista</b> i <b>optimista</b>. Si fins i tot el pessimista supera el punt mort, el projecte és molt segur.</p>`,
+   q:{p:"Punt mort: 30 unitats. Escenaris: 25, 40 i 60. Quin dona pèrdues?",o:["Cap","El pessimista","Tots"],a:1,x:"Només el pessimista (25) queda per sota del punt mort."}},
+  {t:"Formes jurídiques",h:`<ul><li><b>Autònom/a:</b> responsabilitat il·limitada.</li><li><b>SL:</b> des d'1 € de capital; responsabilitat limitada (si el capital és de menys de 3.000 €, fins a 3.000 €).</li><li><b>SA:</b> capital mínim de 60.000 € en accions.</li><li><b>Cooperativa catalana:</b> capital mínim de 3.000 €, responsabilitat limitada i un soci, un vot.</li></ul>`,
+   q:{p:"Quin capital mínim cal per constituir una cooperativa a Catalunya?",o:["1 €","3.000 €","60.000 €"],a:1,x:"3.000 € (la SL, 1 €; la SA, 60.000 €)."}},
+  {t:"La cooperativa i l'organigrama",h:`<p>Principis cooperatius: adhesió voluntària, <b>gestió democràtica (un soci, un vot)</b>, participació econòmica, formació i compromís amb la comunitat.</p>
+   <p>Elements de l'empresa: persones, capital, organització (organigrama) i entorn. Rols de la cooperativa: Coordinació, Dades, Tresoreria i Comunicació.</p>`,
+   q:{p:"Qui calcula el punt mort i porta els comptes a la cooperativa?",o:["Coordinació","Dades","Tresoreria","Comunicació"],a:2,x:"La tresoreria porta els números."}},
+  {t:"RSC i rentat verd",h:`<p>La <b>RSC</b> són compromisos amb les persones i el planeta més enllà de la llei. El <b>rentat verd</b> és dir-se ecològic sense proves. Un bon compromís és <b>mesurable</b>: què, quant i quan.</p>`,
+   q:{p:"Quin compromís és mesurable?",o:["Serem molt sostenibles","Reutilitzarem 50 pots aquest trimestre","Cuidarem el planeta"],a:1,x:"Diu què, quant i quan."}}
  ],
- cards:[["Cost fix","No canvia amb la quantitat produïda."],["Cost variable","Augmenta com més es produeix."],["Cost total","CF + CVu × quantitat."],["Ingressos","Preu × quantitat venuda."],["Benefici","Ingressos − cost total."],["Punt mort","Quantitat on ingressos = costos: CF ÷ (preu − CVu)."],["Marge unitari","Preu − cost variable unitari."],["IVA","Impost indirecte sobre el consum; el paga el consumidor final."]],
+ cards:[["Cost fix","No canvia amb la quantitat produïda."],["Cost total","CF + CVu × quantitat."],["Punt mort","CF ÷ (preu − CVu): ni es guanya ni es perd."],["Escenari pessimista","Previsió de vendes baixes per comprovar la viabilitat."],["Responsabilitat il·limitada","Respondre dels deutes amb els béns personals."],["Un soci, un vot","Gestió democràtica de les cooperatives."],["Organigrama","Esquema de qui fa què a l'empresa."],["Rentat verd","Presentar-se com a ecològic sense proves."]],
  extra:[
-  {p:"El sou fix de la persona que porta la comptabilitat cada mes és un cost…",o:["Variable","Fix","Unitari","D'oportunitat"],a:1,x:"No depèn de la quantitat produïda."},
-  {p:"Si venem menys unitats que el punt mort, tenim…",o:["Benefici","Pèrdues","Ni benefici ni pèrdues","Més ingressos que costos"],a:1,x:"Per sota del punt mort, els ingressos no cobreixen els costos."},
-  {p:"Quin tipus d'IVA té el pa?",o:["21 %","10 %","4 %","0 %"],a:2,x:"El pa és un producte bàsic: tipus superreduït."}
- ]},
-{id:"u4",t:"El mercat",e:"🥖",c:"#7C3AED",
- secs:[
-  {t:"La demanda",h:`<p>Un <b>mercat</b> és qualsevol lloc, físic o virtual, on es troben compradors i venedors per intercanviar un bé o servei.</p>
-   <p>La <b>demanda</b> és la quantitat d'un bé que els consumidors volen i poden comprar a cada preu.</p>
-   <p><b>Llei de la demanda:</b> quan el preu <b>puja</b>, la quantitat demandada <b>baixa</b>, i a l'inrevés. Per això la corba de demanda té pendent negatiu, cap avall.</p>
-   <div class="ex"><b>Exemple.</b> Si el pa passa d'1,50 € a 3 €, la gent en comprarà menys.</div>`,
-   q:{p:"Si el preu de les entrades de cinema puja, la quantitat demandada…",o:["Puja","Baixa","No canvia","Es duplica"],a:1,x:"Llei de la demanda: més preu, menys quantitat demandada."}},
-  {t:"L'oferta",h:`<p>L'<b>oferta</b> és la quantitat d'un bé que els productors volen vendre a cada preu.</p>
-   <p><b>Llei de l'oferta:</b> quan el preu <b>puja</b>, la quantitat oferta <b>augmenta</b>, perquè als productors els surt més a compte vendre. La corba d'oferta té pendent positiu, cap amunt.</p>
-   <div class="ex"><b>Exemple.</b> Si el preu de l'oli puja molt, els pagesos intentaran produir-ne i vendre'n més.</div>`,
-   q:{p:"Segons la llei de l'oferta, si el preu baixa, els productors…",o:["Volen vendre'n més","Volen vendre'n menys","No hi ha cap efecte","Apugen el preu"],a:1,x:"Amb un preu més baix, produir és menys rendible i s'ofereix menys."}},
-  {t:"L'equilibri del mercat",h:`<p>El <b>preu d'equilibri</b> és el preu en què la quantitat demandada és igual a la quantitat oferta. Gràficament, és on es creuen les dues corbes.</p>
-   <ul><li>Si el preu està <b>per sobre</b> de l'equilibri, hi ha <b>excés d'oferta</b>: sobra producte i els venedors abaixen el preu.</li>
-   <li>Si el preu està <b>per sota</b>, hi ha <b>excés de demanda</b>: falta producte, hi ha cues i el preu puja.</li></ul>
-   <p>Així el mercat tendeix cap a l'equilibri, com va passar al joc del mercat del pa.</p>`,
-   q:{p:"Una botiga posa les bambes tan barates que es formen cues i s'esgoten. Hi ha…",o:["Excés d'oferta","Excés de demanda","Equilibri","Punt mort"],a:1,x:"Al preu fixat, la gent vol comprar més del que hi ha: excés de demanda."}},
-  {t:"Desplaçaments de les corbes",h:`<p>Quan canvia el <b>preu</b>, ens movem <b>al llarg</b> de la corba. Quan canvia un altre factor, la corba sencera es <b>desplaça</b>.</p>
-   <ul><li>La <b>demanda</b> es desplaça per canvis en la renda, els gustos i les modes, el preu d'altres béns o el nombre de compradors.</li>
-   <li>L'<b>oferta</b> es desplaça per canvis en els costos de producció, la tecnologia, el clima o el nombre de productors.</li></ul>
-   <div class="ex"><b>Exemples.</b> Festa major: la demanda de pa augmenta i el preu d'equilibri puja. La farina s'encareix: l'oferta baixa, el preu puja i la quantitat venuda baixa.</div>`,
-   q:{p:"Una nova màquina permet fer el doble de bosses amb el mateix cost. Què passa?",o:["La demanda augmenta","L'oferta augmenta i el preu tendeix a baixar","L'oferta baixa","No canvia res"],a:1,x:"Una millora tecnològica desplaça l'oferta cap a la dreta: més quantitat i preu més baix."}}
- ],
- cards:[["Mercat","Lloc on es troben compradors i venedors."],["Llei de la demanda","Si el preu puja, la quantitat demandada baixa."],["Llei de l'oferta","Si el preu puja, la quantitat oferta augmenta."],["Preu d'equilibri","Preu on quantitat demandada = quantitat oferta."],["Excés d'oferta","Sobra producte: el preu tendeix a baixar."],["Excés de demanda","Falta producte: el preu tendeix a pujar."],["Desplaçament de la demanda","Per canvis en renda, gustos o preus d'altres béns."],["Desplaçament de l'oferta","Per canvis en costos, tecnologia o clima."]],
- extra:[
-  {p:"Una mala collita d'olives provoca que…",o:["L'oferta d'oli augmenti","L'oferta d'oli baixi i el preu pugi","La demanda d'oli baixi","El preu de l'oli baixi"],a:1,x:"El clima redueix l'oferta: menys producte i preu més alt."},
-  {p:"Si el preu està per sobre de l'equilibri, hi ha…",o:["Excés de demanda","Excés d'oferta","Equilibri","Cues"],a:1,x:"A preus alts s'ofereix més del que es demana."},
-  {p:"Els joves cobren més i compren més bicis elèctriques. Quina corba es desplaça?",o:["L'oferta","La demanda","Cap","Totes dues cap avall"],a:1,x:"Un augment de renda desplaça la demanda."}
- ]},
-{id:"u5",t:"Nòmina i pressupost",e:"💶",c:"#B7791F",
- secs:[
-  {t:"La nòmina",h:`<p>La <b>nòmina</b> és el document que justifica el pagament del sou a un treballador.</p>
-   <ul><li><b>Salari brut:</b> el total que guanyes abans de descomptes.</li>
-   <li><b>Deduccions:</b> les <b>cotitzacions a la Seguretat Social</b> (per a pensions, atur i sanitat) i la <b>retenció d'IRPF</b> (un avançament de l'impost sobre la renda).</li>
-   <li><b>Salari net:</b> el que arriba de veritat al compte.</li></ul>
-   <div class="formula">Salari net = salari brut − deduccions</div>
-   <p>L'empresa també cotitza a la Seguretat Social per cada treballador, a més de pagar-li el sou.</p>`,
-   q:{p:"Brut: 1.500 €. Seguretat Social: 98 €. IRPF: 120 €. Quin és el salari net?",o:["1.500 €","1.282 €","1.402 €","1.718 €"],a:1,x:"1.500 − 98 − 120 = 1.282 €."}},
-  {t:"El pressupost personal",h:`<p>Un <b>pressupost</b> és un pla que preveu els ingressos i les despeses d'un període, normalment un mes.</p>
-   <ul><li><b>Despeses fixes:</b> sempre igual cada mes, com el lloguer, la quota del mòbil o l'assegurança.</li>
-   <li><b>Despeses variables:</b> canvien segons el que decideixes, com l'oci, la roba o els àpats fora.</li></ul>
-   <p>Si els ingressos superen les despeses, hi ha <b>superàvit</b> (pots estalviar). Si són menors, hi ha <b>dèficit</b>.</p>
-   <div class="ex"><b>Una pauta habitual (50/30/20):</b> el 50 % per a necessitats, el 30 % per a desitjos i el 20 % per a estalvi. També es recomana que l'habitatge no passi del 30–35 % del sou.</div>`,
-   q:{p:"Ingresses 1.200 € i gastes 1.350 €. Tens…",o:["Superàvit","Dèficit","Equilibri","Estalvi"],a:1,x:"Les despeses superen els ingressos: dèficit de 150 €."}},
-  {t:"Estalvi, imprevistos i deute",h:`<p>L'<b>estalvi</b> és la part dels ingressos que no gastes. Un bon hàbit és tenir un <b>fons d'emergència</b>: diners reservats per als <b>imprevistos</b>, com una avaria o una multa.</p>
-   <p>Si no tens estalvi, un imprevist t'obliga a <b>endeutar-te</b>, per exemple amb una targeta de crèdit o un préstec ràpid. El deute s'ha de tornar amb <b>interessos</b>, de manera que l'imprevist acaba costant més.</p>
-   <div class="ex"><b>Exemple.</b> Un portàtil de 350 € pagat amb una targeta a un 24 % anual pot acabar costant bastant més si es retorna a poc a poc.</div>`,
-   q:{p:"Quina és la millor manera de fer front a un imprevist?",o:["Una targeta de crèdit","Un préstec ràpid","Un fons d'emergència","Comprar a terminis"],a:2,x:"Amb estalvi propi no pagues interessos."}}
- ],
- cards:[["Nòmina","Document que justifica el pagament del sou."],["Salari brut","Sou abans de deduccions."],["Salari net","Sou que cobres després de deduccions."],["IRPF","Impost sobre la renda; a la nòmina se'n fa una retenció."],["Seguretat Social","Cotitzacions per a pensions, atur i sanitat."],["Pressupost","Pla d'ingressos i despeses d'un període."],["Dèficit","Despeses més grans que ingressos."],["Fons d'emergència","Estalvi reservat per a imprevistos."]],
- extra:[
-  {p:"Quina d'aquestes és una despesa fixa?",o:["El lloguer","Un sopar amb amics","Roba nova","Un concert"],a:0,x:"Es paga igual cada mes."},
-  {p:"Qui cotitza a la Seguretat Social per un treballador?",o:["Només el treballador","Només l'empresa","El treballador i l'empresa","L'Ajuntament"],a:2,x:"Cotitzen totes dues parts."},
-  {p:"Segons la pauta 50/30/20, quin percentatge es destina a estalvi?",o:["50 %","30 %","20 %","10 %"],a:2,x:"El 20 % es reserva per a l'estalvi."}
+  {p:"Un autònom no pot pagar un deute del negoci. Amb què respon?",o:["Només amb el negoci","També amb els seus béns personals","Paga l'Estat"],a:1,x:"Té responsabilitat il·limitada."},
+  {p:"Venem 30 unitats a 5 € i el cost total és de 170 €. Resultat?",o:["Benefici de 20 €","Pèrdues de 20 €","Benefici de 150 €"],a:1,x:"150 − 170 = −20 €."},
+  {p:"«100 % natural» en lletres verdes sense cap dada és…",o:["RSC","Rentat verd","Un compromís mesurable"],a:1,x:"No hi ha proves: és rentat verd."}
  ]}
 ];
 
-const KEY="repas-teoria-v1";
+const KEY="repas-teoria-v2";
 let P={done:{},best:{}};
 try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.done) P=s; }catch(e){}
 const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(P)); }catch(e){} };
@@ -261,13 +183,13 @@ function render(){
 
 function home(){
   const tot=Math.round(U.reduce((a,u)=>a+pct(u),0)/U.length);
-  app.innerHTML=`<header class="top"><h1>Repassa la teoria</h1>
-    <p>Llegeix cada apartat, comprova que l'has entès i, al final de cada tema, supera el repte. Avances al teu ritme i el progrés es guarda en aquest ordinador.</p></header>
+  app.innerHTML=`<header class="top"><h1>Posa't a prova</h1>
+    <p>Repassa cada unitat de la SA «Res no es llença», comprova que l'has entesa i supera el repte final. Avances al teu ritme i el progrés es guarda en aquest ordinador.</p></header>
     <div class="units">${U.map(u=>{ const p=pct(u), m=(P.best[u.id]||0)>=4;
       return `<button class="unit" style="--c:${u.c}" data-u="${u.id}">
         <div class="ring" style="--p:${p}"><span>${p}%</span></div>
         <div><h2>${u.e} ${u.t}</h2><p>${u.secs.length} apartats · targetes · repte${P.best[u.id]!==undefined?` · millor resultat ${P.best[u.id]}/5`:""}</p></div>
-        <span class="badge" aria-label="${m?"Tema superat":""}">${m?"🏅":""}</span></button>`; }).join("")}</div>
+        <span class="badge" aria-label="${m?"Unitat superada":""}">${m?"🏅":""}</span></button>`; }).join("")}</div>
     <section class="lesson" style="margin-top:1.4rem">
       <h2 style="color:var(--ink)">El teu progrés: ${tot} %</h2>
       <p>Copia aquesta línia a Classroom quan t'ho demani la professora:</p>
@@ -348,8 +270,8 @@ function quiz(u){
     const ok=V.score>=4;
     app.innerHTML=head(u,"quiz")+`<section class="lesson" style="text-align:center">
       <div class="score">${V.score} / 5</div>
-      <h2 style="color:var(--ink)">${ok?"🏅 Tema superat!":"Gairebé! Necessites 4 encerts per superar el tema."}</h2>
-      <p style="margin:.6rem auto">${ok?"Pots passar al tema següent o repassar les targetes.":"Repassa els apartats on has fallat i torna-ho a provar: les preguntes canvien cada vegada."}</p>
+      <h2 style="color:var(--ink)">${ok?"🏅 Unitat superada!":"Gairebé! Necessites 4 encerts per superar la unitat."}</h2>
+      <p style="margin:.6rem auto">${ok?"Pots passar a la unitat següent o repassar les targetes.":"Repassa els apartats on has fallat i torna-ho a provar: les preguntes canvien cada vegada."}</p>
       <div class="nav" style="justify-content:center"><button class="soft" id="again">Torna a fer el repte</button><button class="acc" id="home2">Torna als temes</button></div></section>`;
     wire(u);
     document.getElementById("again").onclick=()=>app.querySelector('[data-tab="quiz"]').click();

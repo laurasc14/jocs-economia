@@ -89,3 +89,4 @@ svg .tr{fill:#1E9E62;font-weight:700} svg .tc{fill:var(--bad);font-weight:700} s
   .tema{break-before:page}
   .tema:first-of-type{break-before:auto}
 }
+.tema > h2 .fase{font-size:.9rem;font-weight:600;color:var(--muted)}

@@ -5,26 +5,30 @@
 
   // Pla del trimestre: els nivells que encara no estan fets surten com a «properament»
   var PLA = [
-    { id: 'N1', num: 1, titol: 'Per què existeix la cooperativa?', tema: 'Economia i escassetat' },
-    { id: 'N2', num: 2, titol: 'Constituïm la cooperativa', tema: 'Empresa i cooperativa' },
-    { id: 'N3', num: 3, titol: 'Els números de la cooperativa', tema: 'Costos, benefici i punt mort' },
-    { id: 'N4', num: 4, titol: 'Sortim al mercat', tema: 'Oferta, demanda i preu' },
-    { id: 'N5', num: 5, titol: 'Viure del teu sou', tema: 'Nòmina i pressupost' }
+    { id: 'N1', num: 1, titol: 'El problema', tema: 'Fase 1 · U1', fita: 'Fita 1 · 13/10', aval: 1 },
+    { id: 'N2', num: 2, titol: 'El mercat', tema: 'Fase 2 · U2', fita: 'Fita 2 · 10/11', aval: 1 },
+    { id: 'N3', num: 3, titol: 'El pla', tema: 'Fase 3 · U3', fita: 'Dossier 27/11 · Pitch 01/12', aval: 1 },
+    { id: 'N4', num: 4, titol: 'Quant costa viure pel teu compte?', tema: 'Projecte del 2n trimestre', fita: 'A partir del 15/12', aval: 2 }
   ];
+  var AVALS = {
+    1: ['1a avaluació', 'SA «Res no es llença. De l\'illa de les flors a la nostra cooperativa» · Prova competencial: 04/12'],
+    2: ['2a avaluació', 'Projecte «Quant costa viure pel teu compte?»']
+  };
+  var RUTES = [['A', 'Aliments'], ['B', 'Tèxtil'], ['C', 'Aparells']];
   var RANGS = [[0, 'Aspirant'], [150, 'Soci/a en prova'], [400, 'Soci/a'], [750, 'Tresorer/a'], [1100, 'Coordinador/a'], [1500, 'Presidència']];
   var EMOJIS = ['🐝', '🌱', '🧵', '🍪', '🕯️', '🎨', '🚲', '☀️', '📚', '🎧'];
   var COLORS = ['#0F766E', '#B45309', '#7C3AED', '#BE123C', '#1D4ED8', '#15803D'];
   var CLASSE = [
-    ['repas-teoria.html', '🎯', 'Posa\'t a prova', 'Preguntes de comprovació, targetes i reptes per tema'],
-    ['exercicis-calcul.html', '✏️', 'Entrenament lliure', 'Exercicis ràpids de càlcul amb números nous'],
-    ['calculadora-cooperativa.html', '🧾', 'Calculadora de la cooperativa', 'Els números reals del vostre producte'],
-    ['kit-pitch.html', '🎤', 'Kit del pitch', 'Temporitzador, guió i rúbrica'],
-    ['mercat-del-pa.html', '🥖', 'El mercat del pa', 'Joc de classe: oferta i demanda'],
-    ['escape-room-cooperativa.html', '🔐', 'La caixa de la cooperativa', 'Escape room per equips'],
-    ['vida-en-daus.html', '🎲', 'La vida en daus', 'Nòmina, pressupost i imprevistos'],
-    ['qui-vol-ser-ric-economia.html', '💰', 'Qui vol ser ric?', 'Repàs de l\'examen']
+    ['repas-teoria.html', '🎯', 'Posa\'t a prova', 'Preguntes de comprovació, targetes i reptes per unitat', 1],
+    ['exercicis-calcul.html', '✏️', 'Entrenament lliure', 'Cost d\'oportunitat, productivitat, enquesta, costos, punt mort i escenaris', 1],
+    ['calculadora-cooperativa.html', '🧾', 'Calculadora de la cooperativa', 'Els números reals del vostre producte', 1],
+    ['kit-pitch.html', '🎤', 'Kit del pitch', 'Temporitzador, guió i rúbrica', 1],
+    ['mercat-del-pa.html', '🥖', 'El mercat del pa', 'Joc: oferta, demanda i preu', 1],
+    ['escape-room-cooperativa.html', '🔐', 'La caixa de la cooperativa', 'Escape room per equips', 1],
+    ['qui-vol-ser-ric-economia.html', '💰', 'Qui vol ser ric?', 'Repàs de la prova', 1],
+    ['vida-en-daus.html', '🎲', 'La vida en daus', 'Nòmina, pressupost i imprevistos', 2]
   ];
-  var KEY = 'coop-lab-v1';
+  var KEY = 'coop-lab-v2';
   var DOCENT = /[?&]docent\b/.test(location.search);
   var app = document.getElementById('app');
   var S = { users: {}, cur: null };
@@ -60,7 +64,7 @@
     var ids = Object.keys(S.users);
     app.innerHTML =
       '<header class="hero"><div class="brand">🐝 Corbatera Coop Lab</div><h1>Crea la teva cooperativa</h1>' +
-      '<p>Economia · 4t ESO · Corbatera Institut Escola</p></header>' +
+      '<p>SA «Res no es llença» · Economia Bàsica 4t ESO · Corbatera Institut Escola</p></header>' +
       (ids.length ? '<section class="card"><h2>Ja tens carnet?</h2><div class="who">' + ids.map(function (id) {
         var u = S.users[id]; return '<button class="who-b" data-u="' + id + '" style="--c:' + u.color + '"><span class="em">' + u.emoji + '</span><span><b>' + esc(u.nom) + '</b><small>' + esc(u.coop) + '</small></span></button>';
       }).join('') + '</div></section>' : '') +
@@ -68,11 +72,13 @@
       '<p class="note">Cada equip és una cooperativa. Escriu el nom de la teva i tria com serà el vostre logotip.</p>' +
       '<label class="fld">El teu nom<input id="fNom" maxlength="30" placeholder="El teu nom o «Alumne 3»" autocomplete="off"></label>' +
       '<label class="fld">Nom de la cooperativa<input id="fCoop" maxlength="40" placeholder="Com es diu el vostre equip?" autocomplete="off"></label>' +
+      '<div class="fld">Ruta del projecte<div class="chips" id="fRuta">' + RUTES.map(function (x, i) { return '<button class="chip-r" data-r="' + x[0] + '" aria-pressed="' + (i === 0) + '">' + x[0] + ' · ' + x[1] + '</button>'; }).join('') + '</div></div>' +
       '<div class="fld">Logotip<div class="chips" id="fEm">' + EMOJIS.map(function (e, i) { return '<button class="chip-e" data-e="' + e + '" aria-pressed="' + (i === 0) + '">' + e + '</button>'; }).join('') + '</div></div>' +
       '<div class="fld">Color<div class="chips" id="fCol">' + COLORS.map(function (c, i) { return '<button class="chip-c" data-c="' + c + '" style="background:' + c + '" aria-pressed="' + (i === 0) + '" aria-label="Color ' + (i + 1) + '"></button>'; }).join('') + '</div></div>' +
       '<p class="note">Fes servir sempre el mateix nom: els teus exercicis i el teu progrés hi van lligats.</p>' +
       '<button class="main" id="fGo">Crea el meu carnet</button><p class="err" id="fErr"></p></section>';
-    var em = EMOJIS[0], col = COLORS[0];
+    var em = EMOJIS[0], col = COLORS[0], ruta = 'A';
+    app.querySelectorAll('.chip-r').forEach(function (b) { b.onclick = function () { ruta = b.dataset.r; app.querySelectorAll('.chip-r').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
     app.querySelectorAll('[data-u]').forEach(function (b) { b.onclick = function () { S.cur = b.dataset.u; save(); viewMap(); }; });
     app.querySelectorAll('.chip-e').forEach(function (b) { b.onclick = function () { em = b.dataset.e; app.querySelectorAll('.chip-e').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
     app.querySelectorAll('.chip-c').forEach(function (b) { b.onclick = function () { col = b.dataset.c; app.querySelectorAll('.chip-c').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); applyTheme({ color: col }); }; });
@@ -80,7 +86,7 @@
       var nom = document.getElementById('fNom').value.trim(), coop = document.getElementById('fCoop').value.trim();
       if (!nom || !coop) { document.getElementById('fErr').textContent = 'Escriu el teu nom i el de la cooperativa.'; return; }
       var id = (nom + '|' + coop).toLowerCase();
-      if (!S.users[id]) S.users[id] = { nom: nom, coop: coop, emoji: em, color: col, best: {}, plays: {}, diari: [], creat: new Date().toISOString() };
+      if (!S.users[id]) S.users[id] = { nom: nom, coop: coop, ruta: ruta, emoji: em, color: col, best: {}, plays: {}, diari: [], creat: new Date().toISOString() };
       S.cur = id; save(); viewMap();
     };
   }
@@ -93,14 +99,26 @@
     var pct = rg.next ? Math.round((xp - rg.min) / (rg.next[0] - rg.min) * 100) : 100;
     var h = '<header class="bar"><div class="brand">🐝 Corbatera Coop Lab</div><button class="ghost" id="out">Canvia de soci/a</button></header>' +
       '<section class="carnet"><div class="logo">' + u.emoji + '</div><div class="cinfo"><small>Cooperativa</small><h1>' + esc(u.coop) + '</h1>' +
-      '<p>Soci/a: <b>' + esc(u.nom) + '</b> · Rang: <b>' + rg.nom + '</b></p>' +
+      '<p>Soci/a: <b>' + esc(u.nom) + '</b>' + (u.ruta ? ' · Ruta ' + u.ruta + ' · ' + RUTES.filter(function (x) { return x[0] === u.ruta; })[0][1] : '') + ' · Rang: <b>' + rg.nom + '</b></p>' +
       '<div class="xpbar"><i style="width:' + pct + '%"></i></div><small>' + xp + ' XP' + (rg.next ? ' · ' + (rg.next[0] - xp) + ' XP per a ' + rg.next[1] : ' · Rang màxim!') + '</small></div></section>' +
       (DOCENT ? '<p class="docent">Mode docent: totes les missions obertes.</p>' : '') +
-      '<a class="study" href="estudi.html"><span>📚</span><div><b>Estudi</b><small>La teoria dels cinc temes: definicions, exemples resolts i errors típics</small></div></a>';
+      '<a class="study" href="estudi.html"><span>📚</span><div><b>Estudi</b><small>La teoria de les tres unitats: definicions, exemples resolts i errors típics</small></div></a>';
+    var lastAval = 0;
+    function classeHTML(av) {
+      var l = CLASSE.filter(function (c) { return c[4] === av; });
+      if (!l.length) return '';
+      return '<section class="level"><div class="lhead"><span class="lnum">A classe</span><h2>Eines i jocs</h2><small>' + AVALS[av][0] + '</small></div><div class="missions">' +
+        l.map(function (c) { return '<a class="mis link" href="' + c[0] + '"><span class="em2">' + c[1] + '</span><b>' + c[2] + '</b><small>' + c[3] + '</small></a>'; }).join('') + '</div></section>';
+    }
     PLA.forEach(function (p) {
+      if (p.aval !== lastAval) {
+        if (lastAval) h += classeHTML(lastAval);
+        h += '<header class="aval"><h2>' + AVALS[p.aval][0] + '</h2><p>' + AVALS[p.aval][1] + '</p></header>';
+        lastAval = p.aval;
+      }
       var nv = nivell(p.id);
-      h += '<section class="level' + (nv ? '' : ' soon') + '"><div class="lhead"><span class="lnum">Nivell ' + p.num + '</span><h2>' + p.titol + '</h2><small>' + p.tema + '</small></div>';
-      if (!nv) { h += '<p class="note">Properament.</p></section>'; return; }
+      h += '<section class="level' + (nv ? '' : ' soon') + '"><div class="lhead"><span class="lnum">Nivell ' + p.num + '</span><h2>' + p.titol + '</h2><small>' + p.tema + '</small><span class="fita">🏁 ' + p.fita + '</span></div>';
+      if (!nv) { h += '<p class="note">Arribarà amb el projecte del 2n trimestre.</p></section>'; return; }
       h += '<div class="missions">';
       nv.missions.forEach(function (m, i) {
         var key = nv.id + '-' + m.id, ok = unlocked(u, nv, i), b = u.best[key], mx = maxXP(nv, i);
@@ -114,14 +132,13 @@
         '<span class="st">' + (bb !== undefined ? (bossPassed(u, nv) ? '🏆 ' : '') + bb + '/' + bossMax(nv) + ' XP' : bOk ? 'Desafia' : '🔒 Supera totes les fases') + '</span></button>';
       h += '</div></section>';
     });
-    h += '<section class="level"><div class="lhead"><span class="lnum">A classe</span><h2>Eines i jocs</h2><small>Per fer a classe o pel teu compte</small></div><div class="missions">' +
-      CLASSE.map(function (c) { return '<a class="mis link" href="' + c[0] + '"><span class="em2">' + c[1] + '</span><b>' + c[2] + '</b><small>' + c[3] + '</small></a>'; }).join('') + '</div></section>';
+    h += classeHTML(lastAval);
     h += '<section class="level"><div class="lhead"><span class="lnum">Diari</span><h2>El meu diari de procés</h2><small>' + u.diari.length + ' missions registrades</small></div>' +
       '<p class="note">Descarrega l\'informe al final de cada sessió i penja\'l a Classroom. Si canvies d\'ordinador o s\'esborra el navegador, el progrés es perd.</p>' +
       '<div class="row"><button class="main" id="rep">Descarrega l\'informe</button></div></section>';
     if (DOCENT) h += '<section class="level"><div class="lhead"><span class="lnum">Professora</span><h2>Eines de seguiment</h2></div><div class="missions">' +
       '<a class="mis link" href="lliga-cooperativa.html"><span class="em2">🐝</span><b>Lliga de la cooperativa</b></a><a class="mis link" href="borsa-classe.html"><span class="em2">📈</span><b>Borsa de la classe</b></a></div></section>';
-    h += '<footer class="foot">Situació d\'aprenentatge «Crea la teva cooperativa» · Curs 2026–2027</footer>';
+    h += '<footer class="foot">SA «Res no es llença. De l\'illa de les flors a la nostra cooperativa» · Economia Bàsica 4t ESO · Curs 2026–2027</footer>';
     app.innerHTML = h;
     document.getElementById('out').onclick = function () { S.cur = null; save(); viewLogin(); };
     document.getElementById('rep').onclick = report;
@@ -135,7 +152,7 @@
     var key = nid + '-' + (isBoss ? 'BOSS' : nv.missions[+which].id);
     u.plays[key] = (u.plays[key] || 0) + 1; save();
     var seed = u.nom.toLowerCase() + '|' + key + '|' + u.plays[key];
-    var ctx = { coop: u.coop };
+    var ctx = { coop: u.coop, ruta: u.ruta };
     var items;
     if (isBoss) {
       items = nv.missions.map(function (m, i) { var g = m.gen(CE.rng(seed + '|' + i), ctx); return { titol: m.titol, intro: g.intro, steps: [g.steps[g.steps.length - 1]] }; });

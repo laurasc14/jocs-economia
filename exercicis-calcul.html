@@ -83,7 +83,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const r2=x=>Math.round(x*100)/100;
 const f=(x,d)=>{ const dec = d!==undefined ? d : (Math.round(x)===x?0:2); return x.toLocaleString("ca-ES",{minimumFractionDigits:dec,maximumFractionDigits:dec}); };
 const eur=x=>f(x)+" €";
-const PROD=[["bosses de roba","bossa"],["samarretes","samarreta"],["paquets de galetes","paquet"],["polseres","polsera"],["espelmes","espelma"],["tasses pintades","tassa"],["clauers","clauer"]];
+const PROD=[["pots de melmelada de fruita lletja","pot"],["bosses de roba reciclada","bossa"],["estoigs de texans vells","estoig"],["carregadors reparats","carregador"],["espelmes d'oli reciclat","espelma"],["altaveus reciclats","altaveu"]];
 
 const TYPES={
  ct:{n:"Cost total", gen(){
@@ -102,37 +102,36 @@ const TYPES={
    return {st:`La cooperativa vol saber quantes <b>${pl}</b> ha de vendre per no perdre diners. Els costos fixos són de <b>${eur(cf)}</b>, cada ${sg} costa <b>${eur(cvu)}</b> de fer i es ven a <b>${eur(p)}</b>.`,
      data:[`CF = ${eur(cf)}`,`P = ${eur(p)}`,`CVu = ${eur(cvu)}`], ask:"Quin és el punt mort (en unitats)?", unit:"unitats", ans:qs,
      sol:[`Marge unitari = P − CVu = ${f(p)} − ${f(cvu)} = ${eur(m)}`,`Punt mort = CF ÷ marge = ${f(cf)} ÷ ${f(m)} = <b>${qs} unitats</b>`,`A partir de la unitat ${qs+1} la cooperativa té benefici.`]}; }},
- iva:{n:"IVA", gen(){
-   const t=pick([21,21,10,4]), base=pick([R(5,60),R(10,200,5),R(2,30)+0.5]);
-   const items={21:["unes bambes","una motxilla","uns auriculars","un rellotge"],10:["un sopar al restaurant","un bitllet de tren","una nit d'hotel"],4:["una barra de pa","un llibre","un litre de llet"]};
-   const item=pick(items[t]);
-   if(Math.random()<0.5){
-     const ans=r2(base*(1+t/100));
-     return {st:`El preu de <b>${item}</b> sense IVA és de <b>${eur(base)}</b>. L'IVA que s'hi aplica és del <b>${t} %</b>.`,
-       data:[`Preu sense IVA = ${eur(base)}`,`IVA = ${t} %`], ask:"Quin és el preu final amb IVA?", unit:"€", ans,
-       sol:[`Preu amb IVA = preu × (1 + ${t}/100) = ${f(base)} × ${f(1+t/100)}`,`= <b>${eur(ans)}</b>`]};
-   } else {
-     const ans=r2(base*t/100);
-     return {st:`Compres <b>${item}</b>. El preu sense IVA és de <b>${eur(base)}</b> i l'IVA és del <b>${t} %</b>.`,
-       data:[`Preu sense IVA = ${eur(base)}`,`IVA = ${t} %`], ask:"Quants euros d'IVA pagues (la quota d'IVA)?", unit:"€", ans,
-       sol:[`Quota d'IVA = preu × ${t}/100 = ${f(base)} × ${f(t/100)}`,`= <b>${eur(ans)}</b>`,`El preu final seria ${f(base)} + ${f(ans)} = ${eur(r2(base+ans))}.`]};
-   } }},
- nom:{n:"Nòmina", gen(){
-   const b=R(1200,2400,50), ss=6.5, irpf=pick([6,8,10,12,14,15]);
-   const dss=r2(b*ss/100), dirpf=r2(b*irpf/100), ans=r2(b-dss-dirpf);
-   const job=pick(["dependent/a","cambrer/a","auxiliar administratiu/va","electricista","tècnic/a informàtic/a","cuiner/a"]);
-   return {st:`Treballes de <b>${job}</b> i el teu salari brut mensual és de <b>${eur(b)}</b>. Et descompten un <b>${f(ss,1)} %</b> de cotitzacions a la Seguretat Social i un <b>${irpf} %</b> de retenció d'IRPF.`,
-     data:[`Brut = ${eur(b)}`,`SS = ${f(ss,1)} %`,`IRPF = ${irpf} %`], ask:"Quin és el teu salari net?", unit:"€", ans,
-     sol:[`Seguretat Social: ${f(b)} × ${f(ss/100,3)} = ${eur(dss)}`,`IRPF: ${f(b)} × ${f(irpf/100)} = ${eur(dirpf)}`,`Salari net = ${f(b)} − ${f(dss)} − ${f(dirpf)} = <b>${eur(ans)}</b>`]}; }},
- pres:{n:"Pressupost", gen(){
-   const net=R(1000,1900,50), llo=R(350,800,25), sub=R(40,100,5), tr=pick([0,25,40,230]), mob=pick([12,20,30]), men=R(200,420,10), oci=R(0,250,10);
-   const tot=llo+sub+tr+mob+men+oci, ans=net-tot;
-   return {st:`Cobres un salari net de <b>${eur(net)}</b> al mes. Les teves despeses són: lloguer <b>${eur(llo)}</b>, llum i aigua <b>${eur(sub)}</b>, transport <b>${eur(tr)}</b>, mòbil <b>${eur(mob)}</b>, menjar <b>${eur(men)}</b> i oci <b>${eur(oci)}</b>.`,
-     data:[`Ingressos = ${eur(net)}`,`Despeses: ${[llo,sub,tr,mob,men,oci].map(x=>f(x)).join(" + ")}`], ask:"Quant et sobra (o et falta) a final de mes? Si et falta, escriu-ho amb un signe menys (−).", unit:"€", ans,
-     sol:[`Total despeses = ${[llo,sub,tr,mob,men,oci].map(x=>f(x)).join(" + ")} = ${eur(tot)}`,`Saldo = ingressos − despeses = ${f(net)} − ${f(tot)} = <b>${eur(ans)}</b>`, ans>=0?`Superàvit: pots estalviar ${eur(ans)}.`:`Dèficit: et falten ${eur(-ans)}.`, `L'habitatge (lloguer + subministraments) és el ${f(Math.round((llo+sub)/net*100),0)} % del sou.`]}; }}
+ esc:{n:"Escenaris", gen(){
+   const [pl,sg]=pick(PROD), m=pick([2,2.5,3,4,5]), pm=R(15,40), cf=r2(m*pm), cvu=pick([1,1.5,2,2.5]), p=r2(cvu+m);
+   const q=pick([pm-R(3,10), pm+R(2,8), pm+R(10,25)]), which=q<pm?"pessimista":q<pm+10?"realista":"optimista";
+   const I=r2(p*q), CT=r2(cf+cvu*q), ans=r2(I-CT);
+   return {st:`Pla de viabilitat de la cooperativa: venen <b>${pl}</b> a <b>${eur(p)}</b>, cada ${sg} costa <b>${eur(cvu)}</b> i els costos fixos són <b>${eur(cf)}</b>. A l'escenari <b>${which}</b> es venen <b>${q}</b> unitats.`,
+     data:[`P = ${eur(p)}`,`CVu = ${eur(cvu)}`,`CF = ${eur(cf)}`,`Q = ${q}`], ask:`Quin és el resultat de l'escenari ${which}? Si són pèrdues, posa el signe menys (−).`, unit:"€", ans,
+     sol:[`Ingressos = ${f(p)} × ${q} = ${eur(I)}`,`Cost total = ${f(cf)} + ${f(cvu)} × ${q} = ${eur(CT)}`,`Resultat = ${f(I)} − ${f(CT)} = <b>${eur(ans)}</b>`, `El punt mort és ${pm} unitats: amb ${q} unitats ${q>=pm?"hi ha benefici":"hi ha pèrdues"}.`]}; }},
+ prod:{n:"Productivitat", gen(){
+   const n=R(3,6), p1=pick([4,6,8,10,12]), pct=pick([25,50,100]), p2=p1*(1+pct/100);
+   if(!Number.isInteger(p2)) return TYPES.prod.gen();
+   const ask2 = Math.random()<0.5;
+   const ans = ask2 ? pct : p2;
+   return {st:`A la fàbrica de la cooperativa, <b>${n} persones</b> fan <b>${p1*n}</b> unitats en una ronda en què cadascú ho fa tot. A la ronda següent es reparteixen les tasques i en fan <b>${p2*n}</b>.`,
+     data:[`Persones = ${n}`,`Ronda 1 = ${p1*n} u.`,`Ronda 2 = ${p2*n} u.`], ask: ask2?"En quin percentatge ha augmentat la productivitat per persona?":"Quina és la productivitat per persona de la ronda 2?", unit: ask2?"%":"u./persona", ans,
+     sol:[`Productivitat ronda 1 = ${p1*n} ÷ ${n} = ${p1}`,`Productivitat ronda 2 = ${p2*n} ÷ ${n} = ${p2}`].concat(ask2?[`Augment = (${p2} − ${p1}) ÷ ${p1} × 100 = <b>${pct} %</b>`]:[`Resposta: <b>${p2} unitats per persona</b>`])}; }},
+ enq:{n:"Enquesta", gen(){
+   const preus=[2,3,4,5,6], cnt=preus.map(()=>R(2,7)), k=R(1,3), qd=cnt.slice(k).reduce((a,b)=>a+b,0);
+   const [pl]=pick(PROD), ing=Math.random()<0.5;
+   return {st:`La cooperativa ha preguntat «Quant pagaries com a màxim?» sobre el seu producte (${pl}). Respostes: ${preus.map((p,i)=>`<b>${cnt[i]}</b> persones ${f(p)} €`).join(', ')}.`,
+     data:preus.map((p,i)=>`${f(p)} € → ${cnt[i]}`), ask: ing?`Quins ingressos tindrien amb un preu de ${f(preus[k])} €?`:`Quantes persones comprarien a ${f(preus[k])} €?`, unit: ing?"€":"persones", ans: ing?preus[k]*qd:qd,
+     sol:[`Compren a ${f(preus[k])} € tots els que pagarien ${f(preus[k])} € o més: ${cnt.slice(k).join(' + ')} = ${qd} persones`].concat(ing?[`Ingressos = ${f(preus[k])} × ${qd} = <b>${eur(preus[k]*qd)}</b>`]:[])}; }},
+ opo:{n:"Cost d'oportunitat", gen(){
+   const vals=[15,20,25,30,35,40,45].sort(()=>Math.random()-.5).slice(0,3), alts=["fer de cangur","ajudar a la botiga del barri","donar classes de repàs"];
+   const best=Math.max(...vals);
+   return {st:`Dissabte has de vendre a la parada de la cooperativa sense cobrar. En lloc d'això podries: ${alts.map((a,i)=>`${a} (<b>${eur(vals[i])}</b>)`).join(', ')}.`,
+     data:alts.map((a,i)=>`${a}: ${eur(vals[i])}`), ask:"Quin és el teu cost d'oportunitat?", unit:"€", ans:best,
+     sol:[`Només compta la millor alternativa a què renuncies, no la suma`,`Millor alternativa: ${eur(best)} → cost d'oportunitat = <b>${eur(best)}</b>`]}; }}
 };
-const ORDER=["ct","ben","pm","iva","nom","pres"];
-const KEY="exercicis-calcul-v1";
+const ORDER=["opo","prod","enq","ct","ben","pm","esc"];
+const KEY="exercicis-calcul-v2";
 let S={type:"mix", stats:{}, streak:0, best:0};
 try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.stats) S=Object.assign(S,s); }catch(e){}
 const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} };

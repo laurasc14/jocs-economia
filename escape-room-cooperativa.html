@@ -99,7 +99,7 @@ ol.q li{margin-bottom:.8rem}
     </div>
   </section>
 
-  <p class="intro">Cada candau s'obre amb un codi numèric (o de lletres). Escriviu només xifres, sense euros ni comes: 12,50 € s'escriu 1250. Demanar una pista resta 2 minuts al rellotge. Les xifres són d'exemple: una cooperativa que fa bosses de roba pintades.</p>
+  <p class="intro">Cada candau s'obre amb un codi numèric (o de lletres). Escriviu només xifres, sense euros ni comes: 12,50 € s'escriu 1250. Demanar una pista resta 2 minuts al rellotge. Les xifres són d'exemple: una cooperativa «Res no es llença» que fa bosses de roba reciclada.</p>
 
   <div id="puzzles"></div>
 
@@ -134,26 +134,26 @@ const P = [
   html:`<p>Cada bossa es ven a 8 €. La cooperativa vol saber quantes bosses ha de vendre per no perdre diners, és a dir, quan els ingressos igualen els costos totals.</p>
   <p><strong>Codi: el nombre de bosses del punt mort.</strong></p>`,
   hint:"Punt mort = costos fixos ÷ (preu − cost variable unitari). Primer calculeu quant guanyeu amb cada bossa."},
- {t:"No oblideu l'IVA", key:"OTY4",
-  html:`<p>El preu de 8 € és <em>sense</em> IVA. Una botiga del barri us demana el preu final amb l'IVA general del 21 %.</p>
-  <p><strong>Codi: el preu final d'una bossa amb IVA</strong>, escrit sense coma (per exemple, 3,25 € seria 325).</p>`,
-  hint:"Preu amb IVA = preu × 1,21. Arrodoniu a cèntims."},
+ {t:"L'escenari optimista", key:"MTI1",
+  html:`<p>Al pla de viabilitat, la cooperativa calcula tres escenaris. Les bosses es venen a 8 €, cada bossa costa 3 € de fer (el resultat del candau 2) i els costos fixos són els del candau 1. A l'escenari <b>optimista</b> es venen 45 bosses.</p>
+  <p><strong>Codi: el benefici de l'escenari optimista.</strong></p>`,
+  hint:"Benefici = ingressos − cost total = 8 × 45 − (costos fixos + 3 × 45)."},
  {t:"Paraules de cooperativa", key:"QkRBQw==",
   html:`<p>Trieu la resposta correcta de cada pregunta. <strong>Codi: les quatre lletres en ordre</strong> (per exemple, ABCD).</p>
   <ol class="q">
    <li>Qui pren les decisions importants en una cooperativa?
      <span class="opts">A) El soci que ha posat més diners · B) Tots els socis, un soci un vot · C) El director · D) El banc</span></li>
    <li>Dediqueu el dissabte a vendre al mercat en lloc d'anar a un partit. Quin és el cost d'oportunitat?
-     <span class="opts">A) Els diners de la tela · B) El preu de la bossa · C) L'IVA · D) El partit al qual renuncieu</span></li>
+     <span class="opts">A) Els diners de la tela · B) El preu de la bossa · C) La parada · D) El partit al qual renuncieu</span></li>
    <li>Què vol dir estar al punt mort?
      <span class="opts">A) Ingressos iguals als costos totals · B) No vendre res · C) Tenir el màxim benefici · D) Haver de tancar</span></li>
-   <li>Qui paga finalment l'IVA d'una bossa?
-     <span class="opts">A) La cooperativa · B) L'Ajuntament · C) El consumidor final · D) El proveïdor de tela</span></li>
+   <li>Vau pagar 40 € per una parada a la fira i no us els tornaran. Per decidir si hi aneu, aquests 40 €…
+     <span class="opts">A) S'han de sumar als costos · B) Són el cost d'oportunitat · C) No han de comptar: ja estan perduts · D) Són ingressos</span></li>
   </ol>`,
   hint:"Una pregunta regalada: la resposta de la número 3 és la A."}
 ];
 
-const TOTAL = 45*60, PEN = 120, SK = "escape-coop-v1";
+const TOTAL = 45*60, PEN = 120, SK = "escape-coop-v2";
 let st = {solved:[], hints:[], left:TOTAL, running:false, end:null};
 try{ const s = JSON.parse(localStorage.getItem(SK)); if(s && Array.isArray(s.solved)) st = s; }catch(e){}
 function save(){ try{ localStorage.setItem(SK, JSON.stringify(st)); }catch(e){} }

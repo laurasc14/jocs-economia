@@ -2,6 +2,7 @@
 var CE = window.CE || {};
 window.CE = CE;
 CE.NIVELLS = [];
+CE.BANC = [];
 
 // Atzar amb llavor: el mateix nom i la mateixa partida donen els mateixos números
 CE.rng = function (seedStr) {
@@ -44,8 +45,13 @@ CE.esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { retu
 
 // Productes d'exemple per als enunciats
 CE.PRODUCTES = [
-  { pl: 'bosses de roba', sg: 'bossa' }, { pl: 'samarretes', sg: 'samarreta' },
-  { pl: 'paquets de galetes', sg: 'paquet' }, { pl: 'polseres', sg: 'polsera' },
-  { pl: 'espelmes', sg: 'espelma' }, { pl: 'tasses pintades', sg: 'tassa' },
-  { pl: 'clauers', sg: 'clauer' }, { pl: 'punts de llibre', sg: 'punt de llibre' }
+  { pl: 'pots de melmelada de fruita lletja', sg: 'pot', ruta: 'A' }, { pl: 'paquets de galetes de pa sec', sg: 'paquet', ruta: 'A' },
+  { pl: "espelmes d'oli reciclat", sg: 'espelma', ruta: 'A' },
+  { pl: 'bosses de roba reciclada', sg: 'bossa', ruta: 'B' }, { pl: 'estoigs de texans vells', sg: 'estoig', ruta: 'B' },
+  { pl: 'carregadors reparats', sg: 'carregador', ruta: 'C' }, { pl: 'altaveus reciclats', sg: 'altaveu', ruta: 'C' }
 ];
+// Tria un producte de la ruta de la cooperativa (A · Aliments, B · Tèxtil, C · Aparells)
+CE.prod = function (r, ctx) {
+  var l = CE.PRODUCTES.filter(function (p) { return ctx && p.ruta === ctx.ruta; });
+  return CE.pick(r, l.length ? l : CE.PRODUCTES);
+};
