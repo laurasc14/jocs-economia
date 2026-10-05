@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Repassa la teoria · Economia 4t ESO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#F3F5FA; --card:#FFFFFF; --ink:#1E2235; --muted:#5A6079; --line:#D8DCE8; --ok:#1F9461; --bad:#D2452F; --soft:#EAEEF7;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#11131D; --card:#1A1D2B; --ink:#E8EAF4; --muted:#A3A8C2; --line:#2D3147; --soft:#23273A; --ok:#45C08A; --bad:#F06A50; }
+}
+:root[data-theme="dark"]{ --bg:#11131D; --card:#1A1D2B; --ink:#E8EAF4; --muted:#A3A8C2; --line:#2D3147; --soft:#23273A; --ok:#45C08A; --bad:#F06A50; }
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.06rem/1.65 "Lexend",system-ui,sans-serif}
+h1,h2,h3{margin:0;line-height:1.2;font-weight:800}
+.wrap{max-width:820px;margin:0 auto;padding:1.4rem 1rem 4rem}
+button{font:600 1rem "Lexend",sans-serif;border:0;border-radius:12px;padding:.65rem 1.1rem;cursor:pointer;background:var(--ink);color:var(--bg)}
+button.soft{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+button.acc{background:var(--c,#3B5BDB);color:#fff}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible{outline:3px solid var(--c,#3B5BDB);outline-offset:2px}
+.top h1{font-size:clamp(1.8rem,4.6vw,2.6rem)}
+.top p{color:var(--muted);margin:.4rem 0 0;max-width:60ch}
+
+/* Unit cards with progress rings: the memorable element */
+.units{display:grid;gap:.9rem;margin-top:1.4rem}
+.unit{display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;text-align:left;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:20px;padding:1rem 1.1rem;font-weight:400}
+.unit:hover{border-color:var(--c)}
+.unit h2{font-size:1.2rem}
+.unit p{margin:.15rem 0 0;color:var(--muted);font-size:.95rem}
+.ring{--p:0;width:64px;height:64px;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--soft) 0);display:grid;place-items:center}
+.ring span{width:48px;height:48px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-weight:800;font-size:.9rem}
+.badge{font-size:1.6rem}
+
+.bar{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.crumbs{color:var(--muted);font-size:.95rem}
+.steps{display:flex;gap:6px;margin:1rem 0}
+.steps i{flex:1;height:8px;border-radius:4px;background:var(--line)}
+.steps i.done{background:var(--c)}
+.steps i.now{background:var(--c);opacity:.45}
+.lesson{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:1.3rem 1.4rem;margin-top:.6rem}
+.lesson h2{font-size:1.5rem;margin-bottom:.6rem;color:var(--c)}
+.lesson p{margin:.6rem 0;max-width:66ch}
+.lesson ul{margin:.4rem 0;padding-left:1.2rem}
+.lesson li{margin:.25rem 0}
+.ex{background:var(--soft);border-radius:14px;padding:.8rem 1rem;margin:.9rem 0}
+.ex b:first-child{color:var(--c)}
+.formula{font-weight:800;font-size:1.15rem;background:var(--soft);border-left:5px solid var(--c);border-radius:0 12px 12px 0;padding:.6rem .9rem;margin:.8rem 0}
+.check{margin-top:1.2rem;border-top:2px dashed var(--line);padding-top:1rem}
+.check h3{font-size:1.05rem;color:var(--muted);font-weight:600}
+.check .q{font-weight:600;margin:.3rem 0 .7rem}
+.opts{display:grid;gap:.5rem}
+.opt{text-align:left;background:var(--soft);color:var(--ink);font-weight:400;border:2px solid transparent}
+.opt:hover:not(:disabled){border-color:var(--c)}
+.opt.right{background:var(--ok);color:#fff}
+.opt.wrong{background:var(--bad);color:#fff;opacity:.85}
+.fb{margin-top:.8rem;font-weight:600;min-height:1.4em}
+.fb.ok{color:var(--ok)} .fb.no{color:var(--bad)}
+.fb span{display:block;font-weight:400;color:var(--ink);margin-top:.2rem}
+.nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+.tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+.tabs button[aria-pressed="true"]{background:var(--c);color:#fff}
+
+.flash{perspective:1000px;margin-top:1rem}
+.fcard{width:100%;min-height:220px;border-radius:20px;background:var(--card);border:2px solid var(--line);color:var(--ink);display:grid;place-items:center;padding:1.5rem;text-align:center;font-weight:400}
+.fcard .term{font-size:1.7rem;font-weight:800;color:var(--c)}
+.fcard .def{font-size:1.1rem;max-width:46ch}
+.fcard small{display:block;color:var(--muted);margin-top:.8rem;font-size:.85rem}
+.score{font-size:3rem;font-weight:800;color:var(--c)}
+.code{background:var(--soft);border-radius:12px;padding:.8rem 1rem;font-weight:600;user-select:all}
+@media (prefers-reduced-motion:no-preference){.lesson{animation:in .25s ease-out}}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const U=[
+{id:"u1",t:"L'economia i l'escassetat",e:"🌍",c:"#3B5BDB",
+ secs:[
+  {t:"Necessitats i béns",h:`<p>Una <b>necessitat</b> és la sensació de manca d'alguna cosa, acompanyada del desig de satisfer-la.</p>
+   <ul><li><b>Necessitats primàries:</b> són imprescindibles per viure, com menjar, beure, l'habitatge o la salut.</li>
+   <li><b>Necessitats secundàries:</b> milloren la qualitat de vida, però podem viure sense, com un mòbil, viatjar o anar al cinema.</li></ul>
+   <p>Les necessitats se satisfan amb <b>béns</b> (coses materials, com un entrepà) i amb <b>serveis</b> (activitats, com un tall de cabells o una classe).</p>
+   <p>Els <b>béns lliures</b> són tan abundants que no tenen preu, com l'aire. Els <b>béns econòmics</b> són escassos i tenen preu, com l'aigua embotellada.</p>`,
+   q:{p:"Una consulta al dentista és…",o:["Un bé lliure","Un servei","Un bé material","Una necessitat secundària"],a:1,x:"És una activitat que fa una persona per a una altra: un servei."}},
+  {t:"L'escassetat i l'elecció",h:`<p>Les necessitats humanes són <b>il·limitades</b>: quan en satisfem una, n'apareix una altra. En canvi, els recursos per satisfer-les són <b>limitats</b>. Aquest és el problema central de l'economia: l'<b>escassetat</b>.</p>
+   <p>Com que no podem tenir-ho tot, hem de <b>triar</b>. Tota societat ha de respondre tres preguntes bàsiques:</p>
+   <ul><li><b>Què</b> produir i en quina quantitat?</li><li><b>Com</b> produir-ho, amb quines tècniques i recursos?</li><li><b>Per a qui</b> produir-ho, és a dir, com es reparteix?</li></ul>
+   <div class="ex"><b>Exemple.</b> Un ajuntament té un pressupost limitat: si fa una piscina nova, potser no podrà arreglar el pavelló.</div>`,
+   q:{p:"Quin és el problema central que estudia l'economia?",o:["Com guanyar més diners","L'escassetat de recursos davant de necessitats il·limitades","El funcionament dels bancs","Com cobrar impostos"],a:1,x:"L'economia estudia com gestionar recursos escassos per satisfer necessitats il·limitades."}},
+  {t:"El cost d'oportunitat",h:`<p>Cada vegada que triem una opció, renunciem a una altra. El <b>cost d'oportunitat</b> és el valor de la <b>millor alternativa a què renunciem</b>.</p>
+   <div class="ex"><b>Exemple.</b> Dissabte pots anar a treballar a la parada de la cooperativa o anar a un concert. Si vas a treballar, el cost d'oportunitat és el concert que et perds.</div>
+   <p>El cost d'oportunitat no sempre són diners: pot ser temps, oci o descans.</p>`,
+   q:{p:"Estudies dues hores en lloc de jugar a futbol amb els amics. Quin és el cost d'oportunitat?",o:["Les dues hores d'estudi","La nota de l'examen","El partit de futbol que no jugues","Res, perquè estudiar és gratis"],a:2,x:"És la millor alternativa a què renuncies: el partit."}},
+  {t:"Els factors de producció",h:`<p>Per produir béns i serveis fan falta recursos, que s'anomenen <b>factors de producció</b>:</p>
+   <ul><li><b>Terra o recursos naturals:</b> sòl, aigua, minerals, energia.</li>
+   <li><b>Treball:</b> l'esforç físic i mental de les persones.</li>
+   <li><b>Capital:</b> màquines, eines, edificis i tecnologia que s'usen per produir.</li>
+   <li><b>Iniciativa empresarial:</b> la capacitat d'organitzar els altres factors i assumir riscos.</li></ul>
+   <p>Cada factor rep una remuneració: la terra rep una <b>renda</b>, el treball un <b>salari</b>, el capital un <b>interès</b> i l'empresari un <b>benefici</b>.</p>`,
+   q:{p:"La màquina de cosir que fa servir la cooperativa per fer bosses és…",o:["Terra","Treball","Capital","Iniciativa empresarial"],a:2,x:"Les màquines i les eines que serveixen per produir són capital."}},
+  {t:"Els agents econòmics",h:`<p>Els <b>agents econòmics</b> són els qui prenen decisions econòmiques:</p>
+   <ul><li><b>Famílies:</b> consumeixen béns i serveis i ofereixen factors de producció, sobretot treball.</li>
+   <li><b>Empreses:</b> produeixen béns i serveis i contracten factors de producció.</li>
+   <li><b>Sector públic:</b> recapta impostos i ofereix serveis públics, com escoles, hospitals o carreteres.</li></ul>
+   <p>Es relacionen en dos mercats: al <b>mercat de béns i serveis</b> les famílies compren el que fan les empreses; al <b>mercat de factors</b> les empreses contracten el treball de les famílies a canvi d'un salari. Aquest circuit s'anomena <b>flux circular de la renda</b>.</p>`,
+   q:{p:"Quan treballes en una empresa a canvi d'un sou, actues com a família en…",o:["El mercat de béns i serveis","El mercat de factors","El sector públic","La borsa"],a:1,x:"Ofereixes el teu treball, que és un factor de producció."}}
+ ],
+ cards:[["Escassetat","Recursos limitats davant de necessitats il·limitades."],["Bé lliure","Bé abundant que no té preu, com l'aire."],["Bé econòmic","Bé escàs que té preu."],["Cost d'oportunitat","Valor de la millor alternativa a què renuncies quan tries."],["Factors de producció","Terra, treball, capital i iniciativa empresarial."],["Capital","Màquines, eines, edificis i tecnologia per produir."],["Agents econòmics","Famílies, empreses i sector públic."],["Flux circular de la renda","Circuit de béns, factors i diners entre famílies i empreses."]],
+ extra:[
+  {p:"Quina d'aquestes és una necessitat primària?",o:["Tenir una consola","Alimentar-se","Anar de viatge","Comprar roba de marca"],a:1,x:"És imprescindible per viure."},
+  {p:"Quina remuneració rep el factor treball?",o:["Renda","Interès","Salari","Benefici"],a:2,x:"El treball es remunera amb un salari."},
+  {p:"La pregunta «com produir?» fa referència a…",o:["Quins béns es fabriquen","Amb quines tècniques i recursos es produeix","Qui rebrà els béns","El preu dels béns"],a:1,x:"Tracta de les tècniques i els recursos que s'utilitzen."}
+ ]},
+{id:"u2",t:"L'empresa i la cooperativa",e:"🏭",c:"#0F8B8D",
+ secs:[
+  {t:"Què és una empresa",h:`<p>Una <b>empresa</b> és una organització que combina factors de producció per produir béns o serveis i vendre'ls, normalment per obtenir un benefici.</p>
+   <p>Les empreses <b>creen riquesa</b>, <b>generen ocupació</b> i <b>paguen impostos</b>, que financen els serveis públics.</p>
+   <p>Segons la seva activitat, es classifiquen en tres sectors:</p>
+   <ul><li><b>Primari:</b> obtenen recursos de la natura, com l'agricultura, la ramaderia o la pesca.</li>
+   <li><b>Secundari:</b> transformen matèries primeres, com la indústria o la construcció.</li>
+   <li><b>Terciari:</b> ofereixen serveis, com el comerç, el turisme o l'educació.</li></ul>`,
+   q:{p:"Una fàbrica de galetes pertany al sector…",o:["Primari","Secundari","Terciari","Públic"],a:1,x:"Transforma matèries primeres (farina, sucre) en un producte nou."}},
+  {t:"Les formes jurídiques",h:`<p>Qui crea una empresa ha de triar una <b>forma jurídica</b>. Una diferència clau és la <b>responsabilitat</b>: si l'empresa té deutes, qui els paga?</p>
+   <ul><li><b>Empresari/ària individual (autònom/a):</b> una sola persona. La responsabilitat és <b>il·limitada</b>: respon dels deutes amb els seus béns personals, com el pis o el cotxe.</li>
+   <li><b>Societat limitada (SL):</b> els socis responen només amb el capital que han aportat. Habitual en empreses petites i mitjanes.</li>
+   <li><b>Societat anònima (SA):</b> el capital es divideix en accions. També té responsabilitat limitada. Habitual en grans empreses.</li>
+   <li><b>Cooperativa:</b> empresa de propietat conjunta dels socis, que la gestionen de manera democràtica.</li></ul>`,
+   q:{p:"Una autònoma té deutes que l'empresa no pot pagar. Què pot passar?",o:["Res, els deutes desapareixen","Ha de respondre amb els seus béns personals","Els paga l'Estat","Els paguen els clients"],a:1,x:"L'empresari individual té responsabilitat il·limitada."}},
+  {t:"La cooperativa",h:`<p>Una <b>cooperativa</b> és una empresa formada per persones que s'uneixen voluntàriament per satisfer necessitats comunes. Es basa en uns <b>principis cooperatius</b>:</p>
+   <ul><li><b>Adhesió voluntària i oberta:</b> hi pot entrar qui vulgui i compleixi els requisits.</li>
+   <li><b>Gestió democràtica:</b> <b>un soci, un vot</b>, independentment del capital aportat.</li>
+   <li><b>Participació econòmica:</b> els socis aporten capital i els excedents es reparteixen segons l'activitat de cadascú, no segons els diners posats.</li>
+   <li><b>Educació i formació</b> dels socis.</li>
+   <li><b>Compromís amb la comunitat</b> i cooperació amb altres cooperatives.</li></ul>
+   <div class="ex"><b>A la vostra cooperativa:</b> totes les decisions importants es voten i cada persona té un vot.</div>`,
+   q:{p:"En una cooperativa, la sòcia que ha aportat més diners…",o:["Té més vots","Té un vot, com tothom","Decideix sola","No pot votar"],a:1,x:"Gestió democràtica: un soci, un vot."}}
+ ],
+ cards:[["Empresa","Organització que combina factors per produir béns o serveis."],["Sector primari","Obté recursos de la natura."],["Sector secundari","Transforma matèries primeres: indústria i construcció."],["Sector terciari","Ofereix serveis."],["Responsabilitat il·limitada","Respondre dels deutes de l'empresa amb els béns personals."],["Societat limitada","Els socis responen només amb el capital aportat."],["Cooperativa","Empresa de propietat conjunta gestionada democràticament."],["Un soci, un vot","Principi de gestió democràtica de les cooperatives."]],
+ extra:[
+  {p:"Una botiga de roba pertany al sector…",o:["Primari","Secundari","Terciari","Quaternari"],a:2,x:"El comerç és un servei."},
+  {p:"Com es reparteixen els excedents en una cooperativa?",o:["Segons el capital aportat","A parts iguals sempre","Segons l'activitat de cada soci","Se'ls queda el president"],a:2,x:"Es reparteixen segons la participació en l'activitat."},
+  {p:"Quina forma jurídica divideix el capital en accions?",o:["Autònom","Societat anònima","Cooperativa","Societat limitada"],a:1,x:"La societat anònima divideix el capital en accions."}
+ ]},
+{id:"u3",t:"Costos, ingressos i benefici",e:"🧮",c:"#C2410C",
+ secs:[
+  {t:"Costos fixos i variables",h:`<p>Els <b>costos</b> són el que paga l'empresa per produir.</p>
+   <ul><li><b>Costos fixos (CF):</b> no canvien encara que produeixis més o menys, com el lloguer o l'assegurança.</li>
+   <li><b>Costos variables (CV):</b> augmenten com més produeixes, com la matèria primera.</li></ul>
+   <p>El <b>cost variable unitari (CVu)</b> és el que costa fer <b>una</b> unitat.</p>
+   <div class="formula">Cost total = CF + CVu × quantitat</div>
+   <div class="ex"><b>Exemple.</b> El lloguer de la parada és de 60 €/mes (fix) i cada bossa necessita 3 € de material (variable). Si en feu 40: 60 + 3 × 40 = 180 €.</div>`,
+   q:{p:"CF = 100 €, CVu = 2 €. Quin és el cost total de fer 50 unitats?",o:["150 €","200 €","102 €","5.000 €"],a:1,x:"100 + 2 × 50 = 200 €."}},
+  {t:"Ingressos i benefici",h:`<p>Els <b>ingressos</b> són els diners que entren per les vendes:</p>
+   <div class="formula">Ingressos = preu × quantitat venuda</div>
+   <p>El <b>benefici</b> és el que queda després de pagar tots els costos:</p>
+   <div class="formula">Benefici = ingressos − cost total</div>
+   <p>Si el resultat és negatiu, l'empresa té <b>pèrdues</b>.</p>
+   <div class="ex"><b>Exemple.</b> Veneu 40 bosses a 8 €: ingressos de 320 €. Amb un cost total de 180 €, el benefici és de 140 €.</div>`,
+   q:{p:"Venem 30 unitats a 5 € i el cost total és de 170 €. Quin és el resultat?",o:["Benefici de 20 €","Pèrdues de 20 €","Benefici de 150 €","Pèrdues de 170 €"],a:1,x:"Ingressos: 30 × 5 = 150 €. 150 − 170 = −20 €: pèrdues."}},
+  {t:"El punt mort",h:`<p>El <b>punt mort</b> (o llindar de rendibilitat) és la quantitat que cal vendre perquè els ingressos siguin <b>iguals</b> als costos totals: ni es guanya ni es perd.</p>
+   <p>Primer calcula el <b>marge unitari</b>: el que guanyes amb cada unitat per pagar els costos fixos (preu − CVu).</p>
+   <div class="formula">Punt mort = CF ÷ (preu − CVu)</div>
+   <div class="ex"><b>Exemple.</b> CF = 100 €, preu = 8 €, CVu = 3 €. Marge: 5 €. Punt mort: 100 ÷ 5 = <b>20 bosses</b>. A partir de la bossa 21 hi ha benefici.</div>`,
+   q:{p:"CF = 300 €, preu = 10 €, CVu = 4 €. Quin és el punt mort?",o:["30 unitats","50 unitats","75 unitats","21 unitats"],a:1,x:"300 ÷ (10 − 4) = 300 ÷ 6 = 50 unitats."}},
+  {t:"L'IVA",h:`<p>L'<b>IVA</b> (impost sobre el valor afegit) és un <b>impost indirecte</b>: grava el consum i està inclòs en el preu del que comprem.</p>
+   <p>A Espanya hi ha tres tipus principals: el <b>general (21 %)</b>, el <b>reduït (10 %)</b>, per exemple per a l'hostaleria o el transport, i el <b>superreduït (4 %)</b>, per a productes bàsics com el pa, la llet o els llibres.</p>
+   <p>Les empreses el cobren als clients i l'ingressen a Hisenda, però qui el paga de veritat és el <b>consumidor final</b>.</p>
+   <div class="formula">Preu amb IVA = preu sense IVA × (1 + tipus)</div>
+   <div class="ex"><b>Exemple.</b> 8 € amb un IVA del 21 %: 8 × 1,21 = 9,68 €.</div>`,
+   q:{p:"Un producte costa 20 € sense IVA. Quin és el preu amb un IVA del 21 %?",o:["21 €","24,20 €","41 €","20,21 €"],a:1,x:"20 × 1,21 = 24,20 €."}}
+ ],
+ cards:[["Cost fix","No canvia amb la quantitat produïda."],["Cost variable","Augmenta com més es produeix."],["Cost total","CF + CVu × quantitat."],["Ingressos","Preu × quantitat venuda."],["Benefici","Ingressos − cost total."],["Punt mort","Quantitat on ingressos = costos: CF ÷ (preu − CVu)."],["Marge unitari","Preu − cost variable unitari."],["IVA","Impost indirecte sobre el consum; el paga el consumidor final."]],
+ extra:[
+  {p:"El sou fix de la persona que porta la comptabilitat cada mes és un cost…",o:["Variable","Fix","Unitari","D'oportunitat"],a:1,x:"No depèn de la quantitat produïda."},
+  {p:"Si venem menys unitats que el punt mort, tenim…",o:["Benefici","Pèrdues","Ni benefici ni pèrdues","Més ingressos que costos"],a:1,x:"Per sota del punt mort, els ingressos no cobreixen els costos."},
+  {p:"Quin tipus d'IVA té el pa?",o:["21 %","10 %","4 %","0 %"],a:2,x:"El pa és un producte bàsic: tipus superreduït."}
+ ]},
+{id:"u4",t:"El mercat",e:"🥖",c:"#7C3AED",
+ secs:[
+  {t:"La demanda",h:`<p>Un <b>mercat</b> és qualsevol lloc, físic o virtual, on es troben compradors i venedors per intercanviar un bé o servei.</p>
+   <p>La <b>demanda</b> és la quantitat d'un bé que els consumidors volen i poden comprar a cada preu.</p>
+   <p><b>Llei de la demanda:</b> quan el preu <b>puja</b>, la quantitat demandada <b>baixa</b>, i a l'inrevés. Per això la corba de demanda té pendent negatiu, cap avall.</p>
+   <div class="ex"><b>Exemple.</b> Si el pa passa d'1,50 € a 3 €, la gent en comprarà menys.</div>`,
+   q:{p:"Si el preu de les entrades de cinema puja, la quantitat demandada…",o:["Puja","Baixa","No canvia","Es duplica"],a:1,x:"Llei de la demanda: més preu, menys quantitat demandada."}},
+  {t:"L'oferta",h:`<p>L'<b>oferta</b> és la quantitat d'un bé que els productors volen vendre a cada preu.</p>
+   <p><b>Llei de l'oferta:</b> quan el preu <b>puja</b>, la quantitat oferta <b>augmenta</b>, perquè als productors els surt més a compte vendre. La corba d'oferta té pendent positiu, cap amunt.</p>
+   <div class="ex"><b>Exemple.</b> Si el preu de l'oli puja molt, els pagesos intentaran produir-ne i vendre'n més.</div>`,
+   q:{p:"Segons la llei de l'oferta, si el preu baixa, els productors…",o:["Volen vendre'n més","Volen vendre'n menys","No hi ha cap efecte","Apugen el preu"],a:1,x:"Amb un preu més baix, produir és menys rendible i s'ofereix menys."}},
+  {t:"L'equilibri del mercat",h:`<p>El <b>preu d'equilibri</b> és el preu en què la quantitat demandada és igual a la quantitat oferta. Gràficament, és on es creuen les dues corbes.</p>
+   <ul><li>Si el preu està <b>per sobre</b> de l'equilibri, hi ha <b>excés d'oferta</b>: sobra producte i els venedors abaixen el preu.</li>
+   <li>Si el preu està <b>per sota</b>, hi ha <b>excés de demanda</b>: falta producte, hi ha cues i el preu puja.</li></ul>
+   <p>Així el mercat tendeix cap a l'equilibri, com va passar al joc del mercat del pa.</p>`,
+   q:{p:"Una botiga posa les bambes tan barates que es formen cues i s'esgoten. Hi ha…",o:["Excés d'oferta","Excés de demanda","Equilibri","Punt mort"],a:1,x:"Al preu fixat, la gent vol comprar més del que hi ha: excés de demanda."}},
+  {t:"Desplaçaments de les corbes",h:`<p>Quan canvia el <b>preu</b>, ens movem <b>al llarg</b> de la corba. Quan canvia un altre factor, la corba sencera es <b>desplaça</b>.</p>
+   <ul><li>La <b>demanda</b> es desplaça per canvis en la renda, els gustos i les modes, el preu d'altres béns o el nombre de compradors.</li>
+   <li>L'<b>oferta</b> es desplaça per canvis en els costos de producció, la tecnologia, el clima o el nombre de productors.</li></ul>
+   <div class="ex"><b>Exemples.</b> Festa major: la demanda de pa augmenta i el preu d'equilibri puja. La farina s'encareix: l'oferta baixa, el preu puja i la quantitat venuda baixa.</div>`,
+   q:{p:"Una nova màquina permet fer el doble de bosses amb el mateix cost. Què passa?",o:["La demanda augmenta","L'oferta augmenta i el preu tendeix a baixar","L'oferta baixa","No canvia res"],a:1,x:"Una millora tecnològica desplaça l'oferta cap a la dreta: més quantitat i preu més baix."}}
+ ],
+ cards:[["Mercat","Lloc on es troben compradors i venedors."],["Llei de la demanda","Si el preu puja, la quantitat demandada baixa."],["Llei de l'oferta","Si el preu puja, la quantitat oferta augmenta."],["Preu d'equilibri","Preu on quantitat demandada = quantitat oferta."],["Excés d'oferta","Sobra producte: el preu tendeix a baixar."],["Excés de demanda","Falta producte: el preu tendeix a pujar."],["Desplaçament de la demanda","Per canvis en renda, gustos o preus d'altres béns."],["Desplaçament de l'oferta","Per canvis en costos, tecnologia o clima."]],
+ extra:[
+  {p:"Una mala collita d'olives provoca que…",o:["L'oferta d'oli augmenti","L'oferta d'oli baixi i el preu pugi","La demanda d'oli baixi","El preu de l'oli baixi"],a:1,x:"El clima redueix l'oferta: menys producte i preu més alt."},
+  {p:"Si el preu està per sobre de l'equilibri, hi ha…",o:["Excés de demanda","Excés d'oferta","Equilibri","Cues"],a:1,x:"A preus alts s'ofereix més del que es demana."},
+  {p:"Els joves cobren més i compren més bicis elèctriques. Quina corba es desplaça?",o:["L'oferta","La demanda","Cap","Totes dues cap avall"],a:1,x:"Un augment de renda desplaça la demanda."}
+ ]},
+{id:"u5",t:"Nòmina i pressupost",e:"💶",c:"#B7791F",
+ secs:[
+  {t:"La nòmina",h:`<p>La <b>nòmina</b> és el document que justifica el pagament del sou a un treballador.</p>
+   <ul><li><b>Salari brut:</b> el total que guanyes abans de descomptes.</li>
+   <li><b>Deduccions:</b> les <b>cotitzacions a la Seguretat Social</b> (per a pensions, atur i sanitat) i la <b>retenció d'IRPF</b> (un avançament de l'impost sobre la renda).</li>
+   <li><b>Salari net:</b> el que arriba de veritat al compte.</li></ul>
+   <div class="formula">Salari net = salari brut − deduccions</div>
+   <p>L'empresa també cotitza a la Seguretat Social per cada treballador, a més de pagar-li el sou.</p>`,
+   q:{p:"Brut: 1.500 €. Seguretat Social: 98 €. IRPF: 120 €. Quin és el salari net?",o:["1.500 €","1.282 €","1.402 €","1.718 €"],a:1,x:"1.500 − 98 − 120 = 1.282 €."}},
+  {t:"El pressupost personal",h:`<p>Un <b>pressupost</b> és un pla que preveu els ingressos i les despeses d'un període, normalment un mes.</p>
+   <ul><li><b>Despeses fixes:</b> sempre igual cada mes, com el lloguer, la quota del mòbil o l'assegurança.</li>
+   <li><b>Despeses variables:</b> canvien segons el que decideixes, com l'oci, la roba o els àpats fora.</li></ul>
+   <p>Si els ingressos superen les despeses, hi ha <b>superàvit</b> (pots estalviar). Si són menors, hi ha <b>dèficit</b>.</p>
+   <div class="ex"><b>Una pauta habitual (50/30/20):</b> el 50 % per a necessitats, el 30 % per a desitjos i el 20 % per a estalvi. També es recomana que l'habitatge no passi del 30–35 % del sou.</div>`,
+   q:{p:"Ingresses 1.200 € i gastes 1.350 €. Tens…",o:["Superàvit","Dèficit","Equilibri","Estalvi"],a:1,x:"Les despeses superen els ingressos: dèficit de 150 €."}},
+  {t:"Estalvi, imprevistos i deute",h:`<p>L'<b>estalvi</b> és la part dels ingressos que no gastes. Un bon hàbit és tenir un <b>fons d'emergència</b>: diners reservats per als <b>imprevistos</b>, com una avaria o una multa.</p>
+   <p>Si no tens estalvi, un imprevist t'obliga a <b>endeutar-te</b>, per exemple amb una targeta de crèdit o un préstec ràpid. El deute s'ha de tornar amb <b>interessos</b>, de manera que l'imprevist acaba costant més.</p>
+   <div class="ex"><b>Exemple.</b> Un portàtil de 350 € pagat amb una targeta a un 24 % anual pot acabar costant bastant més si es retorna a poc a poc.</div>`,
+   q:{p:"Quina és la millor manera de fer front a un imprevist?",o:["Una targeta de crèdit","Un préstec ràpid","Un fons d'emergència","Comprar a terminis"],a:2,x:"Amb estalvi propi no pagues interessos."}}
+ ],
+ cards:[["Nòmina","Document que justifica el pagament del sou."],["Salari brut","Sou abans de deduccions."],["Salari net","Sou que cobres després de deduccions."],["IRPF","Impost sobre la renda; a la nòmina se'n fa una retenció."],["Seguretat Social","Cotitzacions per a pensions, atur i sanitat."],["Pressupost","Pla d'ingressos i despeses d'un període."],["Dèficit","Despeses més grans que ingressos."],["Fons d'emergència","Estalvi reservat per a imprevistos."]],
+ extra:[
+  {p:"Quina d'aquestes és una despesa fixa?",o:["El lloguer","Un sopar amb amics","Roba nova","Un concert"],a:0,x:"Es paga igual cada mes."},
+  {p:"Qui cotitza a la Seguretat Social per un treballador?",o:["Només el treballador","Només l'empresa","El treballador i l'empresa","L'Ajuntament"],a:2,x:"Cotitzen totes dues parts."},
+  {p:"Segons la pauta 50/30/20, quin percentatge es destina a estalvi?",o:["50 %","30 %","20 %","10 %"],a:2,x:"El 20 % es reserva per a l'estalvi."}
+ ]}
+];
+
+const KEY="repas-teoria-v1";
+let P={done:{},best:{}};
+try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.done) P=s; }catch(e){}
+const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(P)); }catch(e){} };
+const app=document.getElementById("app");
+let view={v:"home"};
+
+function pct(u){ const d=u.secs.filter((_,i)=>P.done[u.id+"-"+i]).length; const r=(P.best[u.id]||0)>=4?1:0; return Math.round((d+r)/(u.secs.length+1)*100); }
+const shuffle=a=>{ a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+function go(v){ view=v; render(); scrollTo({top:0}); }
+
+function render(){
+  if(view.v==="home") return home();
+  const u=U.find(x=>x.id===view.u); app.style.setProperty("--c",u.c); document.body.style.setProperty("--c",u.c);
+  ({sec:lesson, cards:cards, quiz:quiz})[view.v](u);
+}
+
+function home(){
+  const tot=Math.round(U.reduce((a,u)=>a+pct(u),0)/U.length);
+  app.innerHTML=`<header class="top"><h1>Repassa la teoria</h1>
+    <p>Llegeix cada apartat, comprova que l'has entès i, al final de cada tema, supera el repte. Avances al teu ritme i el progrés es guarda en aquest ordinador.</p></header>
+    <div class="units">${U.map(u=>{ const p=pct(u), m=(P.best[u.id]||0)>=4;
+      return `<button class="unit" style="--c:${u.c}" data-u="${u.id}">
+        <div class="ring" style="--p:${p}"><span>${p}%</span></div>
+        <div><h2>${u.e} ${u.t}</h2><p>${u.secs.length} apartats · targetes · repte${P.best[u.id]!==undefined?` · millor resultat ${P.best[u.id]}/5`:""}</p></div>
+        <span class="badge" aria-label="${m?"Tema superat":""}">${m?"🏅":""}</span></button>`; }).join("")}</div>
+    <section class="lesson" style="margin-top:1.4rem">
+      <h2 style="color:var(--ink)">El teu progrés: ${tot} %</h2>
+      <p>Copia aquesta línia a Classroom quan t'ho demani la professora:</p>
+      <div class="code">${U.map(u=>`${u.e} ${pct(u)}%${(P.best[u.id]||0)>=4?" 🏅":""}`).join(" · ")}</div>
+    </section>`;
+  app.querySelectorAll("[data-u]").forEach(b=>b.onclick=()=>{
+    const u=U.find(x=>x.id===b.dataset.u); let i=u.secs.findIndex((_,k)=>!P.done[u.id+"-"+k]); if(i<0) i=0;
+    go({v:"sec",u:u.id,i});
+  });
+}
+
+function head(u,active){
+  return `<div class="bar"><button class="soft" data-home>← Temes</button><span class="crumbs">${u.e} ${u.t}</span></div>
+  <div class="tabs">
+    <button class="soft" data-tab="sec" aria-pressed="${active==="sec"}">Teoria</button>
+    <button class="soft" data-tab="cards" aria-pressed="${active==="cards"}">Targetes</button>
+    <button class="soft" data-tab="quiz" aria-pressed="${active==="quiz"}">Repte final</button></div>`;
+}
+function wire(u){
+  app.querySelector("[data-home]").onclick=()=>go({v:"home"});
+  app.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{
+    const t=b.dataset.tab;
+    if(t==="sec") go({v:"sec",u:u.id,i:0});
+    if(t==="cards") go({v:"cards",u:u.id,k:0,flip:false,order:shuffle(u.cards.map((_,i)=>i))});
+    if(t==="quiz") go({v:"quiz",u:u.id,qs:shuffle([...u.secs.map(s=>s.q),...u.extra]).slice(0,5),k:0,score:0,ans:null});
+  });
+}
+
+function lesson(u){
+  const i=view.i, s=u.secs[i], done=!!P.done[u.id+"-"+i];
+  app.innerHTML=head(u,"sec")+`
+   <div class="steps">${u.secs.map((_,k)=>`<i class="${P.done[u.id+"-"+k]?"done":k===i?"now":""}"></i>`).join("")}</div>
+   <article class="lesson">
+     <h2>${i+1}. ${s.t}</h2>${s.h}
+     <div class="check"><h3>Comprova-ho</h3><div class="q">${s.q.p}</div>
+       <div class="opts">${s.q.o.map((o,k)=>`<button class="opt${done&&k===s.q.a?" right":""}" data-k="${k}" ${done?"disabled":""}>${o}</button>`).join("")}</div>
+       <div class="fb${done?" ok":""}" id="fb" aria-live="polite">${done?`Correcte!<span>${s.q.x}</span>`:""}</div></div>
+   </article>
+   <div class="nav">
+     <button class="soft" id="prev" ${i===0?"disabled":""}>Apartat anterior</button>
+     ${i<u.secs.length-1?`<button class="acc" id="next" ${done?"":"disabled"}>Apartat següent</button>`:`<button class="acc" id="toQuiz" ${done?"":"disabled"}>Fes el repte final</button>`}
+   </div>`;
+  wire(u);
+  let tries=0;
+  app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const k=+b.dataset.k, fb=document.getElementById("fb");
+    if(k===s.q.a){
+      b.classList.add("right"); app.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+      fb.className="fb ok"; fb.innerHTML=`Correcte!<span>${s.q.x}</span>`;
+      P.done[u.id+"-"+i]=true; save();
+      const n=document.getElementById("next")||document.getElementById("toQuiz"); n.disabled=false; n.focus();
+    } else {
+      tries++; b.classList.add("wrong"); b.disabled=true;
+      fb.className="fb no"; fb.innerHTML= tries>=2 ? `Encara no.<span>Pista: ${s.q.x.split(":")[0]}. Rellegeix l'apartat i torna-ho a provar.</span>` : `No és correcte. Torna a llegir l'apartat i prova una altra resposta.`;
+    }
+  });
+  document.getElementById("prev").onclick=()=>go({v:"sec",u:u.id,i:i-1});
+  const n=document.getElementById("next"); if(n) n.onclick=()=>go({v:"sec",u:u.id,i:i+1});
+  const q=document.getElementById("toQuiz"); if(q) q.onclick=()=>app.querySelector('[data-tab="quiz"]').click();
+}
+
+function cards(u){
+  const k=view.k, c=u.cards[view.order[k]];
+  app.innerHTML=head(u,"cards")+`
+    <p class="note" style="color:var(--muted);margin-top:1rem">Intenta recordar la definició abans de girar la targeta.</p>
+    <div class="flash"><button class="fcard" id="fc" aria-live="polite">${view.flip?`<div><div class="def">${c[1]}</div><small>${c[0]}</small></div>`:`<div><div class="term">${c[0]}</div><small>Toca per girar</small></div>`}</button></div>
+    <div class="nav"><button class="soft" id="cp" ${k===0?"disabled":""}>Anterior</button><span class="crumbs">${k+1} / ${u.cards.length}</span><button class="acc" id="cn">${k<u.cards.length-1?"Següent":"Torna a començar"}</button></div>`;
+  wire(u);
+  document.getElementById("fc").onclick=()=>{ view.flip=!view.flip; render(); document.getElementById("fc").focus(); };
+  document.getElementById("cp").onclick=()=>{ view.k--; view.flip=false; render(); };
+  document.getElementById("cn").onclick=()=>{ if(view.k<u.cards.length-1){ view.k++; } else { view.k=0; view.order=shuffle(view.order); } view.flip=false; render(); };
+}
+
+function quiz(u){
+  const V=view;
+  if(V.k>=V.qs.length){
+    const prev=P.best[u.id]; if(prev===undefined||V.score>prev){ P.best[u.id]=V.score; save(); }
+    const ok=V.score>=4;
+    app.innerHTML=head(u,"quiz")+`<section class="lesson" style="text-align:center">
+      <div class="score">${V.score} / 5</div>
+      <h2 style="color:var(--ink)">${ok?"🏅 Tema superat!":"Gairebé! Necessites 4 encerts per superar el tema."}</h2>
+      <p style="margin:.6rem auto">${ok?"Pots passar al tema següent o repassar les targetes.":"Repassa els apartats on has fallat i torna-ho a provar: les preguntes canvien cada vegada."}</p>
+      <div class="nav" style="justify-content:center"><button class="soft" id="again">Torna a fer el repte</button><button class="acc" id="home2">Torna als temes</button></div></section>`;
+    wire(u);
+    document.getElementById("again").onclick=()=>app.querySelector('[data-tab="quiz"]').click();
+    document.getElementById("home2").onclick=()=>go({v:"home"});
+    return;
+  }
+  const q=V.qs[V.k];
+  app.innerHTML=head(u,"quiz")+`
+   <div class="steps">${V.qs.map((_,k)=>`<i class="${k<V.k?"done":k===V.k?"now":""}"></i>`).join("")}</div>
+   <section class="lesson"><h2>Pregunta ${V.k+1} de 5</h2><div class="q" style="font-weight:600;margin:.4rem 0 .8rem">${q.p}</div>
+     <div class="opts">${q.o.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join("")}</div>
+     <div class="fb" id="fb" aria-live="polite"></div>
+     <div class="nav"><span></span><button class="acc" id="qn" hidden>${V.k<4?"Següent pregunta":"Mira el resultat"}</button></div></section>`;
+  wire(u);
+  app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const k=+b.dataset.k, fb=document.getElementById("fb");
+    app.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+    app.querySelectorAll(".opt")[q.a].classList.add("right");
+    if(k===q.a){ V.score++; fb.className="fb ok"; fb.innerHTML=`Correcte!<span>${q.x}</span>`; }
+    else { b.classList.add("wrong"); fb.className="fb no"; fb.innerHTML=`No és correcte.<span>${q.x}</span>`; }
+    const n=document.getElementById("qn"); n.hidden=false; n.focus();
+    n.onclick=()=>{ V.k++; render(); };
+  });
+}
+render();
+</script>
+</body>
+</html>

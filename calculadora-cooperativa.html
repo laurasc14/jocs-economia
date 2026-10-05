@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calculadora de la cooperativa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#EFF4EF; --card:#FFFFFF; --ink:#16261B; --muted:#55695B; --line:#CFDDD2; --soft:#F1F6F2;
+  --green:#2E7D4F; --deep:#173D27; --rev:#2E7D4F; --cost:#C2410C; --amber:#F2B233;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#0E1711; --card:#16221A; --ink:#E4EFE7; --muted:#9DB5A4; --line:#26392C; --soft:#1C2B21; --green:#4CB07A; --deep:#0A1A10; --rev:#4CB07A; --cost:#F07A45; }
+}
+:root[data-theme="dark"]{ --bg:#0E1711; --card:#16221A; --ink:#E4EFE7; --muted:#9DB5A4; --line:#26392C; --soft:#1C2B21; --green:#4CB07A; --deep:#0A1A10; --rev:#4CB07A; --cost:#F07A45; }
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.03rem/1.55 "Lexend",system-ui,sans-serif}
+h1,h2,h3{margin:0;line-height:1.2;font-weight:800}
+.wrap{max-width:1080px;margin:0 auto;padding:1.4rem 1rem 4rem}
+button,input,select{font:inherit;color:inherit}
+button{font-weight:600;border:0;border-radius:10px;padding:.55rem .95rem;cursor:pointer;background:var(--green);color:#fff}
+button.soft{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+button.x{background:transparent;color:var(--muted);padding:.3rem .55rem;box-shadow:none;font-size:1.1rem}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+input,select{border:2px solid var(--line);border-radius:10px;padding:.45rem .6rem;background:var(--soft);min-width:0}
+.top{display:flex;justify-content:space-between;align-items:end;gap:1rem;flex-wrap:wrap}
+.top h1{font-size:clamp(1.8rem,4.4vw,2.5rem)}
+.top p{color:var(--muted);margin:.3rem 0 0;max-width:60ch}
+.prod{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:1rem}
+.prod input{font-weight:800;font-size:1.2rem;flex:1;min-width:14ch;max-width:30ch}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-top:1.1rem}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:1.1rem 1.2rem}
+.card h2{font-size:1.25rem}
+.note{color:var(--muted);font-size:.93rem;margin:.2rem 0 .8rem}
+.rows{display:grid;gap:.4rem}
+.row{display:grid;grid-template-columns:1fr 7.5rem auto;gap:.4rem;align-items:center}
+.row .amt{display:flex;align-items:center;gap:.3rem}
+.row .amt input{width:100%;text-align:right}
+.total{display:flex;justify-content:space-between;border-top:2px solid var(--ink);margin-top:.7rem;padding-top:.5rem;font-weight:800}
+.add{margin-top:.6rem}
+.field{display:flex;justify-content:space-between;align-items:center;gap:.8rem;padding:.4rem 0}
+.field label{font-weight:600}
+.field .amt{display:flex;align-items:center;gap:.3rem}
+.field input{width:7.5rem;text-align:right}
+.field input[type=range]{width:100%;accent-color:var(--green)}
+
+/* Results ledger: the memorable element */
+.ledger{margin-top:1.1rem;background:var(--deep);color:#EAF5EE;border-radius:22px;padding:1.3rem}
+.ledger h2{font-size:1.3rem}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.8rem;margin-top:.9rem}
+.kpi{background:rgba(255,255,255,.06);border-radius:14px;padding:.8rem .9rem}
+.kpi span{display:block;color:#A9C7B4;font-size:.9rem}
+.kpi b{font-size:1.75rem;font-variant-numeric:tabular-nums}
+.kpi small{display:block;color:#A9C7B4;font-size:.85rem;margin-top:.2rem}
+.kpi.hi{background:var(--amber);color:#2B1D00}.kpi.hi span,.kpi.hi small{color:#4A3600}
+.kpi.loss b{color:#FF9B85}
+.verdict{margin-top:1rem;font-size:1.08rem;font-weight:600}
+svg{display:block;width:100%;height:auto}
+svg text{fill:var(--muted);font:12px "Lexend",sans-serif}
+.legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.9rem;color:var(--muted)}
+.sw{display:inline-block;width:14px;height:4px;border-radius:2px;margin-right:.35rem;vertical-align:middle}
+.summary{white-space:pre-wrap;background:var(--soft);border:2px dashed var(--line);border-radius:12px;padding:.8rem 1rem;font-size:.95rem;user-select:all}
+.actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem}
+@media (max-width:820px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Calculadora de la cooperativa</h1>
+      <p>Poseu-hi els vostres costos i el preu de venda, i veureu quant heu de vendre per no perdre diners i quin benefici podeu esperar.</p>
+    </div>
+    <button class="soft" id="clear">Comença de zero</button>
+  </header>
+  <div class="prod"><label for="pname" style="font-weight:600">Producte:</label><input id="pname" placeholder="Nom del producte"></div>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Costos fixos</h2>
+      <p class="note">Es paguen igualment, tant si veneu molt com poc: lloguer de la parada, cartells, eines, la web…</p>
+      <div class="rows" id="fixedRows"></div>
+      <button class="soft add" data-add="fixed">+ Afegeix un cost fix</button>
+      <div class="total"><span>Total costos fixos</span><span id="cfT"></span></div>
+    </section>
+    <section class="card">
+      <h2>Costos per unitat</h2>
+      <p class="note">El que costa fer <b>un sol</b> producte: material, embalatge, etiqueta…</p>
+      <div class="rows" id="varRows"></div>
+      <button class="soft add" data-add="var">+ Afegeix un cost per unitat</button>
+      <div class="total"><span>Cost variable unitari</span><span id="cvuT"></span></div>
+    </section>
+  </div>
+
+  <section class="card" style="margin-top:1.1rem">
+    <h2>Preu i vendes previstes</h2>
+    <div class="field"><label for="price">Preu de venda per unitat (sense IVA)</label><span class="amt"><input id="price" inputmode="decimal"> €</span></div>
+    <input type="range" id="priceR" min="0" max="50" step="0.5" aria-label="Preu de venda">
+    <div class="field"><label for="qty">Unitats que preveieu vendre</label><span class="amt"><input id="qty" inputmode="numeric"> u.</span></div>
+    <input type="range" id="qtyR" min="0" max="300" step="1" aria-label="Unitats previstes">
+    <div class="field"><label for="iva">Tipus d'IVA del producte</label><select id="iva"><option value="21">21 % (general)</option><option value="10">10 % (reduït)</option><option value="4">4 % (superreduït)</option></select></div>
+  </section>
+
+  <section class="ledger" aria-live="polite">
+    <h2 id="lTitle">Resultats</h2>
+    <div class="kpis" id="kpis"></div>
+    <p class="verdict" id="verdict"></p>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Ingressos i costos</h2>
+      <p class="note">On les dues línies es creuen hi ha el punt mort.</p>
+      <div id="chart"></div>
+      <div class="legend"><span><i class="sw" style="background:var(--rev)"></i>Ingressos</span><span><i class="sw" style="background:var(--cost)"></i>Cost total</span></div>
+    </section>
+    <section class="card">
+      <h2>I si…?</h2>
+      <p class="note">Quant hauríeu de vendre per guanyar una quantitat concreta?</p>
+      <div class="field"><label for="goal">Benefici que voleu aconseguir</label><span class="amt"><input id="goal" inputmode="decimal"> €</span></div>
+      <p id="goalOut" style="font-weight:600"></p>
+      <h2 style="margin-top:1rem">Resum per al dossier</h2>
+      <p class="note">Copieu-lo i enganxeu-lo al dossier o a la presentació.</p>
+      <div class="summary" id="summary"></div>
+      <div class="actions"><button id="copy">Copia el resum</button></div>
+    </section>
+  </div>
+</div>
+
+<script>
+const KEY="calc-coop-v1";
+const EXAMPLE={name:"Bosses de roba pintades (exemple)", fixed:[["Lloguer de la parada",60],["Cartells i targetes",25],["Pinzells i plantilles",30]], vars:[["Bossa de tela",2],["Pintura tèxtil",0.5],["Etiqueta",0.3]], price:8, qty:60, iva:21, goal:200};
+let S=JSON.parse(JSON.stringify(EXAMPLE));
+try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&Array.isArray(s.fixed)) S=s; }catch(e){}
+const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} };
+const $=id=>document.getElementById(id);
+const num=v=>{ v=String(v).trim().replace(/\s|€/g,""); if(v.includes(",")) v=v.replace(/\./g,"").replace(",","."); const n=parseFloat(v); return isNaN(n)?0:n; };
+const f=(x,d=2)=>x.toLocaleString("ca-ES",{minimumFractionDigits:Math.round(x)===x?0:d,maximumFractionDigits:d});
+const eur=x=>(x<0?"−":"")+f(Math.abs(x))+" €";
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function rowsHTML(list,kind){
+  return list.map((r,i)=>`<div class="row">
+    <input value="${esc(r[0])}" data-k="${kind}" data-i="${i}" data-f="0" aria-label="Concepte" placeholder="Concepte">
+    <span class="amt"><input value="${r[1]?f(r[1]):""}" data-k="${kind}" data-i="${i}" data-f="1" inputmode="decimal" aria-label="Import"> €</span>
+    <button class="x" data-del="${kind}" data-i="${i}" aria-label="Esborra ${esc(r[0])}">✕</button></div>`).join("");
+}
+function buildInputs(){
+  $("pname").value=S.name;
+  $("fixedRows").innerHTML=rowsHTML(S.fixed,"fixed");
+  $("varRows").innerHTML=rowsHTML(S.vars,"var");
+  $("price").value=f(S.price); $("priceR").value=S.price;
+  $("qty").value=S.qty; $("qtyR").value=S.qty;
+  $("iva").value=String(S.iva); $("goal").value=f(S.goal);
+}
+function calc(){
+  const CF=S.fixed.reduce((a,r)=>a+(+r[1]||0),0), CVu=S.vars.reduce((a,r)=>a+(+r[1]||0),0);
+  const P=S.price, Q=S.qty, m=P-CVu;
+  const I=P*Q, CT=CF+CVu*Q, B=I-CT;
+  const pm = m>0 ? Math.ceil(CF/m - 1e-9) : null;
+  const goalQ = m>0 ? Math.ceil((CF+S.goal)/m - 1e-9) : null;
+  return {CF,CVu,P,Q,m,I,CT,B,pm,goalQ,pIva:P*(1+S.iva/100)};
+}
+function render(){
+  const c=calc();
+  $("cfT").textContent=eur(c.CF); $("cvuT").textContent=eur(c.CVu);
+  $("lTitle").textContent=`Resultats${S.name?": "+S.name:""}`;
+  $("kpis").innerHTML=`
+    <div class="kpi"><span>Marge per unitat</span><b>${eur(c.m)}</b><small>preu − cost per unitat</small></div>
+    <div class="kpi hi"><span>Punt mort</span><b>${c.pm===null?"—":c.pm+" u."}</b><small>${c.pm===null?"el preu no cobreix el cost per unitat":"unitats per no perdre diners"}</small></div>
+    <div class="kpi"><span>Ingressos previstos</span><b>${eur(c.I)}</b><small>${f(c.P)} € × ${c.Q} u.</small></div>
+    <div class="kpi"><span>Cost total previst</span><b>${eur(c.CT)}</b><small>fixos + ${c.Q} × ${f(c.CVu)} €</small></div>
+    <div class="kpi ${c.B<0?"loss":""}"><span>${c.B<0?"Pèrdues previstes":"Benefici previst"}</span><b>${eur(c.B)}</b><small>ingressos − cost total</small></div>
+    <div class="kpi"><span>Preu amb IVA (${S.iva} %)</span><b>${eur(c.pIva)}</b><small>el que pagaria el client</small></div>`;
+  $("verdict").textContent = c.pm===null
+    ? "⚠️ Amb aquest preu perdeu diners amb cada unitat que veneu. Heu de pujar el preu o abaratir els costos per unitat."
+    : c.Q>=c.pm
+      ? `✅ Si veneu les ${c.Q} unitats previstes, superareu el punt mort en ${c.Q-c.pm} unitats i tindreu benefici.`
+      : `⚠️ Us falten ${c.pm-c.Q} unitats per arribar al punt mort. Penseu si podeu vendre'n més, pujar el preu o reduir costos.`;
+  $("goalOut").textContent = c.goalQ===null ? "Amb aquest preu no es pot arribar a cap benefici." : `Hauríeu de vendre ${c.goalQ} unitats per guanyar ${eur(S.goal)}.`;
+  chart(c); summary(c); save();
+}
+function chart(c){
+  const W=520,H=260,L=54,R=14,T=14,B=34;
+  const qmax=Math.max(10, Math.ceil(Math.max(c.Q*1.3, (c.pm||0)*1.5, 20)));
+  const ymax=Math.max(c.P*qmax, c.CF+c.CVu*qmax, 10);
+  const x=q=>L+q*(W-L-R)/qmax, y=v=>T+(ymax-v)*(H-T-B)/ymax;
+  let g=`<line x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--line)" stroke-width="2"/>`;
+  [0.5,1].forEach(k=>{ g+=`<line x1="${L}" x2="${W-R}" y1="${y(ymax*k)}" y2="${y(ymax*k)}" stroke="var(--line)"/><text x="${L-6}" y="${y(ymax*k)+4}" text-anchor="end">${f(Math.round(ymax*k),0)} €</text>`; });
+  g+=`<text x="${L-6}" y="${y(0)+4}" text-anchor="end">0</text><text x="${W-R}" y="${H-8}" text-anchor="end">${qmax} u.</text><text x="${L}" y="${H-8}">Unitats venudes</text>`;
+  if(c.pm!==null && c.pm<=qmax){
+    g+=`<line x1="${x(c.pm)}" x2="${x(c.pm)}" y1="${y(0)}" y2="${y(c.P*c.pm)}" stroke="var(--amber)" stroke-width="2" stroke-dasharray="5 4"/>
+        <circle cx="${x(c.pm)}" cy="${y(c.P*c.pm)}" r="7" fill="var(--amber)"/><text x="${x(c.pm)+10}" y="${y(c.P*c.pm)+16}" style="font-weight:600;fill:var(--ink)">Punt mort: ${c.pm} u.</text>`;
+  }
+  g+=`<line x1="${x(0)}" y1="${y(c.CF)}" x2="${x(qmax)}" y2="${y(c.CF+c.CVu*qmax)}" stroke="var(--cost)" stroke-width="4"/>`;
+  g+=`<line x1="${x(0)}" y1="${y(0)}" x2="${x(qmax)}" y2="${y(c.P*qmax)}" stroke="var(--rev)" stroke-width="4"/>`;
+  if(c.Q>0) g+=`<line x1="${x(c.Q)}" x2="${x(c.Q)}" y1="${T}" y2="${y(0)}" stroke="var(--muted)" stroke-dasharray="2 4"/><text x="${x(c.Q)-4}" y="${T+10}" text-anchor="end">Previsió: ${c.Q} u.</text>`;
+  $("chart").innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gràfic d'ingressos i costos">${g}</svg>`;
+}
+function summary(c){
+  const t=`Producte: ${S.name||"(sense nom)"}
+Costos fixos: ${S.fixed.map(r=>`${r[0]} ${eur(+r[1]||0)}`).join(", ")}. Total: ${eur(c.CF)}.
+Cost per unitat: ${S.vars.map(r=>`${r[0]} ${eur(+r[1]||0)}`).join(", ")}. Total: ${eur(c.CVu)}.
+Preu de venda: ${eur(c.P)} sense IVA (${eur(c.pIva)} amb un IVA del ${S.iva} %).
+Marge per unitat: ${eur(c.m)}.
+Punt mort: ${c.pm===null?"no s'hi arriba amb aquest preu":c.pm+" unitats"}.
+Previsió de vendes: ${c.Q} unitats → ingressos ${eur(c.I)}, cost total ${eur(c.CT)}, ${c.B<0?"pèrdues":"benefici"} de ${eur(Math.abs(c.B))}.`;
+  $("summary").textContent=t;
+}
+
+document.addEventListener("input",e=>{
+  const t=e.target;
+  if(t.id==="pname"){ S.name=t.value; render(); }
+  if(t.dataset.k){ const list=t.dataset.k==="fixed"?S.fixed:S.vars; list[+t.dataset.i][+t.dataset.f]= t.dataset.f==="1"?num(t.value):t.value; render(); }
+  if(t.id==="price"){ S.price=num(t.value); $("priceR").value=S.price; render(); }
+  if(t.id==="priceR"){ S.price=+t.value; $("price").value=f(S.price); render(); }
+  if(t.id==="qty"){ S.qty=Math.max(0,Math.round(num(t.value))); $("qtyR").value=S.qty; render(); }
+  if(t.id==="qtyR"){ S.qty=+t.value; $("qty").value=S.qty; render(); }
+  if(t.id==="goal"){ S.goal=num(t.value); render(); }
+});
+$("iva").onchange=e=>{ S.iva=+e.target.value; render(); };
+document.addEventListener("click",e=>{
+  const a=e.target.closest("[data-add]"), d=e.target.closest("[data-del]");
+  if(a){ (a.dataset.add==="fixed"?S.fixed:S.vars).push(["",0]); buildInputs(); render();
+    const rows=$(a.dataset.add==="fixed"?"fixedRows":"varRows").querySelectorAll("input[data-f='0']"); rows[rows.length-1].focus(); }
+  if(d){ (d.dataset.del==="fixed"?S.fixed:S.vars).splice(+d.dataset.i,1); buildInputs(); render(); }
+});
+$("clear").onclick=()=>{ if(confirm("S'esborraran tots els costos i el preu. Vols començar de zero?")){ S={name:"",fixed:[["",0]],vars:[["",0]],price:0,qty:0,iva:21,goal:0}; buildInputs(); render(); } };
+$("copy").onclick=async()=>{ try{ await navigator.clipboard.writeText($("summary").textContent); $("copy").textContent="Copiat!"; }catch(e){ $("copy").textContent="Selecciona el text i copia'l"; } setTimeout(()=>$("copy").textContent="Copia el resum",2000); };
+buildInputs(); render();
+</script>
+</body>
+</html>
