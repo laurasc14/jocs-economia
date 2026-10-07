@@ -1,4 +1,4 @@
-# Corbatera Coop Lab · Economia Bàsica
+# Corbatera Eco Lab · Economia Bàsica
 
 Gamificació d'**Economia Bàsica · 4t ESO** (Corbatera Institut Escola, curs 2026–2027), feta a partir de la programació de la 1a avaluació: SA **«Res no es llença. De l'illa de les flors a la nostra cooperativa»**.
 Cada alumne crea el seu **carnet de soci/a** amb el nom de la seva cooperativa i la ruta del projecte (A · Aliments, B · Tèxtil, C · Aparells), i resol missions **pas a pas**. Els enunciats fan servir el nom de la cooperativa i productes de la seva ruta. Tot el procés queda registrat en un **diari** que es descarrega com a informe.

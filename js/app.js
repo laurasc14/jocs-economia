@@ -1,4 +1,4 @@
-/* Corbatera Coop Lab · motor de l'app */
+/* Corbatera Eco Lab · motor de l'app */
 (function () {
   // Nivells que ja s'han fet a classe: totes les seves fases queden obertes
   var ENTRENAMENT = [];
@@ -80,7 +80,7 @@
   function viewHome() {
     applyTheme(null); location.hash = '';
     app.innerHTML =
-      '<header class="hero"><div class="brand">🐝 Corbatera Coop Lab</div><h1>Economia Bàsica</h1>' +
+      '<header class="hero"><div class="brand">📊 Corbatera Eco Lab</div><h1>Economia Bàsica</h1>' +
       '<p>4t ESO · Corbatera Institut Escola · Curs 2026–2027</p></header>' +
       (DOCENT ? '<p class="docent">Mode docent: totes les avaluacions obertes.</p>' : '') +
       '<h2 class="tria">Tria l\'avaluació</h2><div class="avals">' + [1, 2, 3].map(function (av) {
@@ -89,7 +89,7 @@
           '<span class="em3">' + (ok ? A.em : '🔒') + '</span><small>' + A.nom + '</small><b>' + A.titol + '</b>' +
           '<span class="sub">' + (ok ? A.sub : A.tancada) + '</span></button>';
       }).join('') + '</div>' +
-      '<footer class="foot">Corbatera Coop Lab · Economia Bàsica 4t ESO · Corbatera Institut Escola · Curs 2026–2027</footer>';
+      '<footer class="foot">Corbatera Eco Lab · Economia Bàsica 4t ESO · Corbatera Institut Escola · Curs 2026–2027</footer>';
     app.querySelectorAll('[data-av]').forEach(function (b) { b.onclick = function () { viewLogin(+b.dataset.av); }; });
   }
 
@@ -191,7 +191,7 @@
       '<div class="row"><button class="main" id="rep">Descarrega l\'informe</button></div></section>';
     if (DOCENT) h += '<section class="level"><div class="lhead"><span class="lnum">Professora</span><h2>Eines de seguiment</h2></div><div class="missions">' +
       '<a class="mis link" href="lliga-cooperativa.html"><span class="em2">🐝</span><b>Lliga de la cooperativa</b></a><a class="mis link" href="borsa-classe.html"><span class="em2">📈</span><b>Borsa de la classe</b></a></div></section>';
-    h += '<footer class="foot">Corbatera Coop Lab · Economia Bàsica 4t ESO · Corbatera Institut Escola · Curs 2026–2027</footer>';
+    h += '<footer class="foot">Corbatera Eco Lab · Economia Bàsica 4t ESO · Corbatera Institut Escola · Curs 2026–2027</footer>';
     app.innerHTML = h;
     document.getElementById('out').onclick = function () { S.cur = null; save(); viewHome(); };
     document.getElementById('rep').onclick = report;
@@ -389,7 +389,7 @@
     save();
     var passBoss = R.boss && R.xp >= Math.ceil(R.max * 0.6);
     var nextOk = !R.boss && R.mi + 1 < R.nv.missions.length;
-    app.innerHTML = '<header class="bar"><div class="brand">🐝 Corbatera Coop Lab</div></header><section class="card result">' +
+    app.innerHTML = '<header class="bar"><div class="brand">📊 Corbatera Eco Lab</div></header><section class="card result">' +
       '<div class="big">' + R.xp + ' / ' + R.max + ' XP</div>' +
       '<h1>' + (R.boss ? (passBoss ? '🏆 ' + bossNom(R.nv) + ': superat!' : 'Encara no: cal un 60 %') : 'Missió completada!') + '</h1>' +
       '<p>' + (better && prev !== undefined ? 'Has millorat la teva millor partida (' + prev + ' XP).' : prev !== undefined ? 'La teva millor partida continua sent de ' + prev + ' XP.' : 'Ja la tens al diari de procés.') + '</p>' +
@@ -416,7 +416,7 @@
     }).join('');
     var html = '<!doctype html><html lang="ca"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Informe · ' + esc(u.nom) + '</title>' +
       '<style>body{font:15px/1.5 system-ui,sans-serif;max-width:820px;margin:2rem auto;padding:0 1rem;color:#1b2a24}h1{margin:0}table{border-collapse:collapse;width:100%;margin:1rem 0}td,th{border:1px solid #ccd;padding:.35rem .5rem;text-align:left}s{color:#c0392b}h3{margin:1.4rem 0 .3rem}h3 small{font-weight:400;color:#667}.k{display:flex;gap:1.5rem;flex-wrap:wrap}.k div{background:#eef4f1;border-radius:8px;padding:.5rem .8rem}@media print{body{margin:0}}</style></head><body>' +
-      '<h1>Informe de procés · Corbatera Coop Lab</h1><p><b>' + esc(u.nom) + '</b> · ' + (av === 2 ? 'Carta de vida: <b>' + esc(u.feina || '') : 'Cooperativa <b>' + esc(u.coop)) + '</b> · ' + new Date().toLocaleDateString('ca-ES') + '</p>' +
+      '<h1>Informe de procés · Corbatera Eco Lab</h1><p><b>' + esc(u.nom) + '</b> · ' + (av === 2 ? 'Carta de vida: <b>' + esc(u.feina || '') : 'Cooperativa <b>' + esc(u.coop)) + '</b> · ' + new Date().toLocaleDateString('ca-ES') + '</p>' +
       '<div class="k"><div>XP total: <b>' + xp + '</b></div><div>Rang: <b>' + rg.nom + '</b></div><div>Passos fets: <b>' + steps + '</b></div><div>A la primera: <b>' + first + '</b></div><div>Pistes: <b>' + hints + '</b></div><div>Solucions mostrades: <b>' + sols + '</b></div></div>' +
       '<table><tr><th>Missió</th><th>Millor XP</th><th>Partides</th></tr>' + rows + '</table>' + (av === 2 ? vidaInforme(u) : '') + '<h2>Procés de cada exercici</h2>' + (proc || '<p>Encara no hi ha cap missió feta.</p>') +
       '<p style="color:#667;margin-top:2rem">Per desar-lo en PDF: obre aquest arxiu i fes Imprimeix → Desa com a PDF.</p></body></html>';

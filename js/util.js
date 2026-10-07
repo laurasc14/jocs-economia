@@ -1,4 +1,4 @@
-/* Corbatera Coop Lab · utilitats */
+/* Corbatera Eco Lab · utilitats */
 var CE = window.CE || {};
 window.CE = CE;
 CE.NIVELLS = [];

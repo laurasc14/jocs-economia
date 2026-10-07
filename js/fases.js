@@ -1,4 +1,4 @@
-/* Corbatera Coop Lab · nivells = fases de la SA «Res no es llença» (1a avaluació) i projecte «Quant costa viure pel teu compte?» (2a avaluació) */
+/* Corbatera Eco Lab · nivells = fases de la SA «Res no es llença» (1a avaluació) i projecte «Quant costa viure pel teu compte?» (2a avaluació) */
 (function () {
   function bank(id) { for (var i = 0; i < CE.BANC.length; i++) if (CE.BANC[i].id === id) return CE.BANC[i]; throw new Error('Banc ' + id); }
   function m(bankId, misId) {
