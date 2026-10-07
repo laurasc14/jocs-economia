@@ -72,7 +72,14 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 
 /* Nivells i missions */
 .level{margin-top:1.6rem}
-.aval{margin-top:2.2rem;border-top:4px solid var(--head);padding-top:.9rem}
+.tabs-aval{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem}
+.tab-aval{--ac:var(--head);background:var(--card);color:var(--ink);border:3px solid var(--ac);border-radius:16px;padding:.7rem 1.4rem;font-size:1.05rem;font-weight:800}
+.tab-aval.a1{--ac:#E8771E}.tab-aval.a2{--ac:#7A1F2B}.tab-aval.a3{--ac:#1D4E89}
+.tab-aval[aria-selected="true"]{background:var(--ac);color:#fff}
+.panel{--ac:var(--head);border-top:5px solid var(--ac);margin-top:1rem;padding-top:.2rem}
+.panel.a1{--ac:#E8771E}.panel.a2{--ac:#7A1F2B}.panel.a3{--ac:#1D4E89}
+.tancada{background:var(--soft);border-radius:14px;padding:1rem 1.2rem;font-weight:600;margin-top:1rem}
+.aval{margin-top:1rem}
 .aval h2{font-size:1.7rem}
 .aval p{margin:.2rem 0 0;color:var(--muted)}
 .lhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1rem;margin-bottom:.7rem}

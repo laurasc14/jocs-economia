@@ -12,11 +12,20 @@
   ];
   // 2a avaluació amagada fins que comenci (posa-ho a true el 15/12)
   var MOSTRA_AVAL2 = false;
-  PLA = PLA.filter(function (p) { return MOSTRA_AVAL2 || p.aval === 1; });
+  var MOSTRA_AVAL3 = false;
+  var OBERTES = { 1: true, 2: MOSTRA_AVAL2, 3: MOSTRA_AVAL3 };
   var AVALS = {
-    1: ['1a avaluació', 'SA «Res no es llença. De l\'illa de les flors a la nostra cooperativa» · Prova competencial: 04/12'],
-    2: ['2a avaluació', 'Projecte «Quant costa viure pel teu compte?»']
+    1: ['1a avaluació', 'SA «Res no es llença. De l\'illa de les flors a la nostra cooperativa» · Prova competencial: 04/12', ''],
+    2: ['2a avaluació', 'Projecte «Quant costa viure pel teu compte?»', "S'obrirà quan comenci la 2a avaluació, a partir del 15/12."],
+    3: ['3a avaluació', '', "S'obrirà quan comenci la 3a avaluació."]
   };
+  var avalSel = null;
+  function avalPerDefecte() {
+    var avui = new Date().toISOString().slice(0, 10);
+    if (OBERTES[3] && avui >= '2027-03-22') return 3;
+    if (OBERTES[2] && avui >= '2026-12-15') return 2;
+    return 1;
+  }
   var RUTES = [['A', 'Aliments'], ['B', 'Tèxtil'], ['C', 'Aparells']];
   var RANGS = [[0, 'Aspirant'], [150, 'Soci/a en prova'], [400, 'Soci/a'], [750, 'Tresorer/a'], [1100, 'Coordinador/a'], [1500, 'Presidència']];
   var EMOJIS = ['🐝', '🌱', '🧵', '🍪', '🕯️', '🎨', '🚲', '☀️', '📚', '🎧'];
@@ -31,7 +40,6 @@
     ['qui-vol-ser-ric-economia.html', '💰', 'Qui vol ser ric?', 'Repàs de la prova', 1],
     ['vida-en-daus.html', '🎲', 'La vida en daus', 'Nòmina, pressupost i imprevistos', 2]
   ];
-  CLASSE = CLASSE.filter(function (c) { return MOSTRA_AVAL2 || c[4] === 1; });
   var KEY = 'coop-lab-v2';
   var DOCENT = /[?&]docent\b/.test(location.search);
   var app = document.getElementById('app');
@@ -105,48 +113,55 @@
       '<section class="carnet"><div class="logo">' + u.emoji + '</div><div class="cinfo"><small>Cooperativa</small><h1>' + esc(u.coop) + '</h1>' +
       '<p>Soci/a: <b>' + esc(u.nom) + '</b>' + (u.ruta ? ' · Ruta ' + u.ruta + ' · ' + RUTES.filter(function (x) { return x[0] === u.ruta; })[0][1] : '') + ' · Rang: <b>' + rg.nom + '</b></p>' +
       '<div class="xpbar"><i style="width:' + pct + '%"></i></div><small>' + xp + ' XP' + (rg.next ? ' · ' + (rg.next[0] - xp) + ' XP per a ' + rg.next[1] : ' · Rang màxim!') + '</small></div></section>' +
-      (DOCENT ? '<p class="docent">Mode docent: totes les missions obertes.</p>' : '') +
-      '<a class="study" href="estudi.html"><span>📚</span><div><b>Estudi</b><small>La teoria de les tres unitats: definicions, exemples resolts i errors típics</small></div></a>';
-    var lastAval = 0;
+      (DOCENT ? '<p class="docent">Mode docent: totes les missions obertes.</p>' : '');
+    var sel = avalSel || avalPerDefecte();
     function classeHTML(av) {
       var l = CLASSE.filter(function (c) { return c[4] === av; });
       if (!l.length) return '';
-      return '<section class="level"><div class="lhead"><span class="lnum">A classe</span><h2>Eines i jocs</h2><small>' + AVALS[av][0] + '</small></div><div class="missions">' +
+      return '<section class="level"><div class="lhead"><span class="lnum">A classe</span><h2>Eines i jocs</h2></div><div class="missions">' +
         l.map(function (c) { return '<a class="mis link" href="' + c[0] + '"><span class="em2">' + c[1] + '</span><b>' + c[2] + '</b><small>' + c[3] + '</small></a>'; }).join('') + '</div></section>';
     }
-    PLA.forEach(function (p) {
-      if (p.aval !== lastAval) {
-        if (lastAval) h += classeHTML(lastAval);
-        h += '<header class="aval"><h2>' + AVALS[p.aval][0] + '</h2><p>' + AVALS[p.aval][1] + '</p></header>';
-        lastAval = p.aval;
-      }
-      var nv = nivell(p.id);
-      h += '<section class="level' + (nv ? '' : ' soon') + '"><div class="lhead"><span class="lnum">Nivell ' + p.num + '</span><h2>' + p.titol + '</h2><small>' + p.tema + '</small><span class="fita">🏁 ' + p.fita + '</span></div>';
-      if (!nv) { h += '<p class="note">Arribarà amb el projecte del 2n trimestre.</p></section>'; return; }
-      h += '<div class="missions">';
+    function levelHTML(p) {
+      var nv = nivell(p.id), s = '';
+      s += '<section class="level' + (nv ? '' : ' soon') + '"><div class="lhead"><span class="lnum">Nivell ' + p.num + '</span><h2>' + p.titol + '</h2><small>' + p.tema + '</small><span class="fita">🏁 ' + p.fita + '</span></div>';
+      if (!nv) return s + '<p class="note">Properament.</p></section>';
+      s += '<div class="missions">';
       nv.missions.forEach(function (m, i) {
         var key = nv.id + '-' + m.id, ok = unlocked(u, nv, i), b = u.best[key], mx = maxXP(nv, i);
-        h += '<button class="mis' + (b !== undefined ? ' done' : '') + '" ' + (ok ? 'data-go="' + nv.id + ':' + i + '"' : 'disabled') + '>' +
+        s += '<button class="mis' + (b !== undefined ? ' done' : '') + '" ' + (ok ? 'data-go="' + nv.id + ':' + i + '"' : 'disabled') + '>' +
           '<span class="tag">FASE ' + (i + 1) + '</span><b>' + m.titol + '</b><small>' + m.sabers + '</small>' +
           '<span class="st">' + (b !== undefined ? '⭐ ' + b + '/' + mx + ' XP' : ok ? 'Comença' : '🔒') + '</span></button>';
       });
       var bk = nv.id + '-BOSS', bb = u.best[bk], bOk = bossUnlocked(u, nv);
-      h += '<button class="mis boss' + (bossPassed(u, nv) ? ' done' : '') + '" ' + (bOk ? 'data-go="' + nv.id + ':BOSS"' : 'disabled') + '>' +
+      s += '<button class="mis boss' + (bossPassed(u, nv) ? ' done' : '') + '" ' + (bOk ? 'data-go="' + nv.id + ':BOSS"' : 'disabled') + '>' +
         '<span class="tag">BOSS</span><b>Assemblea final</b><small>Un exercici de cada fase, sense pistes. Cal un 60 %.</small>' +
         '<span class="st">' + (bb !== undefined ? (bossPassed(u, nv) ? '🏆 ' : '') + bb + '/' + bossMax(nv) + ' XP' : bOk ? 'Desafia' : '🔒 Supera totes les fases') + '</span></button>';
-      h += '</div></section>';
-    });
-    h += classeHTML(lastAval);
+      return s + '</div></section>';
+    }
+    h += '<nav class="tabs-aval" role="tablist" aria-label="Avaluacions">' + [1, 2, 3].map(function (av) {
+      return '<button role="tab" class="tab-aval a' + av + '" data-aval="' + av + '" aria-selected="' + (sel === av) + '">' + AVALS[av][0] + (OBERTES[av] || DOCENT ? '' : ' 🔒') + '</button>';
+    }).join('') + '</nav>';
+    h += '<section class="panel a' + sel + '" role="tabpanel">';
+    h += '<header class="aval"><h2>' + AVALS[sel][0] + '</h2>' + (AVALS[sel][1] ? '<p>' + AVALS[sel][1] + '</p>' : '') + '</header>';
+    if (!OBERTES[sel] && !DOCENT) {
+      h += '<p class="tancada">🔒 ' + AVALS[sel][2] + '</p>';
+    } else {
+      if (sel === 1) h += '<a class="study" href="estudi.html"><span>📚</span><div><b>Estudi</b><small>La teoria de les tres unitats: definicions, exemples resolts i errors típics</small></div></a>';
+      PLA.filter(function (p) { return p.aval === sel; }).forEach(function (p) { h += levelHTML(p); });
+      h += classeHTML(sel);
+    }
+    h += '</section>';
     h += '<section class="level"><div class="lhead"><span class="lnum">Diari</span><h2>El meu diari de procés</h2><small>' + u.diari.length + ' missions registrades</small></div>' +
       '<p class="note">Descarrega l\'informe al final de cada sessió i penja\'l a Classroom. Si canvies d\'ordinador o s\'esborra el navegador, el progrés es perd.</p>' +
       '<div class="row"><button class="main" id="rep">Descarrega l\'informe</button></div></section>';
     if (DOCENT) h += '<section class="level"><div class="lhead"><span class="lnum">Professora</span><h2>Eines de seguiment</h2></div><div class="missions">' +
       '<a class="mis link" href="lliga-cooperativa.html"><span class="em2">🐝</span><b>Lliga de la cooperativa</b></a><a class="mis link" href="borsa-classe.html"><span class="em2">📈</span><b>Borsa de la classe</b></a></div></section>';
-    h += '<footer class="foot">SA «Res no es llença. De l\'illa de les flors a la nostra cooperativa» · Economia Bàsica 4t ESO · Curs 2026–2027</footer>';
+    h += '<footer class="foot">Corbatera Coop Lab · Economia Bàsica 4t ESO · Corbatera Institut Escola · Curs 2026–2027</footer>';
     app.innerHTML = h;
     document.getElementById('out').onclick = function () { S.cur = null; save(); viewLogin(); };
     document.getElementById('rep').onclick = report;
     app.querySelectorAll('[data-go]').forEach(function (b) { b.onclick = function () { var p = b.dataset.go.split(':'); start(p[0], p[1]); }; });
+    app.querySelectorAll('[data-aval]').forEach(function (b) { b.onclick = function () { avalSel = +b.dataset.aval; var y = scrollY; viewMap(); scrollTo(0, y); }; });
   }
 
   /* ---------- Missió pas a pas ---------- */

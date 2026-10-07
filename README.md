@@ -5,6 +5,10 @@ Cada alumne crea el seu **carnet de soci/a** amb el nom de la seva cooperativa i
 
 **App:** <https://laurasc14.github.io/jocs-economia/>
 
+## Pestanyes per avaluació
+
+El mapa té tres pestanyes: **1a**, **2a** i **3a avaluació**. Només es mostra el contingut de la pestanya triada (nivells, estudi i eines de classe). Per defecte s'obre l'avaluació en curs segons la data. Les avaluacions que encara no han començat surten amb 🔒; per obrir-les, canvia `var MOSTRA_AVAL2 = false;` o `var MOSTRA_AVAL3 = false;` a `true` a `js/app.js`. En mode docent (`?docent`) es veuen totes.
+
 ## Nivells = fases del projecte
 
 | Nivell | Fase i unitat | Fita | Missions |
