@@ -1,4 +1,4 @@
-/* Corbatera Coop Lab · nivells = fases de la SA «Res no es llença» (programació de la 1a avaluació) */
+/* Corbatera Coop Lab · nivells = fases de la SA «Res no es llença» (1a avaluació) i projecte «Quant costa viure pel teu compte?» (2a avaluació) */
 (function () {
   function bank(id) { for (var i = 0; i < CE.BANC.length; i++) if (CE.BANC[i].id === id) return CE.BANC[i]; throw new Error('Banc ' + id); }
   function m(bankId, misId) {
@@ -47,5 +47,18 @@
     ['NOU', 'ORG'],   // 8 Qui fa què a l'empresa
     ['NOU', 'RSC'],   // 9 Verd de veritat o de màrqueting?
     ['NOU', 'CU3']    // 10 Caça l'error
+  ]);
+
+  // 2a avaluació · Projecte «Quant costa viure pel teu compte?» (pressupost mensual, nòmina i imprevist)
+  nivell('N4', 4, 'Quant costa viure pel teu compte?', '2a avaluació · Necessitats, nòmina, pressupost i imprevistos', 'Projecte del 2n trimestre · des del 15/12', 'estudi-2.html#u4', [
+    ['VIU', 'NEC'],   // 1 Necessitat o desig? (llista de despeses d'una llar, S26)
+    ['VIU', 'NOM'],   // 2 Llegeix la nòmina
+    ['VIU', 'PAR'],   // 3 Les paraules de la nòmina
+    ['VIU', 'FIX'],   // 4 Fixes o variables?
+    ['VIU', 'PRE'],   // 5 Quadra el pressupost
+    ['VIU', 'REG'],   // 6 La regla 50/30/20
+    ['VIU', 'IMP'],   // 7 Imprevistos i deute
+    ['VIU', 'TER'],   // 8 Al comptat o a terminis?
+    ['VIU', 'CAC']    // 9 Caça l'error
   ]);
 })();

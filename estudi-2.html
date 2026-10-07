@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Teoria d'Economia Bàsica 4t ESO, 2a avaluació: quant costa viure pel teu compte? Necessitats, nòmina, pressupost, estalvi i deute.">
+<title>Estudi 2a avaluació · Corbatera Coop Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estudi.css">
+</head>
+<body>
+<header class="top">
+  <a class="back" href="index.html">← Tornar al mapa</a>
+  <div class="brand">🐝 Corbatera Coop Lab · Estudi · 2a avaluació</div>
+  <button class="print" id="print">Imprimeix o desa en PDF</button>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="Índex">
+  <label class="search"><span>Cerca</span><input id="q" type="search" placeholder="nòmina, IRPF, pressupost…"></label>
+  <p class="nores" id="nores" hidden>No hi ha cap apartat amb aquesta paraula.</p>
+  <ol id="toc"></ol>
+</nav>
+
+<main id="doc">
+<section class="intro">
+  <h1>La teoria de la 2a avaluació</h1>
+  <p>Projecte «Quant costa viure pel teu compte?». Imagina't que tens 23 anys i te'n vas a viure sola o sol: quant cobraràs de debò, en què et gastaràs els diners i què passarà si arriba un imprevist? Cada apartat té la idea clau, un exemple resolt i els errors més habituals. Quan acabis un apartat, prem <b>Practica-ho</b> i et portarà a la missió que hi correspon.</p>
+</section>
+
+<section class="tema" id="u4">
+<h2><span class="tn">Unitat 4</span> Quant costa viure pel teu compte? <small class="fase">Projecte del 2n trimestre</small></h2>
+
+<article class="ap" id="u4-1">
+<h3>4.1 Necessitats i desitjos</h3>
+<p>Quan fas un pressupost, la primera pregunta és: <b>quines despeses no puc evitar?</b></p>
+<ul>
+  <li><b>Necessitats:</b> despeses imprescindibles per viure i per poder anar a treballar. Per exemple, l'habitatge, la llum i l'aigua, la compra bàsica o el transport a la feina.</li>
+  <li><b>Desitjos:</b> despeses que fan la vida més agradable, però que es poden retallar. Per exemple, les plataformes de sèries, els sopars fora o la roba de marca.</li>
+</ul>
+<div class="tip"><b>Truc:</b> pregunta't «si aquest mes anés just, ho podria deixar de pagar?». Si la resposta és sí, és un desig.</div>
+<div class="ex"><b>Exemple resolt.</b> Llista del primer mes: habitació 380 €, llum i aigua 55 €, compra bàsica 220 €, dues plataformes 22 €, sopars fora 60 €. Necessitats: 380 + 55 + 220 = <b>655 €</b>. Desitjos: 22 + 60 = <b>82 €</b>.</div>
+<div class="err"><b>Compte!</b> La publicitat fa que molts desitjos semblin necessitats («el necessites!»). Un mòbil per comunicar-te és una necessitat; canviar-lo cada any quan el vell funciona és un desig.</div>
+<a class="practice" href="index.html#jugar=N4M1">Practica-ho → Nivell 4 · Fase 1</a>
+</article>
+
+<article class="ap" id="u4-2">
+<h3>4.2 La nòmina: del brut al net</h3>
+<p>La <b>nòmina</b> és el document que l'empresa et dona cada mes amb el que cobres i el que et descompten.</p>
+<table>
+  <tr><th>Concepte</th><th>Què és</th></tr>
+  <tr><td>Salari brut</td><td>El sou total abans de qualsevol descompte</td></tr>
+  <tr><td>Seguretat Social</td><td>Cotització per pagar pensions, atur i baixes per malaltia. El treballador en paga aproximadament un <b>6,5 %</b> del brut; l'empresa també en paga una part, i més gran</td></tr>
+  <tr><td>IRPF</td><td>Retenció: un avançament de l'impost sobre la renda. El percentatge depèn de quant cobres i de la situació personal</td></tr>
+  <tr><td>Salari net</td><td>El que t'arriba al compte</td></tr>
+</table>
+<p><b>Salari net = salari brut − Seguretat Social − IRPF</b></p>
+<div class="ex"><b>Exemple resolt.</b> Brut 1.600 €, Seguretat Social 6,5 % i IRPF 10 %.
+Seguretat Social: 1.600 × 0,065 = <b>104 €</b>. IRPF: 1.600 × 0,10 = <b>160 €</b>. Deduccions: 104 + 160 = <b>264 €</b>. Net: 1.600 − 264 = <b>1.336 €</b>.</div>
+<div class="err"><b>Compte!</b> Quan una oferta de feina diu «1.600 € al mes», normalment parla del <b>brut</b>. Per fer el pressupost, fes servir sempre el <b>net</b>.</div>
+<a class="practice" href="index.html#jugar=N4M2">Practica-ho → Nivell 4 · Fase 2</a>
+<a class="practice" href="index.html#jugar=N4M3">Practica-ho → Nivell 4 · Fase 3</a>
+</article>
+
+<article class="ap" id="u4-3">
+<h3>4.3 Despeses fixes i variables</h3>
+<p>Ja ho vas veure amb els costos de la cooperativa; a casa funciona igual:</p>
+<table>
+  <tr><th></th><th>Despesa fixa</th><th>Despesa variable</th></tr>
+  <tr><td>Què és</td><td>El mateix import cada mes</td><td>Canvia segons el que decideixes o consumeixes</td></tr>
+  <tr><td>Exemples</td><td>Lloguer, quota del mòbil, abonament de transport, assegurança</td><td>Oci, roba, menjar fora, regals</td></tr>
+</table>
+<div class="tip"><b>Per al projecte:</b> les fixes les has de pagar sí o sí; per tant, si has de retallar, mira primer les variables.</div>
+<div class="err"><b>Compte!</b> Fix no vol dir necessari: el gimnàs és una quota fixa, però és un desig. I variable no vol dir prescindible: el menjar varia cada mes, però és una necessitat.</div>
+<a class="practice" href="index.html#jugar=N4M4">Practica-ho → Nivell 4 · Fase 4</a>
+</article>
+
+<article class="ap" id="u4-4">
+<h3>4.4 El pressupost mensual</h3>
+<p>Un <b>pressupost</b> és el pla de què faràs amb els diners d'un mes. Es compara el que entra amb el que surt:</p>
+<p><b>Saldo = ingressos − despeses</b></p>
+<ul>
+  <li>Saldo positiu: <b>superàvit</b>. Et sobren diners i pots estalviar.</li>
+  <li>Saldo negatiu: <b>dèficit</b>. Gastes més del que guanyes i hauràs de retallar o endeutar-te.</li>
+</ul>
+<p>Es recomana que l'<b>habitatge</b> (lloguer i subministraments) no passi del <b>30–35 %</b> del sou net.</p>
+<div class="ex"><b>Exemple resolt.</b> Net 1.336 €. Despeses: lloguer 450 €, llum i aigua 60 €, menjar 280 €, transport 40 €, oci 150 €. Total: <b>980 €</b>. Saldo: 1.336 − 980 = <b>356 €</b> → superàvit. Habitatge: (450 + 60) ÷ 1.336 × 100 ≈ <b>38 %</b> → passa del 35 %: és car per al seu sou.</div>
+<div class="err"><b>Compte!</b> Si el saldo és negatiu, escriu-lo amb el signe menys (−120 €). Un dèficit petit cada mes es converteix en un deute gran a final d'any.</div>
+<a class="practice" href="index.html#jugar=N4M5">Practica-ho → Nivell 4 · Fase 5</a>
+</article>
+
+<article class="ap" id="u4-5">
+<h3>4.5 La regla 50/30/20</h3>
+<p>Una manera fàcil de repartir el <b>sou net</b>:</p>
+<table>
+  <tr><th>Part</th><th>Per a què</th><th>Amb 1.400 € nets</th></tr>
+  <tr><td>50 %</td><td>Necessitats</td><td>700 €</td></tr>
+  <tr><td>30 %</td><td>Desitjos</td><td>420 €</td></tr>
+  <tr><td>20 %</td><td>Estalvi</td><td>280 €</td></tr>
+</table>
+<div class="tip"><b>Comprova-ho:</b> les tres parts han de sumar el sou net (700 + 420 + 280 = 1.400 €).</div>
+<div class="err"><b>Compte!</b> És una guia, no una llei. Amb els lloguers d'avui, sovint les necessitats passen del 50 %; llavors es retalla dels desitjos, però intenta no deixar l'estalvi a zero.</div>
+<a class="practice" href="index.html#jugar=N4M6">Practica-ho → Nivell 4 · Fase 6</a>
+</article>
+
+<article class="ap" id="u4-6">
+<h3>4.6 Imprevistos, estalvi i deute</h3>
+<p>Un <b>imprevist</b> és una despesa que no esperaves: s'espatlla la rentadora, una multa, el dentista. Per això convé tenir un <b>fons d'emergència</b>: uns diners estalviats només per a això.</p>
+<p>Si no tens estalvis, hauràs de demanar diners (targeta de crèdit, préstec) i pagaràs <b>interessos</b>. Amb un 2 % mensual, cada mes el deute es multiplica per 1,02 si no en tornes res.</p>
+<div class="ex"><b>Exemple resolt.</b> Estalvies 80 € al mes i vols un fons de 500 €: 500 ÷ 80 = 6,25 → <b>7 mesos</b> (amb 6 no hi arribes). Si abans se t'espatlla el mòbil i deus 400 € al 2 % mensual: 1 mes → 400 × 1,02 = <b>408 €</b>; 2 mesos → 408 × 1,02 = <b>416,16 €</b>. Interessos: <b>16,16 €</b>.</div>
+<div class="err"><b>Compte!</b> En els mesos, arrodoneix sempre cap amunt. I els interessos se sumen sobre el deute que ja ha crescut, no sobre el deute inicial.</div>
+<a class="practice" href="index.html#jugar=N4M7">Practica-ho → Nivell 4 · Fase 7</a>
+</article>
+
+<article class="ap" id="u4-7">
+<h3>4.7 Al comptat o a terminis?</h3>
+<p>Pagar <b>al comptat</b> és pagar-ho tot de cop. Pagar <b>a terminis</b> és pagar una quota cada mes. Sembla més fàcil, però sovint hi ha interessos o comissions.</p>
+<p><b>Cost total a terminis = quota × nombre de quotes</b></p>
+<div class="ex"><b>Exemple resolt.</b> Un portàtil costa 700 € al comptat o 12 quotes de 65 €. A terminis: 65 × 12 = <b>780 €</b>. De més: 780 − 700 = <b>80 €</b>, que és 80 ÷ 700 × 100 ≈ <b>11 %</b> més car.</div>
+<div class="err"><b>Compte!</b> «Només 65 € al mes» no et diu quant pagaràs en total. Multiplica sempre abans de decidir.</div>
+<a class="practice" href="index.html#jugar=N4M8">Practica-ho → Nivell 4 · Fase 8</a>
+<a class="practice" href="index.html#jugar=N4M9">Repàs: Caça l'error → Nivell 4 · Fase 9</a>
+</article>
+
+</section>
+
+<p class="foot">Corbatera Coop Lab · Economia Bàsica 4t ESO · Projecte «Quant costa viure pel teu compte?» · Corbatera Institut Escola · Curs 2026–2027</p>
+</main>
+</div>
+
+<script>
+(function () {
+  var doc = document.getElementById('doc'), toc = document.getElementById('toc');
+  // Índex generat a partir dels títols
+  var temes = doc.querySelectorAll('.tema');
+  toc.innerHTML = Array.prototype.map.call(temes, function (t) {
+    var aps = t.querySelectorAll('.ap');
+    return '<li data-t="' + t.id + '"><a href="#' + t.id + '">' + t.querySelector('h2').textContent.replace(/^Unitat \d/, function (m) { return m + ' ·'; }).replace(/Projecte del.*$/, '') + '</a><ol>' +
+      Array.prototype.map.call(aps, function (a) { return '<li data-a="' + a.id + '"><a href="#' + a.id + '">' + a.querySelector('h3').textContent + '</a></li>'; }).join('') + '</ol></li>';
+  }).join('');
+  // Cercador
+  var norm = function (s) { return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); };
+  var q = document.getElementById('q');
+  q.addEventListener('input', function () {
+    var v = norm(q.value.trim()), any = false;
+    var re = v ? new RegExp('(^|[^a-z0-9])' + v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) : null;
+    temes.forEach(function (t) {
+      var vis = 0;
+      t.querySelectorAll('.ap').forEach(function (a) {
+        var hit = !re || re.test(norm(a.textContent));
+        a.hidden = !hit; toc.querySelector('[data-a="' + a.id + '"]').hidden = !hit; if (hit) vis++;
+      });
+      t.hidden = !vis; toc.querySelector('[data-t="' + t.id + '"]').hidden = !vis; if (vis) any = true;
+    });
+    document.getElementById('nores').hidden = any;
+  });
+  document.getElementById('print').onclick = function () { q.value = ''; q.dispatchEvent(new Event('input')); window.print(); };
+})();
+</script>
+</body>
+</html>

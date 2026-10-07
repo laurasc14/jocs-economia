@@ -16,11 +16,13 @@ El mapa té tres pestanyes: **1a**, **2a** i **3a avaluació**. Només es mostra
 | 1 · El problema | Fase 1 · U1 | Fita 1 · 13/10 | Escassetat o repartiment · Cost d'oportunitat · Costos irrecuperables · Pensar al marge i incentius · Positiu/normatiu i micro/macro · Què, com i per a qui · Factors de producció · Economies plurals, drets i deures · Dades amb font · Caça l'error · BOSS |
 | 2 · El mercat | Fase 2 · U2 | Fita 2 · 10/11 | Productivitat i divisió del treball · Recursos i sostenibilitat · Lleis del mercat · Llegeix la taula · Troba l'equilibri · Desplaçaments · Flux circular · De l'enquesta a la demanda · Caça l'error · BOSS |
 | 3 · El pla | Fase 3 · U3 | Dossier 27/11 · Pitch 01/12 | Costos fixos i variables · Benefici · Punt mort · Tres escenaris · Formes jurídiques · Un soci, un vot · Principis cooperatius · Elements de l'empresa i organigrama · RSC i rentat verd · Caça l'error · BOSS |
-| 4 · Quant costa viure pel teu compte? | 2a avaluació | A partir del 15/12 | Amagat (`var MOSTRA_AVAL2 = false;` a `js/app.js`); missions a `2n-trimestre/` |
+| 4 · Quant costa viure pel teu compte? | 2a avaluació · U4 | Projecte · des del 15/12 | Necessitat o desig? · Llegeix la nòmina · Les paraules de la nòmina · Fixes o variables? · Quadra el pressupost · La regla 50/30/20 · Imprevistos i deute · Al comptat o a terminis? · Caça l'error · BOSS |
+
+El nivell 4 està amagat per a l'alumnat fins que posis `var MOSTRA_AVAL2 = true;` a `js/app.js` (el 15/12). Amb `?docent` ja es pot provar.
 
 ## Estudi (teoria)
 
-`estudi.html` té la teoria de les tres unitats, en l'ordre de les fases: definicions, fórmules, exemples resolts (com «Espelmes Corbatera»), errors típics i esquemes. Té índex, cercador i opció d'imprimir o desar en PDF. Cada apartat té botons **Practica-ho** que obren la missió corresponent (`index.html#jugar=N3M4`).
+`estudi.html` té la teoria de les tres unitats de la 1a avaluació i `estudi-2.html`, la de la 2a (unitat 4: necessitats i desitjos, nòmina, despeses fixes i variables, pressupost, regla 50/30/20, imprevistos i deute, al comptat o a terminis), en l'ordre de les fases: definicions, fórmules, exemples resolts (com «Espelmes Corbatera»), errors típics i esquemes. Té índex, cercador i opció d'imprimir o desar en PDF. Cada apartat té botons **Practica-ho** que obren la missió corresponent (`index.html#jugar=N3M4`).
 
 ## Com funciona
 
@@ -44,14 +46,14 @@ Eines de la professora (només amb `?docent`): `lliga-cooperativa.html` i `borsa
 
 ```
 index.html            l'app (carnet, mapa, missions, diari)
-estudi.html           teoria de les unitats 1, 2 i 3
+estudi.html           teoria de les unitats 1, 2 i 3 (1a avaluació)
+estudi-2.html         teoria de la unitat 4 (2a avaluació)
 css/estil.css         estil de l'app
 css/estudi.css        estil de l'estudi (i de la versió impresa)
 js/util.js            utilitats: atzar amb llavor, format, productes per ruta
-js/banc-*.js          banc de missions (cada missió és un generador pas a pas)
+js/banc-*.js          banc de missions (cada missió és un generador pas a pas; banc-viure.js = 2a avaluació)
 js/fases.js           quines missions formen cada nivell i en quin ordre
 js/app.js             motor: carnet, mapa, passos, XP, rangs, diari i informe
-2n-trimestre/         missions de nòmina i pressupost (encara no carregades)
 *.html                jocs i eines de classe
 ```
 

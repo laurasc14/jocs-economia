@@ -8,7 +8,7 @@
     { id: 'N1', num: 1, titol: 'El problema', tema: 'Fase 1 · U1', fita: 'Fita 1 · 13/10', aval: 1 },
     { id: 'N2', num: 2, titol: 'El mercat', tema: 'Fase 2 · U2', fita: 'Fita 2 · 10/11', aval: 1 },
     { id: 'N3', num: 3, titol: 'El pla', tema: 'Fase 3 · U3', fita: 'Dossier 27/11 · Pitch 01/12', aval: 1 },
-    { id: 'N4', num: 4, titol: 'Quant costa viure pel teu compte?', tema: 'Projecte del 2n trimestre', fita: 'A partir del 15/12', aval: 2 }
+    { id: 'N4', num: 4, titol: 'Quant costa viure pel teu compte?', tema: 'Necessitats, nòmina, pressupost i imprevistos', fita: 'Projecte · des del 15/12', aval: 2 }
   ];
   // 2a avaluació amagada fins que comenci (posa-ho a true el 15/12)
   var MOSTRA_AVAL2 = false;
@@ -16,7 +16,7 @@
   var OBERTES = { 1: true, 2: MOSTRA_AVAL2, 3: MOSTRA_AVAL3 };
   var AVALS = {
     1: ['1a avaluació', 'SA «Res no es llença. De l\'illa de les flors a la nostra cooperativa» · Prova competencial: 04/12', ''],
-    2: ['2a avaluació', 'Projecte «Quant costa viure pel teu compte?»', "S'obrirà quan comenci la 2a avaluació, a partir del 15/12."],
+    2: ['2a avaluació', 'Projecte «Quant costa viure pel teu compte?» · Pressupost mensual, nòmina i imprevist', "S'obrirà quan comenci la 2a avaluació, a partir del 15/12."],
     3: ['3a avaluació', '', "S'obrirà quan comenci la 3a avaluació."]
   };
   var avalSel = null;
@@ -53,6 +53,11 @@
   function totalXP(u) { var t = 0; for (var k in u.best) t += u.best[k]; return t; }
   function rang(xp) { var r = RANGS[0], next = null; for (var i = 0; i < RANGS.length; i++) { if (xp >= RANGS[i][0]) { r = RANGS[i]; next = RANGS[i + 1] || null; } } return { nom: r[1], min: r[0], next: next }; }
   function nivell(id) { for (var i = 0; i < CE.NIVELLS.length; i++) if (CE.NIVELLS[i].id === id) return CE.NIVELLS[i]; return null; }
+  function obert(id) { // el nivell és d'una avaluació oberta?
+    if (DOCENT) return true;
+    var p = PLA.filter(function (x) { return x.id === id; })[0];
+    return !p || !!OBERTES[p.aval];
+  }
   function maxXP(nv, mi) { // XP màxim d'una missió (10 per pas)
     var r = CE.rng('max'); return nv.missions[mi].gen(r, { coop: '' }).steps.length * 10;
   }
@@ -147,6 +152,7 @@
       h += '<p class="tancada">🔒 ' + AVALS[sel][2] + '</p>';
     } else {
       if (sel === 1) h += '<a class="study" href="estudi.html"><span>📚</span><div><b>Estudi</b><small>La teoria de les tres unitats: definicions, exemples resolts i errors típics</small></div></a>';
+      if (sel === 2) h += '<a class="study" href="estudi-2.html"><span>📚</span><div><b>Estudi</b><small>La teoria del projecte: necessitats, nòmina, pressupost, estalvi i deute</small></div></a>';
       PLA.filter(function (p) { return p.aval === sel; }).forEach(function (p) { h += levelHTML(p); });
       h += classeHTML(sel);
     }
@@ -260,7 +266,7 @@
   function report() {
     var u = me(), xp = totalXP(u), rg = rang(xp);
     var rows = '';
-    CE.NIVELLS.forEach(function (nv) {
+    CE.NIVELLS.filter(function (nv) { return obert(nv.id); }).forEach(function (nv) {
       nv.missions.forEach(function (m, i) { var k = nv.id + '-' + m.id; rows += '<tr><td>Nivell ' + nv.num + ' · Fase ' + (i + 1) + ': ' + m.titol + '</td><td>' + (u.best[k] !== undefined ? u.best[k] + ' / ' + maxXP(nv, i) : '—') + '</td><td>' + (u.plays[k] || 0) + '</td></tr>'; });
       var bk = nv.id + '-BOSS'; rows += '<tr><td><b>Nivell ' + nv.num + ' · BOSS</b></td><td>' + (u.best[bk] !== undefined ? u.best[bk] + ' / ' + bossMax(nv) + (bossPassed(u, nv) ? ' ✔' : '') : '—') + '</td><td>' + (u.plays[bk] || 0) + '</td></tr>';
     });
@@ -286,7 +292,8 @@
   var m = location.hash.match(/jugar=(N\d)(M\d|BOSS)/);
   if (me() && m) {
     var nv = nivell(m[1]);
-    if (nv) {
+    if (nv && !obert(nv.id)) { viewMap(); alert('Aquesta avaluació encara no està oberta.'); }
+    else if (nv) {
       var idx = m[2] === 'BOSS' ? 'BOSS' : String(nv.missions.findIndex(function (x) { return x.id === m[2]; }));
       var okk = idx === 'BOSS' ? bossUnlocked(me(), nv) : unlocked(me(), nv, +idx);
       if (okk && idx !== '-1') { start(nv.id, idx); } else { viewMap(); alert('Aquesta missió encara està bloquejada. Fes primer les fases anteriors.'); }
