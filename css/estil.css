@@ -147,3 +147,33 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .fld select{font:inherit;font-weight:400;color:inherit;background:var(--soft);border:2px solid var(--line);border-radius:10px;padding:.6rem .7rem;max-width:28rem}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .aval-card.a2{--ac:#C2414F} }
 :root[data-theme="dark"] .aval-card.a2{--ac:#C2414F}
+
+/* 2a avaluació · La meva vida en números */
+.vida-sum{margin-top:1.4rem;background:var(--card);border:2px solid var(--line);border-radius:20px;padding:1.1rem 1.2rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.7rem;margin-top:.6rem}
+.tile{background:var(--soft);border-radius:14px;padding:.8rem 1rem;display:flex;flex-direction:column;gap:.15rem}
+.tile small{color:var(--muted);font-weight:600}
+.tile b{font-size:1.6rem;line-height:1.15;font-variant-numeric:tabular-nums}
+.st-ok,.st-bad,.st-muted{font-size:.9rem;font-weight:600}
+.st-ok{color:var(--ok)}.st-bad{color:var(--bad)}.st-muted{color:var(--muted);font-weight:400}
+.nom{background:var(--soft);border-radius:12px;padding:.7rem .9rem;font-variant-numeric:tabular-nums}
+.vtwrap{overflow-x:auto;margin-top:.4rem}
+.vtable{border-collapse:collapse;width:100%;min-width:560px;font-variant-numeric:tabular-nums}
+.vtable th,.vtable td{border-bottom:1px solid var(--line);padding:.45rem .5rem;text-align:left}
+.vtable thead th{color:var(--muted);font-size:.9rem}
+.vtable input{width:7.5rem;border:2px solid var(--line);border-radius:10px;padding:.4rem .5rem;background:var(--soft)}
+.vtable .dif,.vtable tfoot th{font-weight:700}
+.meters{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
+.mlab{display:flex;justify-content:space-between;gap:.5rem;font-weight:600}
+.mbar{position:relative;height:12px;border-radius:6px;background:var(--soft);margin:.35rem 0 .25rem;box-shadow:inset 0 0 0 1px var(--line)}
+.mbar i{display:block;height:100%;border-radius:6px;background:var(--coop)}
+.mbar em{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);transform:translateX(-1px)}
+.mref{color:var(--muted)}
+.chips.imp{display:flex;flex-wrap:wrap;gap:.4rem;margin:.4rem 0}
+.chip-i{background:var(--soft);font-weight:400;font-size:.92rem;padding:.4rem .7rem;box-shadow:inset 0 0 0 1px var(--line)}
+.row input{border:2px solid var(--line);border-radius:10px;padding:.5rem .6rem;background:var(--soft);min-width:0;flex:1 1 160px}
+.implist{list-style:none;padding:0;margin:.6rem 0}
+.implist li{display:flex;gap:.6rem;align-items:center;border-bottom:1px solid var(--line);padding:.35rem 0}
+.implist li span{flex:1}
+.implist .del{padding:.2rem .55rem}
+.mlab b{white-space:nowrap}

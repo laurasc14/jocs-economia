@@ -150,7 +150,8 @@
       '<section class="carnet' + (v2 ? ' vida' : '') + '"><div class="logo">' + u.emoji + '</div><div class="cinfo"><small>' + (v2 ? 'Carta de vida' : 'Cooperativa') + '</small><h1>' + esc(v2 ? u.nom : u.coop) + '</h1>' +
       '<p>' + (v2 ? 'Feina: <b>' + esc(u.feina || '') + '</b>' : 'Soci/a: <b>' + esc(u.nom) + '</b>' + (u.ruta ? ' · Ruta ' + u.ruta + ' · ' + RUTES.filter(function (x) { return x[0] === u.ruta; })[0][1] : '')) + ' · Rang: <b>' + rg.nom + '</b></p>' +
       '<div class="xpbar"><i style="width:' + pct + '%"></i></div><small>' + xp + ' XP' + (rg.next ? ' · ' + (rg.next[0] - xp) + ' XP per a ' + rg.next[1] : ' · Rang màxim!') + '</small></div></section>' +
-      (DOCENT ? '<p class="docent">Mode docent: totes les missions obertes.</p>' : '');
+      (DOCENT ? '<p class="docent">Mode docent: totes les missions obertes.</p>' : '') +
+      (v2 && (OBERTES[2] || DOCENT) ? vidaResum(u) : '');
     function classeHTML() {
       var l = CLASSE.filter(function (c) { return c[4] === av; });
       if (!l.length) return '';
@@ -194,7 +195,117 @@
     app.innerHTML = h;
     document.getElementById('out').onclick = function () { S.cur = null; save(); viewHome(); };
     document.getElementById('rep').onclick = report;
+    var tb = document.getElementById('tauler'); if (tb) tb.onclick = viewTauler;
     app.querySelectorAll('[data-go]').forEach(function (b) { b.onclick = function () { var p = b.dataset.go.split(':'); start(p[0], p[1]); }; });
+  }
+
+  /* ---------- 2a avaluació · La meva vida en números ---------- */
+  // Sou brut anual aproximat de cada carta de vida (el mateix que l'annex A del Quadern 1)
+  var SOUS = { 'Dependent/a de supermercat': 17300, 'Cambrer/a': 18200, 'Auxiliar administratiu/va': 19500, 'Cuiner/a': 20500, 'Mecànic/a de vehicles': 21000, 'Tècnic/a en cures auxiliars d\'infermeria': 21500, 'Electricista': 22800, 'Tècnic/a informàtic/a': 25000 };
+  var PARTIDES = [['hab', 'Habitatge (pis o habitació)', 'N'], ['subm', 'Llum, aigua i gas', 'N'], ['xarxa', 'Internet i mòbil', 'N'], ['menjar', 'Menjar', 'N'], ['transp', 'Transport', 'N'], ['oci', 'Oci', 'D'], ['roba', 'Roba i altres', 'D']];
+  var IMPREV = [['El mòbil cau i la pantalla es trenca', -180], ['Visita al dentista: un empast', -120], ['Multa per aparcar malament', -90], ['S\'espatlla la rentadora (la teva part)', -130], ['Casament d\'una amiga: regal i roba', -150], ['Factura de la llum d\'hivern més alta', -60], ['Et roben la bicicleta', -250], ['Viatge urgent per veure la família', -140], ['Hisenda et torna diners de l\'IRPF', 200], ['Vens roba que no fas servir', 40], ['Hores extres a la feina', 120]];
+  function irpfPct(b) { return b <= 18000 ? 4 : b <= 22000 ? 8 : b <= 26000 ? 11 : 14; }
+  function vida(u) {
+    if (!u.vida) u.vida = { brut: SOUS[u.feina] || 0, teo: {}, real: {}, imp: [] };
+    return u.vida;
+  }
+  function calcVida(u) {
+    var v = vida(u), r2 = CE.r2, c = { brut: +v.brut || 0 };
+    c.mes = r2(c.brut / 14); c.ss = r2(c.mes * 0.065); c.ir = irpfPct(c.brut); c.irpf = r2(c.mes * c.ir / 100); c.net = r2(c.mes - c.ss - c.irpf);
+    c.teT = 0; c.reT = 0; c.N = 0; c.D = 0; c.teN = 0; c.teD = 0; c.hab = 0; c.teHab = 0; c.nReal = 0;
+    PARTIDES.forEach(function (p) {
+      var t = +v.teo[p[0]] || 0, hasR = v.real[p[0]] !== undefined && v.real[p[0]] !== '', re = hasR ? +v.real[p[0]] || 0 : t;
+      if (hasR) c.nReal++;
+      c.teT += t; c.reT += re;
+      if (p[2] === 'N') { c.N += re; c.teN += t; } else { c.D += re; c.teD += t; }
+      if (p[0] === 'hab' || p[0] === 'subm') { c.hab += re; c.teHab += t; }
+    });
+    c.usaReal = c.nReal > 0;
+    c.gasto = c.usaReal ? c.reT : c.teT;
+    c.saldoTe = r2(c.net - c.teT); c.saldo = r2(c.net - c.gasto);
+    c.imp = v.imp.reduce(function (a, x) { return a + x[1]; }, 0); c.despresImp = r2(c.saldo + c.imp);
+    var pc = function (x) { return c.net ? Math.round(x / c.net * 1000) / 10 : 0; };
+    c.pHab = pc(c.hab); c.pN = pc(c.N); c.pD = pc(c.D); c.pE = pc(Math.max(c.saldo, 0));
+    c.fons = c.teN || c.N ? (c.usaReal ? c.N : c.teN) * 3 : 0; c.mesosFons = c.saldo > 0 && c.fons ? Math.ceil(c.fons / c.saldo) : null;
+    return c;
+  }
+  var eurV = function (x) { return CE.eur(CE.r2(x)); };
+  function estat(saldo) { return saldo >= 0 ? '<span class="st-ok">✅ Superàvit</span>' : '<span class="st-bad">⚠️ Dèficit</span>'; }
+  function vidaResum(u) {
+    var c = calcVida(u), buit = !c.teT;
+    return '<section class="vida-sum"><div class="lhead"><span class="lnum">La meva vida en números</span><small>' + (c.usaReal ? 'Amb els preus reals de la Fita 5' : 'Pressupost teòric') + '</small></div>' +
+      '<div class="tiles"><div class="tile"><small>Tinc (sou net al mes)</small><b>' + eurV(c.net) + '</b></div>' +
+      '<div class="tile"><small>Gasto</small><b>' + (buit ? '—' : eurV(c.gasto)) + '</b></div>' +
+      '<div class="tile"><small>Em queda</small><b>' + (buit ? '—' : eurV(c.saldo)) + '</b>' + (buit ? '<span class="st-muted">Omple el pressupost</span>' : estat(c.saldo)) + '</div></div>' +
+      '<div class="row"><button class="main" id="tauler">' + (buit ? 'Fes el meu pressupost' : 'Obre el meu tauler') + '</button></div></section>';
+  }
+  function meter(lbl, val, ref, sobre) { // sobre=true: passar la referència és dolent
+    var w = Math.max(0, Math.min(val, 100)), dolent = sobre ? val > ref : val < ref;
+    return '<div class="meter"><div class="mlab"><span>' + lbl + '</span><b>' + CE.f(val, val % 1 ? 1 : 0) + ' %</b></div>' +
+      '<div class="mbar" role="img" aria-label="' + lbl + ': ' + CE.f(val, 1) + ' %, referència ' + ref + ' %"><i style="width:' + w + '%"></i><em style="left:' + ref + '%" title="Referència: ' + ref + ' %"></em></div>' +
+      '<small class="mref">' + (dolent ? '⚠️ ' : '✔ ') + (sobre ? 'Recomanat: com a màxim ' : 'Recomanat: com a mínim ') + ref + ' %</small></div>';
+  }
+  function viewTauler() {
+    var u = me(), v = vida(u); save();
+    var h = '<header class="bar"><button class="ghost" id="back">← Mapa</button><div class="brand">🏠 La meva vida en números</div></header>' +
+      '<section class="card"><h2>Els meus ingressos</h2><p class="note">Carta de vida: <b>' + esc(u.feina || '') + '</b>. Si a la Fita 4 has trobat una oferta real amb un altre sou, canvia\'l aquí.</p>' +
+      '<label class="fld">Sou brut anual (14 pagues)<input id="vBrut" inputmode="decimal" value="' + (v.brut || '') + '"></label>' +
+      '<div class="nom" id="vNom"></div></section>' +
+      '<section class="card"><h2>El meu pressupost del mes</h2><p class="note">Primer posa el que creus que gastaràs (Quadern 2, V9.4). Després de la Fita 5, afegeix els preus reals de la classe i mira la diferència.</p>' +
+      '<div class="vtwrap"><table class="vtable"><thead><tr><th>Partida</th><th>Tipus</th><th>El que em pensava</th><th>Real (Fita 5)</th><th>Diferència</th></tr></thead><tbody>' +
+      PARTIDES.map(function (p) {
+        return '<tr><td>' + p[1] + '</td><td>' + (p[2] === 'N' ? 'Necessitat' : 'Desig') + '</td>' +
+          '<td><input data-t="teo" data-k="' + p[0] + '" inputmode="decimal" value="' + (v.teo[p[0]] !== undefined ? v.teo[p[0]] : '') + '" aria-label="' + p[1] + ', el que em pensava"></td>' +
+          '<td><input data-t="real" data-k="' + p[0] + '" inputmode="decimal" value="' + (v.real[p[0]] !== undefined ? v.real[p[0]] : '') + '" aria-label="' + p[1] + ', preu real"></td>' +
+          '<td class="dif" id="d_' + p[0] + '"></td></tr>';
+      }).join('') + '</tbody><tfoot><tr><th>Total</th><th></th><th id="tTe"></th><th id="tRe"></th><th id="tDi"></th></tr></tfoot></table></div></section>' +
+      '<section class="card"><h2>Com quedo?</h2><div class="tiles" id="vTiles"></div><div class="meters" id="vMeters"></div></section>' +
+      '<section class="card"><h2>Imprevistos</h2><p class="note">Afegeix els imprevistos de La vida en daus o els que et passin. Són despeses d\'un sol cop: es resten del que et queda aquest mes.</p>' +
+      '<div class="chips imp">' + IMPREV.map(function (x, i) { return '<button class="chip-i" data-i="' + i + '">' + (x[1] > 0 ? '+' : '−') + CE.f(Math.abs(x[1])) + ' € · ' + x[0] + '</button>'; }).join('') + '</div>' +
+      '<div class="row"><input id="iT" placeholder="Un altre imprevist" aria-label="Descripció de l\'imprevist"><input id="iA" inputmode="decimal" placeholder="Import (−120)" aria-label="Import"><button class="ghost" id="iAdd">Afegeix</button></div>' +
+      '<ul class="implist" id="iList"></ul><div class="tiles" id="iTiles"></div></section>';
+    app.innerHTML = h;
+    function num(x) { var n = CE.parse(x); return n === null ? '' : n; }
+    function paint() {
+      var c = calcVida(u);
+      document.getElementById('vNom').innerHTML = c.brut ? 'Brut mensual: ' + CE.f(c.brut) + ' ÷ 14 = <b>' + eurV(c.mes) + '</b> · Seguretat Social (6,5 %): ' + eurV(c.ss) + ' · IRPF (' + c.ir + ' %): ' + eurV(c.irpf) + ' · <b>Net: ' + eurV(c.net) + '</b>' : 'Escriu el teu sou brut anual.';
+      PARTIDES.forEach(function (p) {
+        var t = v.teo[p[0]], r = v.real[p[0]], el = document.getElementById('d_' + p[0]);
+        el.textContent = (t !== undefined && t !== '' && r !== undefined && r !== '') ? ((r - t) > 0 ? '+' : '') + eurV(r - t) : '';
+      });
+      document.getElementById('tTe').textContent = eurV(c.teT);
+      document.getElementById('tRe').textContent = c.usaReal ? eurV(c.reT) : '—';
+      document.getElementById('tDi').textContent = c.usaReal ? ((c.reT - c.teT) > 0 ? '+' : '') + eurV(c.reT - c.teT) : '';
+      document.getElementById('vTiles').innerHTML =
+        '<div class="tile"><small>Tinc (sou net)</small><b>' + eurV(c.net) + '</b></div>' +
+        '<div class="tile"><small>Gasto ' + (c.usaReal ? '(real)' : '(el que em pensava)') + '</small><b>' + eurV(c.gasto) + '</b></div>' +
+        '<div class="tile"><small>Em queda</small><b>' + eurV(c.saldo) + '</b>' + estat(c.saldo) + '</div>' +
+        (c.usaReal ? '<div class="tile"><small>Em pensava que em quedaria</small><b>' + eurV(c.saldoTe) + '</b></div>' : '');
+      document.getElementById('vMeters').innerHTML = c.net ? meter('Habitatge (lloguer i subministraments)', c.pHab, 35, true) + meter('Necessitats', c.pN, 50, true) + meter('Desitjos', c.pD, 30, true) + meter('Estalvi', c.pE, 20, false) : '';
+      document.getElementById('iList').innerHTML = v.imp.map(function (x, i) { return '<li><span>' + esc(x[0]) + '</span><b>' + (x[1] > 0 ? '+' : '') + eurV(x[1]) + '</b><button class="ghost del" data-del="' + i + '" aria-label="Treu">✕</button></li>'; }).join('');
+      document.getElementById('iTiles').innerHTML = (v.imp.length ? '<div class="tile"><small>Aquest mes, després dels imprevistos</small><b>' + eurV(c.despresImp) + '</b>' + estat(c.despresImp) + '</div>' : '') +
+        '<div class="tile"><small>Fons d\'emergència (3 mesos de necessitats)</small><b>' + (c.fons ? eurV(c.fons) : '—') + '</b><span class="st-muted">' + (c.mesosFons ? 'Hi arribes en ' + c.mesosFons + ' mesos estalviant el que et queda' : c.fons ? 'Amb dèficit no pots estalviar: retalla abans' : 'Omple el pressupost') + '</span></div>';
+      app.querySelectorAll('[data-del]').forEach(function (b) { b.onclick = function () { v.imp.splice(+b.dataset.del, 1); save(); paint(); }; });
+    }
+    document.getElementById('back').onclick = viewMap;
+    document.getElementById('vBrut').oninput = function (e) { v.brut = num(e.target.value); save(); paint(); };
+    app.querySelectorAll('.vtable input').forEach(function (inp) {
+      inp.oninput = function () { var val = num(inp.value); if (val === '') delete v[inp.dataset.t][inp.dataset.k]; else v[inp.dataset.t][inp.dataset.k] = val; save(); paint(); };
+    });
+    app.querySelectorAll('[data-i]').forEach(function (b) { b.onclick = function () { v.imp.push(IMPREV[+b.dataset.i].slice()); save(); paint(); }; });
+    document.getElementById('iAdd').onclick = function () {
+      var t = document.getElementById('iT').value.trim(), a = num(document.getElementById('iA').value);
+      if (!t || a === '') return; v.imp.push([t, a]); document.getElementById('iT').value = ''; document.getElementById('iA').value = ''; save(); paint();
+    };
+    paint(); scrollTo(0, 0);
+  }
+  function vidaInforme(u) {
+    var c = calcVida(u), v = vida(u);
+    return '<h2>La meva vida en números</h2><p>Feina: <b>' + esc(u.feina || '') + '</b> · Brut anual ' + eurV(c.brut) + ' · Net mensual <b>' + eurV(c.net) + '</b></p>' +
+      '<table><tr><th>Partida</th><th>El que em pensava</th><th>Real (Fita 5)</th></tr>' + PARTIDES.map(function (p) { return '<tr><td>' + p[1] + '</td><td>' + (v.teo[p[0]] !== undefined ? eurV(v.teo[p[0]]) : '—') + '</td><td>' + (v.real[p[0]] !== undefined ? eurV(v.real[p[0]]) : '—') + '</td></tr>'; }).join('') +
+      '<tr><th>Total</th><th>' + eurV(c.teT) + '</th><th>' + (c.usaReal ? eurV(c.reT) : '—') + '</th></tr></table>' +
+      '<p>Em queda: <b>' + eurV(c.saldo) + '</b> (' + (c.saldo >= 0 ? 'superàvit' : 'dèficit') + ') · Habitatge ' + CE.f(c.pHab, 1) + ' % · Necessitats ' + CE.f(c.pN, 1) + ' % · Desitjos ' + CE.f(c.pD, 1) + ' % · Estalvi ' + CE.f(c.pE, 1) + ' %</p>' +
+      (v.imp.length ? '<p>Imprevistos: ' + v.imp.map(function (x) { return esc(x[0]) + ' (' + eurV(x[1]) + ')'; }).join(' · ') + ' → després dels imprevistos: <b>' + eurV(c.despresImp) + '</b></p>' : '');
   }
 
   /* ---------- Missió pas a pas ---------- */
@@ -307,7 +418,7 @@
       '<style>body{font:15px/1.5 system-ui,sans-serif;max-width:820px;margin:2rem auto;padding:0 1rem;color:#1b2a24}h1{margin:0}table{border-collapse:collapse;width:100%;margin:1rem 0}td,th{border:1px solid #ccd;padding:.35rem .5rem;text-align:left}s{color:#c0392b}h3{margin:1.4rem 0 .3rem}h3 small{font-weight:400;color:#667}.k{display:flex;gap:1.5rem;flex-wrap:wrap}.k div{background:#eef4f1;border-radius:8px;padding:.5rem .8rem}@media print{body{margin:0}}</style></head><body>' +
       '<h1>Informe de procés · Corbatera Coop Lab</h1><p><b>' + esc(u.nom) + '</b> · ' + (av === 2 ? 'Carta de vida: <b>' + esc(u.feina || '') : 'Cooperativa <b>' + esc(u.coop)) + '</b> · ' + new Date().toLocaleDateString('ca-ES') + '</p>' +
       '<div class="k"><div>XP total: <b>' + xp + '</b></div><div>Rang: <b>' + rg.nom + '</b></div><div>Passos fets: <b>' + steps + '</b></div><div>A la primera: <b>' + first + '</b></div><div>Pistes: <b>' + hints + '</b></div><div>Solucions mostrades: <b>' + sols + '</b></div></div>' +
-      '<table><tr><th>Missió</th><th>Millor XP</th><th>Partides</th></tr>' + rows + '</table><h2>Procés de cada exercici</h2>' + (proc || '<p>Encara no hi ha cap missió feta.</p>') +
+      '<table><tr><th>Missió</th><th>Millor XP</th><th>Partides</th></tr>' + rows + '</table>' + (av === 2 ? vidaInforme(u) : '') + '<h2>Procés de cada exercici</h2>' + (proc || '<p>Encara no hi ha cap missió feta.</p>') +
       '<p style="color:#667;margin-top:2rem">Per desar-lo en PDF: obre aquest arxiu i fes Imprimeix → Desa com a PDF.</p></body></html>';
     var a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));

@@ -15,6 +15,17 @@ En entrar, l'app mostra tres targetes: **1a**, **2a** i **3a avaluació**. Cada 
 
 Les avaluacions que encara no han començat surten amb 🔒. Per obrir-les, canvia `var MOSTRA_AVAL2 = false;` o `var MOSTRA_AVAL3 = false;` a `true` a `js/app.js` (la 2a, el 8/01). En mode docent (`?docent`) es veuen totes. El botó **← Avaluacions** torna a la pantalla d'inici. L'informe només inclou els nivells de l'avaluació del perfil.
 
+## 2a avaluació · La meva vida en números
+
+Al mapa de la 2a avaluació hi ha un resum (tinc · gasto · em queda) i el botó **Obre el meu tauler**:
+
+- **Ingressos:** el sou brut surt de la carta de vida (es pot canviar pel de l'oferta real de la Fita 4) i l'app calcula SS, IRPF (taula simplificada del quadern) i net.
+- **Pressupost:** set partides amb dues columnes, «el que em pensava» (V9.4) i «real» (Fita 5), i la diferència.
+- **Com quedo?:** saldo (superàvit o dèficit) i barres d'habitatge (35 %) i regla 50/30/20.
+- **Imprevistos:** les cartes de La vida en daus o d'altres; saldo després dels imprevistos i fons d'emergència (3 mesos de necessitats).
+
+Tot es guarda al navegador i surt a l'informe. Les missions continuen fent servir dades inventades (números nous a cada partida).
+
 ## Nivells = fases del projecte
 
 | Nivell | Fase i unitat | Fita | Missions |
