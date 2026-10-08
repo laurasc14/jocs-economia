@@ -181,7 +181,7 @@
       h += '<p class="tancada">🔒 ' + A.tancada + '</p>';
     } else {
       if (av === 1) h += '<a class="study" href="estudi.html"><span>📚</span><div><b>Estudi</b><small>La teoria de les tres unitats: definicions, exemples resolts i errors típics</small></div></a>';
-      if (av === 2) h += '<a class="study" href="estudi-2.html"><span>📚</span><div><b>Estudi</b><small>La teoria del projecte: necessitats, nòmina, pressupost, estalvi i deute</small></div></a>';
+      if (av === 2) h += '<a class="study" href="estudi-2.html"><span>📚</span><div><b>Estudi</b><small>La teoria de les 3 fases: diners d'ara, feina i nòmina, viure pel meu compte</small></div></a>';
       PLA.filter(function (p) { return p.aval === av; }).forEach(function (p) { h += levelHTML(p); });
       h += classeHTML();
     }
@@ -251,7 +251,7 @@
       '<section class="card"><h2>Els meus ingressos</h2><p class="note">Carta de vida: <b>' + esc(u.feina || '') + '</b>. Si a la Fita 4 has trobat una oferta real amb un altre sou, canvia\'l aquí.</p>' +
       '<label class="fld">Sou brut anual (14 pagues)<input id="vBrut" inputmode="decimal" value="' + (v.brut || '') + '"></label>' +
       '<div class="nom" id="vNom"></div></section>' +
-      '<section class="card"><h2>El meu pressupost del mes</h2><p class="note">Primer posa el que creus que gastaràs (Quadern 2, V9.4). Després de la Fita 5, afegeix els preus reals de la classe i mira la diferència.</p>' +
+      '<section class="card"><h2>El meu pressupost del mes</h2><p class="note">Primer posa el que creus que gastaràs (Quadern 3, V12.9). Després de la Fita 5, afegeix els preus reals de la classe i mira la diferència.</p>' +
       '<div class="vtwrap"><table class="vtable"><thead><tr><th>Partida</th><th>Tipus</th><th>El que em pensava</th><th>Real (Fita 5)</th><th>Diferència</th></tr></thead><tbody>' +
       PARTIDES.map(function (p) {
         return '<tr><td>' + p[1] + '</td><td>' + (p[2] === 'N' ? 'Necessitat' : 'Desig') + '</td>' +
