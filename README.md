@@ -55,7 +55,7 @@ El nivell 4 està tancat per a l'alumnat fins que posis `var MOSTRA_AVAL2 = true
 
 ## A classe
 
-1a avaluació: Posa't a prova (`repas-teoria.html`, per unitats), Entrenament lliure (`exercicis-calcul.html`), Calculadora de la cooperativa (punt mort i tres escenaris), Kit del pitch (5 minuts i consell assessor), El mercat del pa, La caixa de la cooperativa (escape room) i Qui vol ser ric?
+1a avaluació: La prova en una pantalla (`xuleta-prova.html`: conceptes clau de les fites 1 i 2 amb autocorrecció, equilibri interactiu, notícies, la Part 1 de cada alumne desada al navegador i repte de 8 preguntes; la Fase 3 hi està tancada fins que es faci a classe), Posa't a prova (`repas-teoria.html`, per unitats), Entrenament lliure (`exercicis-calcul.html`), Calculadora de la cooperativa (punt mort i tres escenaris), Kit del pitch (5 minuts i consell assessor), El mercat del pa, La caixa de la cooperativa (escape room) i Qui vol ser ric?
 2a avaluació (amagat de moment): La vida en daus.
 Eines de la professora (només amb `?docent`): `lliga-cooperativa.html` i `borsa-classe.html`.
 
@@ -65,6 +65,7 @@ Eines de la professora (només amb `?docent`): `lliga-cooperativa.html` i `borsa
 index.html            l'app (carnet, mapa, missions, diari)
 estudi.html           teoria de les unitats 1, 2 i 3 (1a avaluació)
 estudi-2.html         teoria de la unitat 4 (2a avaluació)
+xuleta-prova.html     la prova en una pantalla (fites 1 i 2, Part 1 de la prova)
 css/estil.css         estil de l'app
 css/estudi.css        estil de l'estudi (i de la versió impresa)
 js/util.js            utilitats: atzar amb llavor, format, productes per ruta

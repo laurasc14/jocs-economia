@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Els conceptes que entren a la prova del 4/12 (fites 1 i 2), amb exercicis que es corregeixen sols.">
+<title>La prova en una pantalla · Economia Bàsica 4t ESO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#F3F5FA; --card:#FFFFFF; --ink:#1E2235; --muted:#5A6079; --line:#D8DCE8; --ok:#1F9461; --bad:#D2452F; --soft:#EAEEF7;
+  --u1:#3B5BDB; --u2:#7C3AED; --u3:#C2410C; --c:var(--u1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#11131D; --card:#1A1D2B; --ink:#E8EAF4; --muted:#A3A8C2; --line:#2D3147; --soft:#23273A; --ok:#45C08A; --bad:#F06A50; --u1:#7C95F0; --u2:#A98BF5; --u3:#F08A55; }
+}
+:root[data-theme="dark"]{ --bg:#11131D; --card:#1A1D2B; --ink:#E8EAF4; --muted:#A3A8C2; --line:#2D3147; --soft:#23273A; --ok:#45C08A; --bad:#F06A50; --u1:#7C95F0; --u2:#A98BF5; --u3:#F08A55; }
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:4.2rem}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.04rem/1.6 "Lexend",system-ui,sans-serif}
+h1,h2,h3{margin:0;line-height:1.2;font-weight:800}
+a{color:var(--c)}
+.wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 4rem}
+button{font:600 .98rem "Lexend",sans-serif;border:0;border-radius:12px;padding:.6rem 1rem;cursor:pointer;background:var(--ink);color:var(--bg)}
+button.soft{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.back{display:inline-block;margin-bottom:.8rem;color:var(--muted);text-decoration:none;font-size:.95rem}
+.top h1{font-size:clamp(1.7rem,4.6vw,2.5rem)}
+.top p{color:var(--muted);margin:.45rem 0 0;max-width:62ch}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.6rem;margin-top:1rem}
+.part{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:.7rem .9rem;font-size:.92rem}
+.part b{display:block;color:var(--c)}
+
+nav.tabs{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:.4rem;overflow-x:auto;padding:.7rem 0;margin-top:1rem;border-bottom:2px solid var(--line)}
+nav.tabs a{flex:none;text-decoration:none;font-weight:600;font-size:.92rem;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:999px;padding:.35rem .85rem}
+nav.tabs a.lock{color:var(--muted);border-style:dashed}
+
+section.bloc{margin-top:2rem}
+section.bloc > h2{font-size:1.5rem;color:var(--c);display:flex;gap:.5rem;align-items:baseline;flex-wrap:wrap}
+section.bloc > h2 small{font-size:.85rem;font-weight:600;color:var(--muted)}
+.intro{color:var(--muted);margin:.3rem 0 0;max-width:64ch}
+.u1{--c:var(--u1)} .u2{--c:var(--u2)} .u3{--c:var(--u3)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.8rem;margin-top:1rem}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:1rem 1.1rem;display:flex;flex-direction:column}
+.card h3{font-size:1.1rem;color:var(--c)}
+.card .def{margin:.4rem 0 .2rem}
+.card .ex{background:var(--soft);border-radius:12px;padding:.5rem .7rem;font-size:.93rem;margin:.5rem 0}
+.card .warn{font-size:.9rem;color:var(--muted)}
+.card .warn b{color:var(--bad)}
+.card .more{margin-top:auto;padding-top:.5rem;font-size:.85rem}
+.chk{margin-top:.6rem;border-top:2px dashed var(--line);padding-top:.6rem}
+.chk .q{font-weight:600;font-size:.95rem;margin-bottom:.45rem}
+.opts{display:flex;flex-wrap:wrap;gap:.4rem}
+.opt{background:var(--soft);color:var(--ink);font-weight:600;font-size:.9rem;padding:.4rem .75rem;border:2px solid transparent}
+.opt:hover:not(:disabled){border-color:var(--c)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok);color:#fff}
+.opt.wrong{background:var(--bad);color:#fff;opacity:.85}
+.fb{font-size:.9rem;margin-top:.4rem;min-height:1.2em}
+.fb.ok{color:var(--ok)} .fb.no{color:var(--bad)}
+.fb span{color:var(--ink);font-weight:400}
+
+/* Equilibri interactiu */
+.lab{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:1rem 1.1rem;margin-top:1rem}
+.lab h3{font-size:1.15rem;color:var(--c)}
+.labgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:1rem;align-items:center;margin-top:.6rem}
+@media (max-width:640px){.labgrid{grid-template-columns:1fr}}
+.slider label{font-weight:600}
+.slider input{width:100%;accent-color:var(--c);margin:.4rem 0}
+.price{font-size:2.2rem;font-weight:800;color:var(--c)}
+.qs{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.6rem 0}
+.qs div{background:var(--soft);border-radius:12px;padding:.45rem .7rem;font-size:.9rem}
+.qs b{display:block;font-size:1.3rem}
+.verdict{border-radius:12px;padding:.6rem .8rem;font-weight:600}
+.verdict.eq{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
+.verdict.d{background:color-mix(in srgb,var(--bad) 13%,transparent);color:var(--bad)}
+.verdict.o{background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c)}
+.verdict span{display:block;font-weight:400;color:var(--ink);font-size:.92rem}
+svg text{font-family:"Lexend",sans-serif;fill:var(--muted);font-size:11px}
+
+/* Notícies */
+.news{display:grid;gap:.6rem;margin-top:.8rem}
+.nw{background:var(--soft);border-radius:14px;padding:.7rem .85rem}
+.nw p{margin:0 0 .45rem;font-weight:600}
+.nw .row{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.nw .row small{color:var(--muted);margin-right:.2rem}
+
+/* Part 1 */
+.form{display:grid;gap:.75rem;margin-top:1rem}
+.field{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:.8rem 1rem}
+.field label{display:block;font-weight:600}
+.field .tip{display:block;color:var(--muted);font-size:.86rem;margin:.1rem 0 .4rem}
+.field textarea,.field input{width:100%;font:400 1rem "Lexend",sans-serif;color:var(--ink);background:var(--soft);border:2px solid transparent;border-radius:10px;padding:.5rem .65rem;resize:vertical}
+.field textarea{min-height:3.4rem}
+.field .tag{float:right;font-size:.78rem;font-weight:600;color:var(--c)}
+.actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem;align-items:center}
+.saved{color:var(--muted);font-size:.88rem}
+
+/* Repte */
+.quiz{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:1rem 1.1rem;margin-top:1rem}
+.steps{display:flex;gap:5px;margin:.2rem 0 .8rem}
+.steps i{flex:1;height:7px;border-radius:4px;background:var(--line)}
+.steps i.done{background:var(--c)} .steps i.now{background:var(--c);opacity:.45}
+.quiz .q{font-weight:600;font-size:1.05rem;margin-bottom:.7rem}
+.quiz .opts{display:grid;gap:.45rem}
+.quiz .opt{text-align:left;font-weight:400;font-size:.98rem;padding:.6rem .85rem}
+.score{font-size:2.8rem;font-weight:800;color:var(--c);text-align:center}
+
+.locked{background:var(--card);border:2px dashed var(--line);border-radius:18px;padding:1rem 1.1rem;color:var(--muted)}
+footer{margin-top:2.5rem;color:var(--muted);font-size:.88rem;text-align:center}
+
+@media print{
+  nav.tabs,.chk,.lab,.news,#repte,.actions,.back,#fase3,button{display:none!important}
+  body{background:#fff;color:#000;font-size:11pt}
+  .card,.field{break-inside:avoid;border-color:#bbb}
+  .print-only{display:block!important}
+}
+.print-only{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Tornar al mapa</a>
+  <header class="top">
+    <h1>La prova en una pantalla</h1>
+    <p>Els conceptes de les fites 1 i 2 que entren a la prova del <b>divendres 4 de desembre</b>, amb exercicis que es corregeixen sols. Al final hi ha la teva <b>Part 1</b> per preparar-la amb les dades de la cooperativa.</p>
+    <div class="parts">
+      <div class="part"><b>Part 1 · 5 p</b>La meva cooperativa. Aquí preparem el problema (1,25 p) i el mercat (1,25 p).</div>
+      <div class="part"><b>Part 2 · 3,5 p</b>Un cas nou. De les fites 1 i 2 hi surt el positiu o normatiu.</div>
+      <div class="part"><b>Part 3 · 1,5 p</b>Defensa una decisió del grup amb dos conceptes subratllats.</div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Apartats">
+    <a href="#problema">1 · El problema</a>
+    <a href="#mercat">2 · El mercat</a>
+    <a href="#part1">3 · La meva Part 1</a>
+    <a href="#repte">4 · Repte ràpid</a>
+    <a href="#fase3" class="lock">🔒 Fase 3</a>
+  </nav>
+
+  <section class="bloc u1" id="problema">
+    <h2>1 · El problema <small>Fase 1 · Fita 1</small></h2>
+    <p class="intro">Llegeix cada targeta i respon la pregunta de sota. Si falles, pots tornar-ho a provar.</p>
+    <div class="grid" id="g1"></div>
+  </section>
+
+  <section class="bloc u2" id="mercat">
+    <h2>2 · El mercat <small>Fase 2 · Fita 2</small></h2>
+    <div class="grid" id="g2"></div>
+
+    <div class="lab" id="lab">
+      <h3>Juga amb el preu: on és l’equilibri?</h3>
+      <p class="intro" style="margin:.2rem 0 0">Bosses de tela reciclada al mercat de Nadal. Mou el preu i mira què passa.</p>
+      <div class="labgrid">
+        <div class="slider">
+          <label for="pr">Preu de la bossa</label>
+          <div class="price" id="prv">3 €</div>
+          <input type="range" id="pr" min="1" max="5" step="1" value="3" aria-describedby="verd">
+          <div class="qs"><div>Es volen comprar<b id="qd">30</b></div><div>Es volen vendre<b id="qo">30</b></div></div>
+          <div class="verdict eq" id="verd" aria-live="polite"></div>
+        </div>
+        <svg id="ch" viewBox="0 0 300 220" role="img" aria-label="Gràfic de demanda i oferta"></svg>
+      </div>
+    </div>
+
+    <div class="lab">
+      <h3>Què passa si…? Moviment o desplaçament</h3>
+      <p class="intro" style="margin:.2rem 0 0">Per a cada notícia, tria quina corba es mou i cap on. Una té trampa.</p>
+      <div class="news" id="news"></div>
+    </div>
+  </section>
+
+  <section class="bloc u3" id="part1">
+    <h2>3 · La meva Part 1 <small>es desa en aquest navegador</small></h2>
+    <p class="intro">Omple-ho amb el dossier al davant. Escriu frases senceres i dona sempre el perquè. Pots imprimir-ho o desar-ho en PDF per estudiar.</p>
+    <div class="form" id="form"></div>
+    <div class="actions">
+      <button id="print">Imprimeix o desa en PDF</button>
+      <button class="soft" id="clear">Esborra-ho tot</button>
+      <span class="saved" id="saved" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <section class="bloc u1" id="repte">
+    <h2>4 · Repte ràpid <small>8 preguntes barrejades</small></h2>
+    <div class="quiz" id="quiz"></div>
+  </section>
+
+  <section class="bloc u3" id="fase3">
+    <h2>🔒 Fase 3 · Muntem una empresa</h2>
+    <div class="locked">Properament: costos fixos i variables, benefici, punt mort, la cooperativa i l’RSC. S’obrirà quan ho haguem fet a classe.</div>
+  </section>
+
+  <footer>Vols més exemples? <a href="estudi.html">Estudi (teoria completa)</a> · <a href="repas-teoria.html">Posa’t a prova</a><br>Economia Bàsica · 4t ESO · Corbatera Institut Escola</footer>
+</div>
+
+<script>
+const $=(s,el=document)=>el.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+/* ---------- Targetes de concepte ---------- */
+const C1=[
+ {t:"Necessitat primària o secundària",d:"<b>Primària:</b> imprescindible per viure (menjar, salut, habitatge). <b>Secundària:</b> millora la vida, però s’hi pot viure sense (oci, un mòbil nou).",
+  e:"Truc: pregunta’t «podria viure sense això?». Si la resposta és no, és primària.",l:"u1-1",
+  q:{p:"Una jaqueta d’abric a l’hivern és una necessitat…",o:["Primària","Secundària"],a:0,x:"Protegeix del fred: és imprescindible."}},
+ {t:"Bé lliure o bé econòmic",d:"<b>Lliure:</b> tan abundant que no té preu (l’aire, la llum del sol). <b>Econòmic:</b> és escàs, cal produir-lo i té preu.",
+  e:"L’aigua d’un riu és natural, però l’aigua de l’aixeta de casa és un bé econòmic: es paga.",l:"u1-1",
+  q:{p:"Un pot de salsa de tomàquet és un bé…",o:["Lliure","Econòmic"],a:1,x:"És escàs, s’ha produït i té preu."}},
+ {t:"Escassetat",d:"Les necessitats són <b>il·limitades</b> i els recursos, <b>limitats</b>. Per això sempre cal triar.",
+  w:"No ho confonguis amb un <b>problema de repartiment</b>: n’hi ha prou, però no arriba a tothom (com els tomàquets a <i>L’illa de les flors</i>).",l:"u1-2",
+  q:{p:"Es llença fruita bona mentre hi ha famílies que no en poden comprar. És…",o:["Escassetat","Repartiment"],a:1,x:"N’hi ha prou, però no arriba a tothom."}},
+ {t:"Factors de producció",d:"<b>Terra:</b> recursos naturals i materials. <b>Treball:</b> les persones i les seves hores. <b>Capital:</b> eines, màquines i diners per produir.",
+  e:"Texans vells → terra · les mans de l’equip → treball · la màquina de cosir → capital.",l:"u1-8",
+  q:{p:"Les hores que l’equip passa cosint són…",o:["Terra","Treball","Capital"],a:1,x:"És l’esforç de les persones: treball."}},
+ {t:"Cost d’oportunitat",d:"La <b>millor alternativa</b> a què renuncies quan tries. És <b>una sola cosa</b>, no una llista, i no és un preu.",
+  w:"<b>Error típic:</b> escriure totes les alternatives («futbol, sèrie i dormir»).",l:"u1-3",
+  q:{p:"La Nora tria fer feina de la cooperativa. Si no, hauria anat a futbol (la que més li venia de gust de les altres). El seu cost d’oportunitat és…",o:["Anar a futbol","Futbol i mirar una sèrie","Els diners que no cobra"],a:0,x:"Només compta la millor alternativa: futbol."}},
+ {t:"Cost irrecuperable",d:"Diners o temps <b>ja gastats</b> que no recuperaràs facis el que facis. <b>No han de decidir res</b>: decideix mirant endavant.",
+  e:"La pel·li de 12 € que ja has pagat i no t’agrada: els 12 € ja no tornen, et quedis o te’n vagis.",l:"u1-4",
+  q:{p:"Vau pagar 15 € per una parada i plou. Els 15 € han de decidir si hi aneu?",o:["Sí","No"],a:1,x:"Ja estan gastats: decideix pel que guanyareu a partir d’ara."}},
+ {t:"Positiu o normatiu",d:"<b>Positiu:</b> es pot comprovar amb dades (encara que sigui fals). <b>Normatiu:</b> és una opinió, el que «hauria» de ser.",
+  e:"«Hem venut 42 pots» → positiu · «La gent hauria de comprar producte local» → normatiu.",w:"Surt a la Part 2: un missatge amb dades (kg recuperats) és positiu.",l:"u1-6",
+  q:{p:"«El nostre producte és el més bonic de la fira.» És…",o:["Positiu","Normatiu"],a:1,x:"És una opinió: no es pot comprovar amb dades."}},
+];
+const C2=[
+ {t:"Llei de la demanda",d:"Si el preu <b>puja</b>, la quantitat demandada <b>baixa</b>. Si baixa, en volen comprar més.",
+  w:"<b>A la prova (Part 1.2):</b> si apugeu el preu 1 €, la quantitat demandada baixa. La corba no es mou: ens movem per la corba.",l:"u2-3",
+  q:{p:"La cooperativa apuja el preu 1 €. La quantitat demandada…",o:["Puja","Baixa","No canvia"],a:1,x:"Llei de la demanda: més preu, menys quantitat demandada."}},
+ {t:"Llei de l’oferta",d:"Si el preu <b>puja</b>, la quantitat que es vol vendre <b>puja</b>: a les empreses els surt més a compte produir.",l:"u2-3",
+  q:{p:"Si el preu de les bosses puja, la quantitat oferta…",o:["Puja","Baixa"],a:0,x:"Llei de l’oferta: a més preu, en volen vendre més."}},
+ {t:"Equilibri",d:"El preu on la quantitat demandada <b>és igual</b> a la quantitat oferta. <b>Per sobre:</b> sobra producte i el preu baixa. <b>Per sota:</b> en falta i el preu puja.",l:"u2-4",
+  q:{p:"Si el preu és més baix que el d’equilibri, hi ha…",o:["Excés d’oferta (sobra)","Excés de demanda (falta)"],a:1,x:"Molta gent vol comprar i hi ha poc producte: en falta."}},
+ {t:"Com es justifica un preu",d:"Amb <b>dos arguments diferents</b>: l’<b>enquesta</b> (què pagarien), la <b>competència</b> (a quant ho venen altres), els <b>costos</b> (ha de cobrir el que costa cada unitat) i l’<b>accessibilitat</b> (qui quedaria fora).",
+  e:"«El preu és 3,20 € perquè a l’enquesta la majoria pagaria entre 3 i 4 €, i la competència ven pots semblants a 3,50 €.»",l:"u2-7",
+  q:{p:"«El preu és 4 € perquè ens agrada.» És una bona justificació?",o:["Sí","No"],a:1,x:"No és cap argument econòmic: cal enquesta, competència, costos o accessibilitat."}},
+];
+function cardHTML(c,id){
+  return `<article class="card"><h3>${c.t}</h3><div class="def">${c.d}</div>${c.e?`<div class="ex">${c.e}</div>`:""}${c.w?`<div class="warn">${c.w}</div>`:""}
+  <div class="chk" data-id="${id}"><div class="q">${c.q.p}</div><div class="opts">${c.q.o.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join("")}</div><div class="fb" aria-live="polite"></div></div>
+  <div class="more"><a href="estudi.html#${c.l}">Amplia-ho a l’Estudi →</a></div></article>`;
+}
+function wireCheck(el,q){
+  el.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const k=+b.dataset.k, fb=$(".fb",el);
+    if(k===q.a){ el.querySelectorAll(".opt").forEach(x=>x.disabled=true); b.classList.add("right"); fb.className="fb ok"; fb.innerHTML=`Correcte! <span>${q.x}</span>`; }
+    else { b.classList.add("wrong"); b.disabled=true; fb.className="fb no"; fb.innerHTML=`Encara no. <span>Rellegeix la targeta i torna-ho a provar.</span>`; }
+  });
+}
+[[C1,"g1"],[C2,"g2"]].forEach(([arr,g])=>{
+  $("#"+g).innerHTML=arr.map((c,i)=>cardHTML(c,g+i)).join("");
+  arr.forEach((c,i)=>wireCheck($(`[data-id="${g}${i}"]`),c.q));
+});
+
+/* ---------- Equilibri interactiu ---------- */
+const QD={1:50,2:40,3:30,4:20,5:10}, QO={1:10,2:20,3:30,4:40,5:50};
+const X=q=>40+q*4.4, Y=p=>190-p*30;
+function drawChart(p){
+  const dem=[1,2,3,4,5].map(v=>`${X(QD[v])},${Y(v)}`).join(" "), of=[1,2,3,4,5].map(v=>`${X(QO[v])},${Y(v)}`).join(" ");
+  let ticks="";
+  for(let v=1;v<=5;v++) ticks+=`<text x="30" y="${Y(v)+4}" text-anchor="end">${v} €</text><line x1="40" x2="290" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)" stroke-width="1"/>`;
+  for(let q=10;q<=50;q+=10) ticks+=`<text x="${X(q)}" y="208" text-anchor="middle">${q}</text>`;
+  $("#ch").innerHTML=`${ticks}
+   <polyline points="${dem}" fill="none" stroke="var(--bad)" stroke-width="3"/><polyline points="${of}" fill="none" stroke="var(--u2)" stroke-width="3"/>
+   <text x="${X(52)}" y="${Y(1)+4}" style="fill:var(--bad);font-weight:600">D</text><text x="${X(52)}" y="${Y(5)+4}" style="fill:var(--u2);font-weight:600">O</text>
+   <line x1="${X(QO[p])}" x2="${X(QD[p])}" y1="${Y(p)}" y2="${Y(p)}" stroke="var(--ink)" stroke-width="2" stroke-dasharray="4 3"/>
+   <circle cx="${X(QD[p])}" cy="${Y(p)}" r="6" fill="var(--bad)"/><circle cx="${X(QO[p])}" cy="${Y(p)}" r="6" fill="var(--u2)"/>
+   <text x="165" y="220" text-anchor="middle">Quantitat de bosses</text>`;
+}
+function eq(){
+  const p=+$("#pr").value, d=QD[p], o=QO[p], v=$("#verd");
+  $("#prv").textContent=p+" €"; $("#qd").textContent=d; $("#qo").textContent=o;
+  if(d===o){ v.className="verdict eq"; v.innerHTML=`Equilibri: ${d} = ${o}<span>Es vol comprar el mateix que es vol vendre. Ni sobra ni falta.</span>`; }
+  else if(d>o){ v.className="verdict d"; v.innerHTML=`Excés de demanda: en falten ${d-o}<span>Hi ha més gent que vol comprar que bosses. El preu tendeix a pujar.</span>`; }
+  else { v.className="verdict o"; v.innerHTML=`Excés d’oferta: en sobren ${o-d}<span>Hi ha més bosses que compradors. El preu tendeix a baixar.</span>`; }
+  drawChart(p);
+}
+$("#pr").addEventListener("input",eq); eq();
+
+/* ---------- Notícies ---------- */
+const NEWS=[
+ {t:"Un vídeo viral posa de moda les bosses de tela.",c:"Demanda",d:"Dreta",x:"Canvien els gustos: es vol comprar més a cada preu. Preu ↑ i quantitat ↑."},
+ {t:"S’encareixen la tela i el fil.",c:"Oferta",d:"Esquerra",x:"Pugen els costos: a cada preu en volen vendre menys. Preu ↑ i quantitat ↓."},
+ {t:"Obren tres parades noves que en venen.",c:"Oferta",d:"Dreta",x:"Més empreses: hi ha més oferta. Preu ↓ i quantitat ↑."},
+ {t:"Les bosses de plàstic passen a ser gratis.",c:"Demanda",d:"Esquerra",x:"S’abarateix un substitutiu: es compren menys bosses de tela. Preu ↓ i quantitat ↓."},
+ {t:"La cooperativa apuja el preu de les seves bosses.",c:"Cap",d:"Cap",x:"Trampa! Si canvia el preu del mateix producte, cap corba es desplaça: ens movem per la corba de demanda i la quantitat demandada baixa."},
+];
+$("#news").innerHTML=NEWS.map((n,i)=>`<div class="nw" data-i="${i}"><p>${String.fromCharCode(97+i)}) ${n.t}</p>
+  <div class="row"><small>Corba:</small>${["Demanda","Oferta","Cap"].map(c=>`<button class="opt" data-f="c" data-v="${c}">${c==="Cap"?"Cap (no es desplaça)":c}</button>`).join("")}</div>
+  <div class="row" style="margin-top:.35rem"><small>Cap on:</small>${["Dreta","Esquerra"].map(c=>`<button class="opt" data-f="d" data-v="${c}">${c}</button>`).join("")}</div>
+  <div class="fb" aria-live="polite"></div></div>`).join("");
+document.querySelectorAll(".nw").forEach(el=>{
+  const n=NEWS[+el.dataset.i], st={};
+  el.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const f=b.dataset.f, v=b.dataset.v;
+    el.querySelectorAll(`.opt[data-f="${f}"]`).forEach(x=>x.classList.remove("right","wrong"));
+    if(f==="c" && v==="Cap"){ el.querySelectorAll('.opt[data-f="d"]').forEach(x=>{x.disabled=true;x.classList.remove("right","wrong");}); st.d=null; }
+    else if(f==="c"){ el.querySelectorAll('.opt[data-f="d"]').forEach(x=>x.disabled=false); }
+    st[f]=v;
+    const fb=$(".fb",el);
+    if(n.c==="Cap"){
+      if(st.c==="Cap"){ b.classList.add("right"); fb.className="fb ok"; fb.innerHTML=`Correcte! <span>${n.x}</span>`; }
+      else if(st.c){ el.querySelector(`.opt[data-f="c"][data-v="${st.c}"]`).classList.add("wrong"); fb.className="fb no"; fb.innerHTML=`Compte: <span>què és el que canvia aquí, el preu del mateix producte o una altra cosa?</span>`; }
+      return;
+    }
+    if(st.c){ el.querySelector(`.opt[data-f="c"][data-v="${st.c}"]`).classList.add(st.c===n.c?"right":"wrong"); }
+    if(st.d){ el.querySelector(`.opt[data-f="d"][data-v="${st.d}"]`).classList.add(st.d===n.d?"right":"wrong"); }
+    if(st.c===n.c && st.d===n.d){ fb.className="fb ok"; fb.innerHTML=`Correcte! <span>${n.x}</span>`; }
+    else if(st.c && st.d){ fb.className="fb no"; fb.innerHTML=`Encara no. <span>Demanda = compradors (gustos, modes, substitutius). Oferta = venedors (costos, nombre d’empreses).</span>`; }
+    else { fb.className="fb"; fb.textContent=""; }
+  });
+});
+
+/* ---------- La meva Part 1 ---------- */
+const KEY="xuleta-prova-part1";
+const F=[
+ ["nom","Nom de la cooperativa i producte","",""],
+ ["nec","1 · Quina necessitat resolem? Primària o secundària?","Digues quina necessitat i per què és primària o secundària.","Problema"],
+ ["fac","1 · Factor de producció més escàs i per què","Terra, treball o capital. Explica per què us n’ha faltat.","Problema"],
+ ["cop","1 · Cost d’oportunitat de la cooperativa","Una sola alternativa: «Hem deixat de…».","Problema"],
+ ["pre","2 · El nostre preu i dos arguments","Enquesta, competència, costos o accessibilitat. Dos de diferents.","Mercat"],
+ ["apu","2 · Si l’apugem 1 €, què passa amb la quantitat demandada?","Fes servir la llei de la demanda. (El punt mort ho afegirem a la Fase 3.)","Mercat"],
+ ["p3","Part 3 · La decisió del grup que defensaré o qüestionaré","Quina decisió i dos conceptes que faràs servir.","Reflexió"],
+];
+let data={}; try{ data=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ data={}; }
+$("#form").innerHTML=F.map(f=>`<div class="field">${f[3]?`<span class="tag">${f[3]}</span>`:""}<label for="f-${f[0]}">${f[1]}</label>${f[2]?`<span class="tip">${f[2]}</span>`:""}
+  ${f[0]==="nom"?`<input id="f-${f[0]}" data-k="${f[0]}" autocomplete="off">`:`<textarea id="f-${f[0]}" data-k="${f[0]}"></textarea>`}</div>`).join("");
+let tmr;
+document.querySelectorAll("#form [data-k]").forEach(el=>{
+  el.value=data[el.dataset.k]||"";
+  el.addEventListener("input",()=>{ data[el.dataset.k]=el.value; clearTimeout(tmr);
+    tmr=setTimeout(()=>{ try{ localStorage.setItem(KEY,JSON.stringify(data)); $("#saved").textContent="Desat en aquest navegador."; }catch(e){ $("#saved").textContent="No s’ha pogut desar: imprimeix-ho o desa-ho en PDF."; } },400); });
+});
+$("#print").onclick=()=>window.print();
+let armed=false;
+$("#clear").onclick=()=>{ const b=$("#clear");
+  if(!armed){ armed=true; b.textContent="Segur? Torna a clicar"; setTimeout(()=>{ armed=false; b.textContent="Esborra-ho tot"; },4000); return; }
+  armed=false; b.textContent="Esborra-ho tot"; data={}; document.querySelectorAll("#form [data-k]").forEach(el=>el.value="");
+  try{ localStorage.removeItem(KEY); }catch(e){} $("#saved").textContent="Esborrat."; };
+
+/* ---------- Repte ràpid ---------- */
+const BANK=[
+ {p:"Unes entrades per a un concert són una necessitat…",o:["Primària","Secundària"],a:1,x:"S’hi pot viure sense: secundària."},
+ {p:"La llum del sol és un bé…",o:["Lliure","Econòmic"],a:0,x:"És abundant i no té preu."},
+ {p:"La màquina de cosir de la cooperativa és…",o:["Terra","Treball","Capital"],a:2,x:"És una eina per produir: capital."},
+ {p:"Texans vells que es llençarien, com a matèria primera, són…",o:["Terra","Treball","Capital"],a:0,x:"Són el recurs material que aprofitem: terra."},
+ {p:"El cost d’oportunitat és…",o:["La suma de totes les alternatives","La millor alternativa a què renuncies","El preu del que compres"],a:1,x:"Només una: la millor a què renuncies."},
+ {p:"Ja heu pagat 20 € de cartells que no us serveixen. Per decidir què feu ara…",o:["Els heu de tenir en compte","No els heu de tenir en compte"],a:1,x:"És un cost irrecuperable."},
+ {p:"«El 30 % dels enquestats pagaria 3 €.» És un enunciat…",o:["Positiu","Normatiu"],a:0,x:"Es pot comprovar amb les dades de l’enquesta."},
+ {p:"«Les botigues haurien de vendre més barata la fruita lletja.» És…",o:["Positiu","Normatiu"],a:1,x:"Diu el que hauria de ser: normatiu."},
+ {p:"Si el preu puja, la quantitat demandada…",o:["Puja","Baixa"],a:1,x:"Llei de la demanda."},
+ {p:"A 2 € es volen comprar 40 bosses i se’n volen vendre 20. Hi ha…",o:["Excés de demanda","Excés d’oferta","Equilibri"],a:0,x:"Falten 20 bosses: el preu tendeix a pujar."},
+ {p:"A 5 € es volen comprar 10 bosses i se’n volen vendre 50. El preu tendeix a…",o:["Pujar","Baixar"],a:1,x:"Sobren 40 bosses (excés d’oferta): el preu baixa."},
+ {p:"Puja el preu del material. Quina corba es desplaça?",o:["La demanda","L’oferta","Cap"],a:1,x:"Els costos afecten els venedors: l’oferta, cap a l’esquerra."},
+ {p:"Una influencer posa de moda la roba de segona mà. La demanda es desplaça cap a…",o:["La dreta","L’esquerra"],a:0,x:"Es vol comprar més a cada preu: dreta."},
+ {p:"La cooperativa apuja el seu preu. La corba de demanda…",o:["Es desplaça a l’esquerra","No es desplaça: ens hi movem","Es desplaça a la dreta"],a:1,x:"Si canvia el preu del mateix bé, ens movem per la corba."},
+ {p:"Quin d’aquests és un argument per justificar un preu?",o:["«És un número rodó»","«La competència ven a 3,50 €»","«Ens agrada»"],a:1,x:"La competència és un dels quatre arguments."},
+ {p:"El mercat reparteix els productes segons…",o:["Qui ho necessita més","Qui pot pagar el preu"],a:1,x:"Qui no pot pagar queda fora: per això importa l’accessibilitat."},
+];
+const Q={qs:[],k:0,score:0};
+function newQuiz(){ Q.qs=shuffle(BANK).slice(0,8).map(q=>{ const idx=shuffle(q.o.map((_,i)=>i)); return {p:q.p,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a),x:q.x}; }); Q.k=0; Q.score=0; quiz(); }
+function quiz(){
+  const el=$("#quiz");
+  if(Q.k>=Q.qs.length){
+    const ok=Q.score>=6;
+    el.innerHTML=`<div class="score">${Q.score} / 8</div><p style="text-align:center;margin:.3rem 0 1rem">${ok?"Molt bé! Ho tens a punt per a la prova.":"Repassa les targetes on has dubtat i torna-ho a provar: les preguntes canvien cada vegada."}</p>
+      <div style="text-align:center"><button id="again">Torna a fer el repte</button></div>`;
+    $("#again").onclick=newQuiz; return;
+  }
+  const q=Q.qs[Q.k];
+  el.innerHTML=`<div class="steps">${Q.qs.map((_,k)=>`<i class="${k<Q.k?"done":k===Q.k?"now":""}"></i>`).join("")}</div>
+    <div class="q">${Q.k+1}. ${q.p}</div><div class="opts">${q.o.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join("")}</div>
+    <div class="fb" aria-live="polite"></div><div style="text-align:right;margin-top:.6rem"><button id="qn" hidden>${Q.k<7?"Següent":"Mira el resultat"}</button></div>`;
+  el.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const k=+b.dataset.k, fb=$(".fb",el);
+    el.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+    el.querySelectorAll(".opt")[q.a].classList.add("right");
+    if(k===q.a){ Q.score++; fb.className="fb ok"; fb.innerHTML=`Correcte! <span>${q.x}</span>`; }
+    else { b.classList.add("wrong"); fb.className="fb no"; fb.innerHTML=`No és correcte. <span>${q.x}</span>`; }
+    const n=$("#qn"); n.hidden=false; n.focus(); n.onclick=()=>{ Q.k++; quiz(); };
+  });
+}
+newQuiz();
+</script>
+</body>
+</html>

@@ -30,6 +30,7 @@
   var EMOJIS = ['🐝', '🌱', '🧵', '🍪', '🕯️', '🎨', '🚲', '☀️', '📚', '🎧'];
   var COLORS = ['#0F766E', '#B45309', '#7C3AED', '#BE123C', '#1D4ED8', '#15803D'];
   var CLASSE = [
+    ['xuleta-prova.html', '📝', 'La prova en una pantalla', 'Conceptes clau de les fites 1 i 2 i la teva Part 1, preparada', 1],
     ['repas-teoria.html', '🎯', 'Posa\'t a prova', 'Preguntes de comprovació, targetes i reptes per unitat', 1],
     ['exercicis-calcul.html', '✏️', 'Entrenament lliure', 'Cost d\'oportunitat, productivitat, enquesta, costos, punt mort i escenaris', 1],
     ['calculadora-cooperativa.html', '🧾', 'Calculadora de la cooperativa', 'Els números reals del vostre producte', 1],
